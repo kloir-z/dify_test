@@ -48,6 +48,8 @@ def request(method: str, path: str, body: dict | None = None) -> dict:
         headers={
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
+            # Python-urllib のデフォルト UA は Dify Cloud 前段の Cloudflare に弾かれる (error 1010)
+            "User-Agent": "dify-cli/0.1",
         },
         data=json.dumps(body).encode("utf-8") if body is not None else None,
     )

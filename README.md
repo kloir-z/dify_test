@@ -24,6 +24,15 @@ python scripts/dify.py chat "こんにちは"
 python scripts/dify.py workflow --inputs '{\"query\": \"テスト\"}'
 ```
 
+日本語が文字化けする場合はコンソールを UTF-8 にする:
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+```
+
+注意: チャットフロー型アプリは Dify 画面右上の「公開する」を押すまで API から実行できない
+(`app_unavailable` エラーになる)。
+
 ## Dify 本体をどこで動かすか
 
 | 選択肢 | 判定 | メモ |
