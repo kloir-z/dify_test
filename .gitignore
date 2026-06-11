@@ -1,0 +1,14 @@
+# 秘密情報
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Node
+node_modules/
+
+# その他
+.pshistory
+*.log
