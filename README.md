@@ -6,10 +6,17 @@
 ## 構成
 
 ```
-.env.example        接続設定のテンプレート(コピーして .env を作る)
-scripts/dify.py     Dify API を叩く最小 CLI(Python 標準ライブラリのみ)
-workflows/          ワークフロー DSL(YAML)の置き場
-docs/notes.md       学習メモ
+.env.example         接続設定のテンプレート(コピーして .env を作る)
+scripts/dify.py      Dify API を叩く最小 CLI(Python 標準ライブラリのみ)
+scripts/lint_dsl.py  DSL リンター(参照切れ・未使用変数・常に真の条件などを検出。要 pyyaml)
+workflows/           ワークフロー DSL(YAML)の置き場
+docs/notes.md        学習メモ
+```
+
+DSL をエクスポートしたら、コミット前にリンターを通す:
+
+```powershell
+python scripts/lint_dsl.py workflows/jp-news-digest.yml
 ```
 
 ## セットアップ
