@@ -82,8 +82,13 @@ def cmd_chat(args: argparse.Namespace) -> None:
 
 
 def cmd_workflow(args: argparse.Namespace) -> None:
+    # Windows のコマンドライン長上限 (約32K文字) を超える入力はファイルで渡す
+    if args.inputs_file:
+        inputs = json.loads(Path(args.inputs_file).read_text(encoding="utf-8"))
+    else:
+        inputs = json.loads(args.inputs)
     body = {
-        "inputs": json.loads(args.inputs),
+        "inputs": inputs,
         "user": args.user,
         "response_mode": "blocking",
     }
@@ -108,6 +113,7 @@ def main() -> None:
 
     p = sub.add_parser("workflow", help="ワークフローを実行する")
     p.add_argument("--inputs", default="{}", help="ワークフローの入力変数(JSON)")
+    p.add_argument("--inputs-file", default="", help="入力変数JSONのファイルパス(大きい入力用)")
     p.set_defaults(func=cmd_workflow)
 
     args = parser.parse_args()

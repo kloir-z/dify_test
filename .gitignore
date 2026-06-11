@@ -12,3 +12,4 @@ node_modules/
 # その他
 .pshistory
 *.log
+test-data/inputs.json

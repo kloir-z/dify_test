@@ -1,0 +1,407 @@
+{
+  "collected_at": "2026-06-11T23:07:52.943115+09:00",
+  "mode": "jp",
+  "sources": {
+    "nikkei": {
+      "status": "ok",
+      "items": [
+        {
+          "title": "JT、週休3日制を27年4月に導入 ワークライフバランス向上 - 日本経済新聞",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5qSndISjlVczRtZmdpSzBJS0hrdWlIWmxiSmNhamxLcHNzMHZuMmdPeUhCbjBZT3dfY1BzaGtwdlY3X2pnalAxQXpDOThxUTI2dDNkR2VPd1V4eVo5QlVLVEZmaVZFalFmTnYwdA?oc=5",
+          "pub_date": "Thu, 11 Jun 2026 08:14:11 GMT"
+        },
+        {
+          "title": "スペースX組み入れ投信、購入受付停止 ｢IPO前の先回り｣で個人殺到 - 日本経済新聞",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFBxemE1UDBzUzdTcmVyLWlDX0RCQVFpbHozVzEzUWlBbDA4RWdxSkFuekxFXzJ6MGwxMTJxUFRhVWNYSGtUNUpZanVoX05WaHRaLXZZRERLREVtMlViLWs5VFpRSUNHYWZUeWx3SA?oc=5",
+          "pub_date": "Thu, 11 Jun 2026 08:51:59 GMT"
+        },
+        {
+          "title": "7月の原油代替調達100%に、高市首相が表明へ 米国産などを確保 - 日本経済新聞",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE54X3lJQUY4NE9zRDZVNFRqNERFaEpsVEV4a3N1V092dzRmQWhISUF6bm5aZnpCellEcURra1lXQ01mV0ctNkF3SmVfQkotRnY5NnBpWkl4NU9IR1JXcnB3aHA3c0YxdHQwalJTeQ?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 14:42:04 GMT"
+        },
+        {
+          "title": "トヨタがレクサス「ES」発売 実質660万円から、EVがHVより安く - 日本経済新聞",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1aQjB3VTdEejFzTFZkRTBldk5nclV5OFVlYW9lZHdjaFJXRUxYSHE0ZU1ScWRLZmt6NHdhQnBVaDkzanMyU2RjcnRqaTZHRnpaWVpMNnNIQlYxZVExTWhfN3d0Y0E3TFZFakNxcQ?oc=5",
+          "pub_date": "Thu, 11 Jun 2026 07:24:39 GMT"
+        },
+        {
+          "title": "日銀の植田総裁が入院 15〜16日決定会合は欠席見通し、8人で投票へ - 日本経済新聞",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFAwRVdnQk5pR2p3RjVnSU40MHFiM1VvRkl1LWNSVzZ1VVU2b3ZSVnNIRlV1UVJQT2xNOGJRVFhFbVRjTDB4dFVRZ2VOVlYwQU84dEdDZmFjZnRwQm9JVnlOYzV4dkVmMzk4eHRvbQ?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 09:41:48 GMT"
+        },
+        {
+          "title": "ニデック、サーバー向け水冷装置の売上高1000億円規模に 31年3月期 - 日本経済新聞",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9xX044OFY4Nko3ZmprbmFMZl96RTBRcEkyV3NCOWVjb0hmWHo5dzlKRE9pWTd3RWRUWDY2SlhsODF0SUQteDJvZVV6eGFmYjNxMVp5Q2d4Z0FCRmhCUWNCOXJuUnZ5SDhDR1lHUw?oc=5",
+          "pub_date": "Thu, 11 Jun 2026 06:26:05 GMT"
+        },
+        {
+          "title": "金が7カ月ぶり安値、4000ドル台に 米利上げ観測・巨大IPOも重荷 - 日本経済新聞",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5lbTVwUTFTSXN6WVpnOWpMcW93QjJZODZWX1M0TUQ1VXpSUHVsMWNCTkV2RzJ1TEhvc09NZXdqN19KTFo3UGxxUUZCdVpBRy1mVWV6ZW13MkI4SjhqZnNNV2J5dFkwMWdGOVhjRw?oc=5",
+          "pub_date": "Thu, 11 Jun 2026 08:02:14 GMT"
+        },
+        {
+          "title": "決算:アサヒGHDの25年12月期、純利益38％減、サイバー攻撃響く - 日本経済新聞",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFB2NF8zQjB6bUZrTVRmR3dvZUl0bm0tbUhYeWItRWw2MnNLN2Y2aFZIMHpkLXFoQkt3OG1YZkp6eDNyaENmU0s1T2xsSl9ETGo1em1tRWgtWTE1UGJBZndUYUxKaEdMeTVtcVlseQ?oc=5",
+          "pub_date": "Thu, 11 Jun 2026 08:31:31 GMT"
+        },
+        {
+          "title": "ノリタケ株売却、保有4.36%に ストラテジックキャピタル - 日本経済新聞",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFBON2QtR0RCRnZyeWhSMFVvbEwwNmxTcXhkQWVPeUVPbWZqVk01VlRjcHZjcDZweUpRLXVvMHVkdnAwandBVXFaTkNyemsyRkZfUUJYakhMTlR2MkVacXdCMjZ3V3QxdEVBNjFuNg?oc=5",
+          "pub_date": "Thu, 11 Jun 2026 09:20:34 GMT"
+        },
+        {
+          "title": "ソフトバンクG株価、下げ渋る 米オラクル株急落で一時6000円割れも - 日本経済新聞",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1TLXlGZV9tQkxVOUNrR0hVaUZxQUtoVXozMjNFUjVyLWJJU0ZUMnVIT2s5Z3k4WWJjeS1pNDVUTzJXUjQtdTJYcW94TXdiRFlrTTRQTEdqS2ZiTUdfb2tQUVN6Q2VjVG9tcXQxaQ?oc=5",
+          "pub_date": "Thu, 11 Jun 2026 02:28:28 GMT"
+        },
+        {
+          "title": "大企業の4〜6月景況感、4四半期ぶりマイナス 中東混迷響く - 日本経済新聞",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5MZjM2SkFPNWZrbU8zUE1rM3ZoaGxwb25DMmtrNHU0WjZhSURJZEVuMkE4SkdCWmpwc2l4QUtIaHI5MTdVMEJqSEZsM2NlWVRzMnF0NFcxcnByaUQzbjVhUjVVdTRldHNVV1ZGQg?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 23:52:18 GMT"
+        },
+        {
+          "title": "イーロン・マスク氏、｢究極目標｣はスペースX・テスラ統合 IPOテコにAIへ資金 - 日本経済新聞",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1kdXI4cGR1NHBXajVHVHR1amdWcjh3MVRidnZ2cFcxWGoxNlRhM0pnVVhnWno4N3pzY2VaY3hhQ0JzdU9yUDdybGpKcGZGODhJYjZhbWoxSWc4WEdQUkZ3WHNCSVpBM0M4eC0wdA?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 20:19:52 GMT"
+        },
+        {
+          "title": "フジクラ株価、最高値から半値割れ AI過熱の代償大きく - 日本経済新聞",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1BVjdPWXNQZm1RcUNZMF9tSjlTYmxDNjB4NGRsVk5Gdy1xbFlzSEt4Rlc4Wno5dk1GTkpPTHRNNjNyU2dXNmtYd2VKRXVJWUxveUFycjZJVWFSMU5SaEVjMUtWaFRhamlzR3JITA?oc=5",
+          "pub_date": "Thu, 11 Jun 2026 04:40:04 GMT"
+        },
+        {
+          "title": "イラン「ホルムズ海峡を完全封鎖」宣言 米軍の再攻撃へ対抗措置 - 日本経済新聞",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5rMXBiZWEwcmd3TEZ1Q3p1V3hWS1BpanJ4MWpFcmJBMTJMQmE5OTl2UzMzVDlTenlaZ2l0LXVYNmtDT1FvcGkydWc4TVhFbEdxenZTelNkNnFsdUdZckpKbzNtTGJoVmVDa2Q1ZA?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 21:52:59 GMT"
+        },
+        {
+          "title": "北陸新幹線の延伸、小浜・京都ルートの費用対効果が優位 国交省新試算 - 日本経済新聞",
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFBQSmZ2UDhER0hrT3FWOHRVLTFtbXJDelQtZk4zakJ5YzVxeG1HUHlLLXo2N0xMV3RkN2liUkkycGljS1VnMnlNUThrckhwcS0xRDJPSjMtMnZFdzZUN2dPX0JBZWJISE1MX0cwTQ?oc=5",
+          "pub_date": "Thu, 11 Jun 2026 06:32:31 GMT"
+        }
+      ]
+    },
+    "asahi": {
+      "status": "ok",
+      "items": [
+        {
+          "title": "森議長「言葉足らずだった」と釈明 「養子の子に皇位継承権」発言 [皇室典範の改正] - 朝日新聞",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE80UUh0R3pCX2RxZjRKSC1FVWVreThoMVg3dk14X0JBWHlVdEZzZXc4cGhGaWlHbzFGcTktNGNmUnRXeEp4c2N3bXFvcEdGdk9mQkR0TTFLcDZxRVhqMnVKTGxZN01vLUU?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 09:20:52 GMT"
+        },
+        {
+          "title": "映画の名匠・小津安二郎邸が民泊に 北鎌倉の古民家 名優たちも来訪 [神奈川県] - 朝日新聞",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9oSzRnMWYwcU9NaTdTUFJXa1ZMMUdFWGlBWndYX3ZNN2pjRzNka3ZPUmt5V0lrdFpEbVowZFlBYmk0TGt0UE9Nb0NOOWJpOU9nblp5VlJ3b2g2ZW1pT0R3cmx2MFNFWVE?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 21:30:00 GMT"
+        },
+        {
+          "title": "出産前の妊婦を盗撮容疑、元研修医を書類送検「勉強のつもりだった」 [大阪府] - 朝日新聞",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9hQlJ0Rm1BbHB0WmZXUHQ1NlFXTnZBSVBKMUwtLURwWWJlMmM5YTYyMWdyZm9LY0ZJMG85ZEJtVGFGTWVvR3RSXy03aFkwbVVMYTl4M2J1Q0ZyUWhhX1EzNl9DWVBRT0E?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 07:07:58 GMT"
+        },
+        {
+          "title": "「ほぼ全九州」電力契約情報、漏洩の恐れ 九電送配、最大1千万件超 - 朝日新聞",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBLMTFnTGVFU2FpZllPRDNmczRmQ0czd2JMV2lpYTZiQTNTY1lNcDVZTTB5eXFIODBZUWhON0N0THM4RC1qbnlBU19xZDRZWmNDUVJzaE1LS3ZQY3htUlVnVFh6SUd6UWc?oc=5",
+          "pub_date": "Mon, 08 Jun 2026 09:32:00 GMT"
+        },
+        {
+          "title": "任天堂に65億円の制裁金、フランス当局 コントローラー不具合巡り - 朝日新聞",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE84UTBfd3NmTjR3WnZrMnJPdU13Q0hDcHJVTVY4cG96S2lKRWJGRUNPeldTcTlBY01wMnNYek5oR051VlZmZktOUVBpUTQyWXY3VkNoZXlfT3VyUlRYSVRfcnVrM2IzTDg?oc=5",
+          "pub_date": "Mon, 08 Jun 2026 12:18:03 GMT"
+        },
+        {
+          "title": "高市氏側から相談受け「ネガティブな発信提案」 共同通信が証言報道 - 朝日新聞",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9KdGtBbzJZeTN6XzN1MGtKQ3hSMEN0VXhUOEktNzQzZmlVekFGLVlfOG1MLTFWanV3ZjdkR3FHNEMzeVQ3Ml81eDFLNThCQzZCQTZKRTR6VG5xd3JDMzlIWmdpVXNWWUU?oc=5",
+          "pub_date": "Tue, 09 Jun 2026 09:17:57 GMT"
+        },
+        {
+          "title": "阿部知子氏が中道離党「説明なく結成、決定的誤り」 立憲に戻る意向 [神奈川県] - 朝日新聞",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE5vQkJ3NlVvLTdyZ2h1b0t5V2I2dVZ4YnFGQmRQMm14NS1FV0tRNVJhaWtJLVFTT3BxSWpUd3paX2dCWnhiN2R6YmtPWGhsT01zS294UGRiR09nNzRpTFFScEItazZJRTA?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 10:15:00 GMT"
+        },
+        {
+          "title": "韓国軍の防諜司令部を解体へ 非常戒厳時、国会への兵投入に関与 - 朝日新聞",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1QV2YwVmppckVEZWxId0JtYWdxeG1fbkxpMlhYM2I4bTZZVDhQYm1oOXdfRFlKU1lvWk56dVRlVmRjTkhlRzEzc0xXX2VjMWV5OUdieGw2aTVoeFFUVU5vOGVlaWVtV2s?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 12:42:30 GMT"
+        },
+        {
+          "title": "難民の7割が長期化「2035年までに半減」目標 国連機関が報告書 - 朝日新聞",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBJTy1LWnpSbTRuSndDdkhXRTA4TzlGV0ZqaTRrUTFQNjVQZ3NVbFRSNVBPcmtoTmpuOF9YUFVPQkl3WkFXTHVpSDVHdmdXSXlkak0tLWNJUzRINHFpajNnbU1UNHIxSlk?oc=5",
+          "pub_date": "Thu, 11 Jun 2026 03:27:37 GMT"
+        },
+        {
+          "title": "イラン「ホルムズ完全封鎖」 米トマホーク49発発射 連日攻撃応酬 - 朝日新聞",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1YVThjV0NMV2tOQmlMcmRDd0FndENSV0JWR3V0U1V0Z0RZTHQyTFdVeWZoRUUtZGhuNGZoSnFTRnV0THFySzg5QzN2eTlIMXNRVGFhSk9aR1BqZWRhUE9FTU95M21wclE?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 19:15:00 GMT"
+        },
+        {
+          "title": "堺のシャープ敷地でエレベーター解体作業中の男性死亡 重りが落下 [大阪府] - 朝日新聞",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE5GRXNLdVNNaTROV2MzV01YVk4tVVFSLUtMcnVuem9EZVM1ZkxsMHgxb1R4WkVfWk9DcENJbjB0OFhaNW03Qko3RXRqQ3AzcldKZnowRGtLcWotVDVzalNlcko3LWlMRTQ?oc=5",
+          "pub_date": "Tue, 09 Jun 2026 01:40:00 GMT"
+        },
+        {
+          "title": "医療費の自己負担、70歳になっても「3割維持」 自民に維新提案 - 朝日新聞",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1hN0xSb2hkNzZCSHltbnBqWjdfeWNOZlNMU1lmTGVRYTVjdDZweDdrUWNvQWd1czdLVlg5clc3Rk1sNXh6WWtES2NXMnExVUI4azFNWUhhQl92eVozY1ZkNW5LaDlNNnM?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 11:45:00 GMT"
+        },
+        {
+          "title": "国保滞納した外国人情報、115自治体が入管に通報 在留審査に影響 - 朝日新聞",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE54UFJOSUZ3S1NwZzZjdzNvUjRNY2Nib0FTeEJUZy0zSDFvMDlWTzNTN1hvXy1UY1F5SUJHc3FCSUQwcEx0Y1IwbG1JQUR6bzhYaFUtekpiX21mN0VrdGtuaTZXVFJfZE0?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 20:00:00 GMT"
+        },
+        {
+          "title": "W杯で米国に入国できない問題 五輪は「乗り越えられる」IOC会長 [サッカーワールドカップ（W杯）] - 朝日新聞",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE8zR1lWZkNyUkwzLVllY21kdFM5V200S00yUHhaaHRUTktHQ1pJWFZGTFhnazhUUjRUY1dORkYtdXNGVXgzUVpQc0owbS1kOWFkZlo2VUktS3ZDdHFfYVZfQUMtTUlLc28?oc=5",
+          "pub_date": "Thu, 11 Jun 2026 06:32:54 GMT"
+        },
+        {
+          "title": "独仏、次期戦闘機の共同開発が中止に 日本と英伊の計画には追い風か - 朝日新聞",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9rbXM1RkRVMTVGUnpJOWNMNWkyckt4TWFoQTVZa1FRRmJzaEE3LUlJT2J5di1HRnJGSGp3QVV4Tm1OSWRsRGFoeXNBOFNVdVE3cnhhRXYzV2FRQVlfSUZTeTFNMmhwTjg?oc=5",
+          "pub_date": "Mon, 08 Jun 2026 16:02:00 GMT"
+        }
+      ]
+    },
+    "sankei": {
+      "status": "ok",
+      "items": [
+        {
+          "title": "伊藤博文暗殺の安重根記念碑を撤去へ 高知のホテル、抗議受け 事前に内容確認せずと説明 - 産経ニュース",
+          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5iUlk2X3pLVi04WHBGYjdKZkFiUG9YM0QzRXNicXNuOUdTQkhqVUdPN3psaldNeGFCRnUyZjZTQ1N0cG12dDZHQ2dJbHpGdFZldDd3OXUwOTNUWENwLXk2dmNWSEVoaXJfaUJFVGJ6MWxhWVh5YXc?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 08:54:32 GMT"
+        },
+        {
+          "title": "河野洋平元衆院議長が死去、89歳 自民総裁や外相歴任 慰安婦に関する「河野談話」発表 - 産経ニュース",
+          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5VVVJIZUhURXNkS2ZTQXJwcDdjY3ZUanJKc1l5Tk5UbGVHbHRiYU04bmlsV1FYN0FaRGJGcUFBTGNpdlpOQ29xYVQ4SjdTNkIzREVmNWl1VldGQnRmaVdzanBRd2RQOTVjRXVLTmRzSGl2NUUxalE?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 10:17:02 GMT"
+        },
+        {
+          "title": "日本製鉄が4000億円投資計画 USスチールの設備刷新、自動車向け鋼材など生産強化へ - 産経ニュース",
+          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9tb01UZVl1b2tZendZZ2lkek1CZ1Z1LXdqX3RMT2pfWFdrQ1duOXZESkVSZkZqcjEtc1Z4dUpWQVpiNDlSRkhGc3NhTHgwY1I0TC1TUkp3UEdRazAzZUtZeXM2WTIxMFFZbmlVVl82UHdSUkpSdVE?oc=5",
+          "pub_date": "Mon, 08 Jun 2026 22:08:14 GMT"
+        },
+        {
+          "title": "「ご遺族のおっしゃる通り」辺野古事故遺族の〝公開質問〟に沖縄・玉城デニー知事が回答 - 産経ニュース",
+          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE8xVTR2TkZ2eHdkbEstUDRnanAyZTlDSFhTc0kxcUVBdWVJeWtnaTZvOHFVellpdlJvUHBNamY3T3cycW1BSG5qTEhsQlBjN0RMY1BuU0l6ckRSTHAtS3ZMSHZOQWcwelFhdjM0RzBYaTBjY0NFd1E?oc=5",
+          "pub_date": "Mon, 08 Jun 2026 02:11:53 GMT"
+        },
+        {
+          "title": "皇族確保「立法府の総意」を決定 女性身分保持と男系養子 皇位継承策は先送り - 産経ニュース",
+          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE1Pc1A3RkNrM3RyZjJQeFg1YjZ5ZEt5WjZ2MTZrOU9Ha2NNc0VpVUxIZWxXakUxcnhtSWhpVDh3VGt2WU9hVkhzc0NDdzFvcGRtcF9QZVduVUVqaHlCYTY4QjdDZWdTYVNycFB6OXpUNV9hUVgzTkE?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 08:50:03 GMT"
+        },
+        {
+          "title": "「生活保護の外国人が無料で体外受精」保守党・北村晴男氏 外国人は「民間保険に」参院委 - 産経ニュース",
+          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFAtc1BsWWdXRWE1Q2FPUGxzNnBIYm1jSkw1NC1JRUYteGVNMklnZkU5WGlxQU9ob3BCam5FTHpGdEV5TTdySW1xX2ppSjhGTHNJeEVUM0hBTE1aTGV0dUhxaWJQWS1YLW1tLS1uaWlxT09VTEd3b3c?oc=5",
+          "pub_date": "Tue, 09 Jun 2026 02:04:14 GMT"
+        },
+        {
+          "title": "着工144年…サグラダ・ファミリアの主塔完成 ローマ教皇、ガウディ命日の10日にミサ - 産経ニュース",
+          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5fU0ZTYnlNZHNpODFkUWhsY0RsV2hrTjN3WHhTdFB3UTN2aTZ3OXYxSWpJVE9ZX1d0Nm5DWW1jVzFCMzBOeldQV05sNmNWWnU1M3ZwQXlqMDE4bU1RMGcxYnQ3ZGhCOVBPLUppOWFxazlLSkRhYnc?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 04:56:33 GMT"
+        },
+        {
+          "title": "玉城知事、辺野古ダンプ死傷現場で信号機整備に言及「道路交通法を守る当たり前の状況に」 - 産経ニュース",
+          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9oSUlSaVZKdWJkRHowTkRUR3BiQXZmOWp1QnZ5cUY5ZGpEN21hendFTGFZYVJlS09ma20za2FMVGFELUNTVi1GV3VwYkZWcEF4cUJKdXM1X0o4Q0FwNmpKQVJENTJPMUNHUGZKVndTMTJlb291ekE?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 02:21:03 GMT"
+        },
+        {
+          "title": "外国人の子供への教育義務化を 日商が官房長官に提言提出 政府の「司令塔」創設検討も - 産経ニュース",
+          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5MYU9naXhITDM3X29FNTFXM0RBVG5PSzg4MDMwV0JEdV9IdDU3MU5UVU1lblE0OXFmcEcxMTloNWJrNGE1aTNaUzNtVDQtUm1PNTM3WHE3YXdOWlJtOS1iYU5rb2VDU3JfdklEMUtIT2FBRXdyZFE?oc=5",
+          "pub_date": "Tue, 09 Jun 2026 08:55:45 GMT"
+        },
+        {
+          "title": "青山繁晴氏「父系一系の子、皇位継承権は当然の帰結」 森議長の「養子の子」発言に賛同 - 産経ニュース",
+          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE84Mlh5U1FQaFR6SmhOdk1yYldpQTl2d0FyVDJRd0oyeUo2X3pnRTAtTVF4SUszb1hOUTlROEFOR1pHVHhoMXFOZEdOQWZpeEhNMDJDZVp0eFkyQ05XUjNDdjFFc19WRkhReHJTemg4Yl82Zk5vMXc?oc=5",
+          "pub_date": "Tue, 09 Jun 2026 09:19:12 GMT"
+        },
+        {
+          "title": "BAY☆スタ ： SANKEI SH∞W - 産経ニュース",
+          "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE11TDdtOTJ5dUp1WDBldjRWekxOS0pYaGZETE5RWE9tYzYzbWtKbGJaaVBsTG1IVHZuRkdjQURCaEhPQi0wOHh0cXRxeEc?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 10:06:00 GMT"
+        },
+        {
+          "title": "【動画】WBCで全7試合的中の占いインコ、日本全勝を予想 サッカーW杯1次リーグ - 産経ニュース",
+          "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOYzdldGFiSEhJZEM2cG44enI0UGZyVFI0MlV1ekJRVHFfa2RwN2x6eG1oaXNQdjNoOFFfY0ZMSV9uNWZpcjlPOGpmQU1US0lIZS14bWdYWVNhd2dIai15QnhoZWVOcGFYdkx1dHRGczRBT1o3Um9LUnFRa05VRFZEdjY5ajlPaTVJc2pDeWNITVpSR0FrNTJ2SVNCRTN4SDlHTjZIS05LZw?oc=5",
+          "pub_date": "Thu, 11 Jun 2026 08:19:17 GMT"
+        },
+        {
+          "title": "【動画】ガッツ石松さんが肺炎のため死去、76歳 ボクシング元世界王者、タレントとしても活躍 - 産経ニュース",
+          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE1vdk9hTmt2Yk4weVUxZWVoSU9FZHJ3dXZLV25aUGJrYmFWYXRHT0hnNUR2c1loc0pMeUktWDBTTmNieWszaUVMNi0tdVBadEZUQl9QYnRJQTR1TWl4UmR6RVY4Yjc3WWlYa050YjVpY0F1cF9WVVE?oc=5",
+          "pub_date": "Thu, 11 Jun 2026 07:37:05 GMT"
+        },
+        {
+          "title": "【動画】イランがホルムズ海峡封鎖を宣言 米軍の再攻撃受け、停戦維持は重大局面に - 産経ニュース",
+          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE1VRTlsMzU4TnNtelRBZDRTeVhmQlBVRk51TnFDUld2WFpNVk1NNDJxWDlya2t1bkNPb0s4VFVlUEE5amJISlpvaTBfLWNBbGZtQmtpak5oNEhzRTdKY1ZuVkNQbF8tVG1Gb2VVYjdJYm8xa05jSUE?oc=5",
+          "pub_date": "Thu, 11 Jun 2026 02:28:03 GMT"
+        },
+        {
+          "title": "国民の自衛官 ： SANKEI SH∞W - 産経ニュース",
+          "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE9PeG1DWU5sdnNhSFpjdDQ5ZE5aUDgzUWZ3a3A3WG1LR3VucEJSTWhWNG81QzU0ejZ6bkhKOGtCZjRaUHQ0ZmFfTmU3My0?oc=5",
+          "pub_date": "Tue, 09 Jun 2026 22:57:54 GMT"
+        }
+      ]
+    },
+    "reuters_jp": {
+      "status": "ok",
+      "items": [
+        {
+          "title": "トランプ氏、イランの米軍ヘリ撃墜で「対応」警告 - Reuters",
+          "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE5qcWQxZEctZjVpNWlMSkl0eEoxYnpDTzV3alN5UW5EdGVnbjRJY01kM042dkUzakRCcEJrbVFuTng0WFhGZ09MZGdyNjZZRGg4MjNUbHhtcHRVUU10eTQ0aklzSUZjWkRmQTBVOW5CeFY3elk3TVlsSTZn?oc=5",
+          "pub_date": "Tue, 09 Jun 2026 17:17:43 GMT"
+        },
+        {
+          "title": "米国株式市場＝ナスダック・Ｓ＆Ｐ反落、トランプ氏の対イラン報復示唆で - Reuters",
+          "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxOY01qR1RiV2ZhUmpJMUJxWGpGYkpwRUZReGphaHlxMFpjalZMQ25nenVXU3V3Z04wSDBtN0NjMjQtdXFJMFhjX0d5N3l6QnJCNVpVaVJhT2NXQkpySjNUWWpGX1RVMnVsM042Rzh6bG0yUjdNVUJTbmRrTGlNVzNkSQ?oc=5",
+          "pub_date": "Tue, 09 Jun 2026 21:40:31 GMT"
+        },
+        {
+          "title": "為替円安、断固たる措置取る用意「常に変らない」＝片山財務相 - Reuters",
+          "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9TMjlFY2ozdW1vUXA4OVl2TkF3bjc1R3ctd2tGdzM1N0FoSEh5Z3BZT3VWYnkzeWxQSDZnVFlMaG5UTXZJcTdzTlJvNVZhTjA4b0d2NmROOEUzbzM1eElpVFdtb2ozNEZCcEdBZlZ5VGp5bE9pSUJIRA?oc=5",
+          "pub_date": "Tue, 09 Jun 2026 00:38:00 GMT"
+        },
+        {
+          "title": "装備の生産基盤強化へ「防衛公社」の設立検討、武器輸出も支援＝関係者 - Reuters",
+          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQUFJ3UW1icTcxVGF5eWQwRFZuU0NCRDJ0djZMaHRTWUhCSFlObWFrY3U0MzZNZUU5Wl9TOElQaDRweFU3SmtCNnVkb1Z6YmVzS2MzRUtlSHhxY2Z5WmkyM0l4czFKaXhwWFdUX1RWaXB1VE1xSjN1cGhxYnp1Z1kyQUdR?oc=5",
+          "pub_date": "Tue, 09 Jun 2026 23:43:43 GMT"
+        },
+        {
+          "title": "イスラエルとイラン、攻撃停止を表明 トランプ氏が即時停止要求 - Reuters",
+          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNNnZsdU1ZOEZfeWVhODVDRXBZVWUyRzN5QzFvYl9rNFNWWnJ5WW1HMUcySUFTSGVYa0pPMmlOWmc2UkItSkZ5NG9PR1F4Uk41UlBJTUp1dW1fWmpvcG9MZWRMdHhEbW5qc1JoSXk1ZlVQUHpSYmpYNXpvTEd4MTFRSE5B?oc=5",
+          "pub_date": "Mon, 08 Jun 2026 13:38:00 GMT"
+        },
+        {
+          "title": "米国株式市場＝主要3指数1％超安、中東緊張再燃で 半導体株が安い - Reuters",
+          "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPSEd3Vm1JZmg2UGVOcmREa3ZWTzY1VUFxM2kyczBua0pJODRmcUZYMFJhLTRpMW9nOFJQZ0NDX1FFdzIzaXNJTlhyZzRGWW5UeGpmbzlkMk4wNlVyaEk1VDNISG9xNlk2dnJtX0k1RG1KNUE4alMwVjAtdGVZNk5nVg?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 21:29:29 GMT"
+        },
+        {
+          "title": "米オープンＡＩ、チャットＧＰＴ大幅刷新へ 上場見据え＝ＦＴ - Reuters",
+          "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPZlBUMDVkNHBHZ0pQek1ld3BGZ2tXV3Z3bjVkWHdZM1AxU190X0FqbmFxNG9rNUFjZFB0M1lSOFZJbG9SeE1MUFRGd1JmZVl1VDBQQmZPcDJwUGZaZjRoczJrekMzNExweWFxcFZXNzZrbWQ3VURnczlyelByUVZkejFpZE51aXotbWk1cg?oc=5",
+          "pub_date": "Sun, 07 Jun 2026 05:30:00 GMT"
+        },
+        {
+          "title": "焦点：ホンダ旧経営陣の三部氏解任劇、直談判も翻意ならず 揺らぐ求心力 - Reuters",
+          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQVFJZMm9tMV9WQzN0bGtyOFU3cjRGYmxoV0VFQ0w2TTlGT0xnbWU2X0ZrcUk1SEFiZFM3RVhpN1A5cGZZem5Udm5SZEg2elNpRkY5ZDdGSlctd29HNjNaVHVDSlBEajhPakpNUkNDa2JiTHdJZ3poTHVSd0xOZUxMdldB?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 02:17:00 GMT"
+        },
+        {
+          "title": "米国株式市場＝まちまち、Ｓ＆Ｐ・ナスダックは高い 半導体株反発 - Reuters",
+          "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPN0NDaFJHdk8tUWdYRUM3YzJxaUI1SUVmaTlTM2MtZVVoc1RaRC01bVM1UEdTcjh6RUJkWkpkZFM5U2puOEM0NHFrTC1pSTRVNTY4OXZWUWgtZVBQV1dHVFpPbXpGa1lLaUZJMFJoUmpxeE9YZ1A1ektFbHpaTk02Wg?oc=5",
+          "pub_date": "Mon, 08 Jun 2026 22:25:52 GMT"
+        },
+        {
+          "title": "フーシ派、イスラエル関連船舶の紅海航行禁止 海運混乱拡大の恐れ - Reuters",
+          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOZXVLTElIVW5WT05QdWNkeDllUVFja3BKQzdMUWpzQ1RPTGo4RjdfRjJXY3RrdVBhOW1VeDBHZmdZdnVtLWlkOEtlM2ZkSDUxRWo4WGxzWFpLTVA2M3hNbi1JaGR0dE1nYlhHTnBmMVJaNlpVeXpqcy1HLXhOcVNsUENn?oc=5",
+          "pub_date": "Mon, 08 Jun 2026 14:16:14 GMT"
+        },
+        {
+          "title": "イランのＷ杯チケット割り当て取り消し、連盟は政治介入を非難 - Reuters",
+          "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTFBvSlpVZVNhZ1NuQ3pyTkR1SHpEU2FOalhRWHBHRWZ5S3dWMEZPSmxSeXVNYjY2NDVwMDdQM1dWaEJsQS1DeEhBY0pHY1EwUWhYbVQ3dGZ3T3hjaVRCVGk0UzlMYmR4X09LRGozMmJ5OFBiSFl2UTRGLTAybDFIUQ?oc=5",
+          "pub_date": "Tue, 09 Jun 2026 10:48:07 GMT"
+        },
+        {
+          "title": "世界の石油在庫、数十年ぶり低水準へ 米ＥＩＡが警告 - Reuters",
+          "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTFBvVFFySW1qX0ZIWDcxc3RiLVhZRUdnSVl3cUgzNnJUWTVsMUtYU0M3NU94bXhzT2pTRjAxeWVCVDZzbGVoVXVTY2xsNEdHZnZsQmZ6QzZJZGRYMHJSNUwybjRyVURWTFhyLXhzeFQxTDA0cmk4MHRpa1N3?oc=5",
+          "pub_date": "Tue, 09 Jun 2026 22:59:44 GMT"
+        },
+        {
+          "title": "イラン戦争は早期終結へ、物価高解消 トランプ氏表明 - Reuters",
+          "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE42VjVrQVZsLWMxOGVOcjJwU0pCRl9zSld0WGtiMEhQOWhOZWtncnlobk1ZdmJQS2FLZTY4X1FPRzRWMDR2bXRoQ0xlbHBfRlVhVUlPb2Nza0JRc2JYTGl2V2padHRoN3Juckl5ZGlUaE83YkdUT0s2bHF3?oc=5",
+          "pub_date": "Sat, 06 Jun 2026 07:13:46 GMT"
+        },
+        {
+          "title": "スカパーＪＳＡＴ株、伊藤忠が新規取得 フジとの合弁含め26％保有 - Reuters",
+          "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNX3dKQ21mc0RXQXRJQnBIUlljLTV1ZHNPWGJTQUhNbWQxbnR4cnE4S3pTSVlQZVU3MHVfd2kwbm1jZFgzS2lZVEN4X08tVTNaNGUxTXNfYVJGdWhEbXBXYl9VRXhtQm1kOWFvbDBrbmdOemlOQUdFb041aDBOTFU0dw?oc=5",
+          "pub_date": "Thu, 11 Jun 2026 08:35:28 GMT"
+        },
+        {
+          "title": "プーチン氏が利下げに言及、病欠中の中銀総裁の政策運営実績は評価 - Reuters",
+          "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9RWXMwQ2RQU2V0bWtpc2g1WW9oU1BkNG5OeHBiZFJNUUJoSFptLTV6dUluQ2l2VTB3a2k2V0hjdlQ1NlEyLWl0LXRGSDRmdDNHa3dOa282RV83NlBkcmZzOWtmMF9ncnBkX25SR2NuWENvd1EzWUlNNg?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 23:53:43 GMT"
+        }
+      ]
+    },
+    "toyokeizai": {
+      "status": "ok",
+      "items": [
+        {
+          "title": "【6月12日配信】イーロン･マスク率いるスペースXがナスダック上場へ！その可能性と課題を徹底分析 - 東洋経済オンライン",
+          "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBVcmJhc2tUemt0dG9hX2praUgzVTh3bEx2R0Zpd3NjTjlEZTNtXzM2SEkyZ3hDQmFDZXBhWWJZM3o3cmFmcVZTRnhhSTZOaHVKYUE?oc=5",
+          "pub_date": "Thu, 11 Jun 2026 05:00:00 GMT"
+        },
+        {
+          "title": "ホンダ､巨額赤字で有力OBが三部社長に退任勧告…裏で進むガバナンス改革と次期社長候補に浮上した｢40代幹部の正体｣ - 東洋経済オンライン",
+          "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE15QWxxc3BSTVpjOF9VV2h5QndYenZlanV2ck9DUjFNSlBNOW9kc0c3V25JMi16eTJ0TFVSMHZpSjdxTGhxMC05R0p6Z216QWtfcXc?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 21:00:00 GMT"
+        },
+        {
+          "title": "｢ヤバイ…やらかしました｣が825万再生… 閉店寸前だった地方の総菜屋が｢広告費ゼロ｣｢週3営業｣でも大繁盛の秘密 - 東洋経済オンライン",
+          "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFBRdEVZMHpMX3hJenBCUEhDQ1F5UnFfTFRnRDRqalJkaXdDalRMdC1pd18taTROT2lNWU1WQnd6cXlVY2tfWC15NnpmdFhfOXoza0h3ejEyenE1YjR2dTlB?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 00:30:00 GMT"
+        },
+        {
+          "title": "ホンダ､巨額赤字で有力OBが三部社長に退任勧告…裏で進むガバナンス改革と次期社長候補に浮上した｢40代幹部の正体｣ - 東洋経済オンライン",
+          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE84d2tXTm4teFlVbHBRWnprMExlZVhmclZWX216RVZoVy0xYjhqMlRuX1padUxrMjhwTHU0V2QtVkdYeVV6MU9uTldQWHNXOGpkelllUlg1cnJEZDg?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 21:00:00 GMT"
+        },
+        {
+          "title": "膵臓がん｢生存期間を2倍に延ばした｣新薬の臨床試験結果 世界のがん治療医がスタンディングオベーションしたワケ - 東洋経済オンライン",
+          "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9xX0xNNWFkMGxqbTB6b1lVbVIyTTQ2Qzl5cXd4Z1dQYnJjNnFRT1dRUjYtdnBSdHR5UXZiY0o4Rk43czZodVMtZmNzcUZucEhNaUE?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 20:30:00 GMT"
+        },
+        {
+          "title": "重要なのは｢何をやるか｣ではなく｢何をやめるか｣ 50歳を過ぎたら心に刻むべき《人生後半の勝ち筋》の見極め方 - 東洋経済オンライン",
+          "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBPMjlYMXdwWjBvc0dZWlpGZ2QyTlpSeTRaLWdVaTk2QU9tcUNjOFVFNFlkbkg0bGp3c3FqUTZzZnBGWDhGbXF6VF9idnlvU1FoZWc?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 02:00:00 GMT"
+        },
+        {
+          "title": "原油ショックに備える現実策､自衛隊の合成燃料導入と護衛艦など艦艇の省エネ化でエネルギー安全保障を強化せよ - 東洋経済オンライン",
+          "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9pbG02SWVUVnBKYndZOFF3SFlMY1BGREFDOXdiM1E0Wmp3MEREM1l3WEo1cUkyR0haQWg5cDJ0VEhTS09POEptU2hsS09ZcUM3V3c?oc=5",
+          "pub_date": "Tue, 09 Jun 2026 21:30:00 GMT"
+        },
+        {
+          "title": "全国ローカル線5社｢経営者が語る｣鉄道復活策 大井川･ひたちなか･若桜･えちぜん･平筑が座談会 - 東洋経済オンライン",
+          "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE45cFZacldKOGh1clVldHdkcFU4aHJzaS1aeDBoVFZFU2dpX01JTWRzVHd6a2M3Zm5vc3QzaXFtUkNwdUcteGZnd2kxd29LYm11MmdldGFyRVByZVhmOV9N?oc=5",
+          "pub_date": "Mon, 08 Jun 2026 19:30:00 GMT"
+        },
+        {
+          "title": "永田町では｢首相辞任どころか議員辞職も迫られかねない｣との声も… 高市陣営｢中傷動画疑惑｣で広がるヤバすぎる波紋 - 東洋経済オンライン",
+          "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE51NkNnVnN6Tld2cUYzc0gzd3B3RGpla1FiSWtqTFBQS1NpWldTbnZ2YW1Ydy1JMExva0JfYVR1V0s2MUNSbVlKc0t2Y1BZRUthMXc?oc=5",
+          "pub_date": "Mon, 25 May 2026 07:00:00 GMT"
+        },
+        {
+          "title": "｢20代の持ち家率が過去最高｣は本当に\"明るい\"ニュースか？ \"婚姻数半減\"と並べた瞬間に見える｢全く別の景色｣ - 東洋経済オンライン",
+          "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBYUzBYbWF2RGVGdDlOZ0hJcVZfeGhpVFhHRkxLaWJGYmtrcHVtMHYwSW5kT0toOGFNLVNJR2FkQ2F4em1Ud1Fza2pLQzA2LXRhcEE?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 01:00:00 GMT"
+        },
+        {
+          "title": "余命宣告後に医師から｢自由に暮らしてください｣ 60代男性が感じた医療者とのすれ違い…どうすれば解決できるのか - 東洋経済オンライン",
+          "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFAxUGZDTW9uWnY2dWFiMTh1dEQwVWpvSlBPNVFubDI5N1VhTlY1bHZEWGxLMGlEOEdsQU11bmJEa28zZDRYN0k4Zi1FODZyZ0ZVUXc?oc=5",
+          "pub_date": "Tue, 09 Jun 2026 22:30:00 GMT"
+        },
+        {
+          "title": "膵臓がん｢生存期間を2倍に延ばした｣新薬の臨床試験結果 世界のがん治療医がスタンディングオベーションしたワケ - 東洋経済オンライン",
+          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE15VXhPWVBTTGx6cWNyXzdBUkhON1Q1eUxVaTBodVVEOElKdU10V0NyVmU5eVlDVGxuM05Hd2VrdC1jaEZENmpJMTNKc3E1V3YzazNkaHJXUl8tc28?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 20:30:00 GMT"
+        },
+        {
+          "title": "余命宣告後に医師から｢自由に暮らしてください｣ 60代男性が感じた医療者とのすれ違い…どうすれば解決できるのか - 東洋経済オンライン",
+          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTFB3N09ubGR1bXBqdHRRZExkVDJ3Tk96aU4xMy1FbFQ2dXh3TW1VMEdxWm1FdFVac29qeGlqckxGM0xnV29sWjhvVWtDUDNlZkZxeWFUbUNmam9HUnc?oc=5",
+          "pub_date": "Tue, 09 Jun 2026 22:30:00 GMT"
+        },
+        {
+          "title": "｢20代の持ち家率が過去最高｣は本当に\"明るい\"ニュースか？ \"婚姻数半減\"と並べた瞬間に見える｢全く別の景色｣ - 東洋経済オンライン",
+          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTFBjTzRqVzRYdU1WbUtfWjcwNWlwVXFDc0pjVlg5VlBvRzJkcnMtNGFxYXBvclV2OGhWVHRkS1ZKbXhEYXNXdzctM2tocEE4Nm1nVjR2QWtZVTVKUUE?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 01:00:00 GMT"
+        },
+        {
+          "title": "重要なのは｢何をやるか｣ではなく｢何をやめるか｣ 50歳を過ぎたら心に刻むべき《人生後半の勝ち筋》の見極め方 - 東洋経済オンライン",
+          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5QWG9faVpQSXNSZDRKV2N0WVhqMDlkdkRMQ3JvVmJSTkJ6OUJ4TDZlSm1YeXdoVFdGWjZtdk1RVHNVaDZsSTgxZURMZW8yd3dxb1MtbGh3bVhUYXc?oc=5",
+          "pub_date": "Wed, 10 Jun 2026 02:00:00 GMT"
+        }
+      ]
+    }
+  },
+  "state_updated": []
+}
