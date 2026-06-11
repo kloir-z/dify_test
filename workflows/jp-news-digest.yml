@@ -404,7 +404,7 @@ workflow:
         cases:
         - case_id: 'true'
           conditions:
-          - comparison_operator: ≥
+          - comparison_operator: '>'
             id: 6d40604f-22b2-4836-b852-31e46b19e223
             numberVarType: constant
             value: '0'
@@ -462,12 +462,16 @@ workflow:
             # 過去ダイジェスト(直近2〜3本、空の場合あり)
 
             {{#1781187165020.previous_digests#}}'
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 5000
         selected: false
         title: LLM
         type: llm
         vision:
           enabled: false
-      height: 88
+      height: 119
       id: '1781187450764'
       position:
         x: 1015.0104064941406
@@ -509,7 +513,7 @@ workflow:
             6. 株価・件数・順位など変動する値は、見出しに明記されているもの以外書かない"
         - id: a2c204fd-f45f-489d-a4de-c089f0c0bc5f
           role: user
-          text: '日付: k{{#1781187326232.date_label#}}
+          text: '日付: {{#1781187326232.date_label#}}
 
 
             # トピック分析メモ
@@ -520,12 +524,16 @@ workflow:
             # 本日の見出しリスト(全量)
 
             {{#1781187326232.formatted_articles#}}'
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 5000
         selected: false
         title: LLM 2
         type: llm
         vision:
           enabled: false
-      height: 88
+      height: 119
       id: '1781187548626'
       position:
         x: 1317.0104064941406
@@ -569,12 +577,16 @@ workflow:
             {{#1781187326232.formatted_articles#}}
 
             '
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 5000
         selected: false
         title: LLM 3
         type: llm
         vision:
           enabled: false
-      height: 88
+      height: 119
       id: '1781187593654'
       position:
         x: 1619.0104064941406
@@ -618,14 +630,14 @@ workflow:
             {{#1781187593654.text#}}'
         retry_config:
           max_retries: 3
-          retry_enabled: false
-          retry_interval: 1000
-        selected: false
+          retry_enabled: true
+          retry_interval: 5000
+        selected: true
         title: LLM 4
         type: llm
         vision:
           enabled: false
-      height: 88
+      height: 119
       id: '1781187625837'
       position:
         x: 1921.0104064941406
@@ -633,7 +645,7 @@ workflow:
       positionAbsolute:
         x: 1921.0104064941406
         y: 376.01041412353516
-      selected: false
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -675,7 +687,7 @@ workflow:
       positionAbsolute:
         x: 1317.0104064941406
         y: 513.3518913187154
-      selected: true
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -912,7 +924,7 @@ workflow:
       type: custom
       width: 242
     viewport:
-      x: 193.42703306827207
-      y: 1133.80155300575
-      zoom: 0.2916322627976244
+      x: -1253.3797143798402
+      y: 518.6076878913057
+      zoom: 0.9024080582064539
   rag_pipeline_variables: []
