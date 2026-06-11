@@ -67,18 +67,6 @@ workflow:
   graph:
     edges:
     - data:
-        isInLoop: false
-        sourceType: start
-        targetType: code
-      id: 1781187165020-source-1781187326232-target
-      selected: false
-      source: '1781187165020'
-      sourceHandle: source
-      target: '1781187326232'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
         isInIteration: false
         isInLoop: false
         sourceType: code
@@ -181,21 +169,132 @@ workflow:
       targetHandle: target
       type: custom
       zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: http-request
+        targetType: code
+      id: 1781189175977-source-1781187326232-target
+      selected: false
+      source: '1781189175977'
+      sourceHandle: source
+      target: '1781187326232'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: http-request
+        targetType: code
+      id: 17811893361310-source-1781187326232-target
+      selected: false
+      source: '17811893361310'
+      sourceHandle: source
+      target: '1781187326232'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: http-request
+        targetType: code
+      id: 17811893942900-source-1781187326232-target
+      selected: false
+      source: '17811893942900'
+      sourceHandle: source
+      target: '1781187326232'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: http-request
+        targetType: code
+      id: 17811893972820-source-1781187326232-target
+      selected: false
+      source: '17811893972820'
+      sourceHandle: source
+      target: '1781187326232'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: http-request
+        targetType: code
+      id: 17811893996220-source-1781187326232-target
+      selected: false
+      source: '17811893996220'
+      sourceHandle: source
+      target: '1781187326232'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: http-request
+      id: 1781187165020-source-1781189175977-target
+      selected: false
+      source: '1781187165020'
+      sourceHandle: source
+      target: '1781189175977'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: http-request
+      id: 1781187165020-source-17811893361310-target
+      selected: false
+      source: '1781187165020'
+      sourceHandle: source
+      target: '17811893361310'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: http-request
+      id: 1781187165020-source-17811893942900-target
+      selected: false
+      source: '1781187165020'
+      sourceHandle: source
+      target: '17811893942900'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: http-request
+      id: 1781187165020-source-17811893972820-target
+      selected: false
+      source: '1781187165020'
+      sourceHandle: source
+      target: '17811893972820'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: http-request
+      id: 1781187165020-source-17811893996220-target
+      selected: false
+      source: '1781187165020'
+      sourceHandle: source
+      target: '17811893996220'
+      targetHandle: target
+      type: custom
+      zIndex: 0
     nodes:
     - data:
         selected: false
         title: ユーザー入力
         type: start
         variables:
-        - default: ''
-          hint: ''
-          label: articles_json
-          max_length: 99999
-          options: []
-          placeholder: ''
-          required: true
-          type: paragraph
-          variable: articles_json
         - default: ''
           hint: ''
           label: previous_digests
@@ -205,51 +304,57 @@ workflow:
           required: true
           type: paragraph
           variable: previous_digests
-        - default: ''
-          hint: ''
-          label: date_label
-          max_length: 64
-          options: []
-          placeholder: ''
-          required: true
-          type: text-input
-          variable: date_label
-      height: 161
+      height: 109
       id: '1781187165020'
       position:
-        x: 80
-        y: 282
+        x: -538.6352901585824
+        y: 396.040166716223
       positionAbsolute:
-        x: 80
-        y: 282
-      selected: true
+        x: -538.6352901585824
+        y: 396.040166716223
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 242
     - data:
-        code: "import json\n\ndef main(articles_json: str) -> dict:\n    data = json.loads(articles_json)\n\
-          \    labels = {\n        \"nikkei\": \"日経新聞\", \"asahi\": \"朝日新聞\", \"sankei\"\
-          : \"産経新聞\",\n        \"reuters_jp\": \"Reuters JP\", \"toyokeizai\": \"\
-          東洋経済\", \"nhk\": \"NHK\",\n    }\n    suffixes = (\" - 日本経済新聞\", \" - 朝日新聞デジタル\"\
-          , \" - 朝日新聞\",\n                \" - 産経ニュース\", \" - 産経新聞\", \" - ロイター (Reuters\
-          \ Japan)\",\n                \" - ロイター\", \" - 東洋経済オンライン\")\n    lines =\
-          \ []\n    count = 0\n    for key, src in data.get(\"sources\", {}).items():\n\
-          \        lines.append(f\"## {labels.get(key, key)}\")\n        if src.get(\"\
-          status\") != \"ok\":\n            lines.append(f\"(取得失敗: {src.get('error',\
-          \ '不明')})\")\n            continue\n        for it in src.get(\"items\"\
-          , []):\n            title = (it.get(\"title\") or \"\").strip()\n      \
-          \      for suf in suffixes:\n                if title.endswith(suf):\n \
-          \                   title = title[: -len(suf)]\n                    break\n\
-          \            lines.append(f\"- {title} ({it.get('pub_date', '')})\")\n \
-          \           lines.append(f\"  {it.get('url', '')}\")\n            count\
-          \ += 1\n        lines.append(\"\")\n    return {\"formatted_articles\":\
-          \ \"\\n\".join(lines), \"article_count\": count}\n"
+        code: "import re\nfrom datetime import datetime, timedelta, timezone\n\nENTITIES\
+          \ = {\"&amp;\": \"&\", \"&lt;\": \"<\", \"&gt;\": \">\", \"&quot;\": '\"\
+          ', \"&#39;\": \"'\", \"&apos;\": \"'\"}\n\n\ndef unescape(text: str) ->\
+          \ str:\n    for k, v in ENTITIES.items():\n        text = text.replace(k,\
+          \ v)\n    return text\n\n\ndef parse_rss(xml_text: str, limit: int = 15)\
+          \ -> list:\n    items = []\n    for m in re.finditer(r\"<item>([\\s\\S]*?)</item>\"\
+          , xml_text or \"\"):\n        block = m.group(1)\n\n        def field(tag:\
+          \ str) -> str:\n            f = re.search(\n                r\"<\" + tag\
+          \ + r\">(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?</\" + tag + r\">\", block\n\
+          \            )\n            return unescape(f.group(1).strip()) if f else\
+          \ \"\"\n\n        title = field(\"title\")\n        if title:\n        \
+          \    if \" - \" in title:\n                title = title.rsplit(\" - \"\
+          , 1)[0]\n            items.append({\"title\": title, \"url\": field(\"link\"\
+          ), \"pub_date\": field(\"pubDate\")})\n        if len(items) >= limit:\n\
+          \            break\n    return items\n\n\ndef main(body_nikkei: str, body_asahi:\
+          \ str, body_sankei: str,\n         body_reuters: str, body_toyokeizai: str)\
+          \ -> dict:\n    sources = [\n        (\"日経新聞\", body_nikkei),\n        (\"\
+          朝日新聞\", body_asahi),\n        (\"産経新聞\", body_sankei),\n        (\"Reuters\
+          \ JP\", body_reuters),\n        (\"東洋経済\", body_toyokeizai),\n    ]\n  \
+          \  lines = []\n    count = 0\n    for name, body in sources:\n        lines.append(f\"\
+          ## {name}\")\n        items = parse_rss(body)\n        if not items:\n \
+          \           lines.append(\"(取得失敗または0件)\")\n        for it in items:\n  \
+          \          lines.append(f\"- {it['title']} ({it['pub_date']})\")\n     \
+          \       lines.append(f\"  {it['url']}\")\n            count += 1\n     \
+          \   lines.append(\"\")\n\n    jst_now = datetime.now(timezone(timedelta(hours=9)))\n\
+          \    date_label = f\"{jst_now.year}年{jst_now.month}月{jst_now.day}日\"\n\n\
+          \    return {\n        \"formatted_articles\": \"\\n\".join(lines),\n  \
+          \      \"article_count\": count,\n        \"date_label\": date_label,\n\
+          \    }"
         code_language: python3
         outputs:
           article_count:
             children: null
             type: number
+          date_label:
+            children: null
+            type: string
           formatted_articles:
             children: null
             type: string
@@ -258,18 +363,38 @@ workflow:
         type: code
         variables:
         - value_selector:
-          - '1781187165020'
-          - articles_json
+          - '1781189175977'
+          - body
           value_type: string
-          variable: articles_json
+          variable: body_nikkei
+        - value_selector:
+          - '17811893361310'
+          - body
+          value_type: string
+          variable: body_asahi
+        - value_selector:
+          - '17811893942900'
+          - body
+          value_type: string
+          variable: body_sankei
+        - value_selector:
+          - '17811893972820'
+          - body
+          value_type: string
+          variable: body_reuters
+        - value_selector:
+          - '17811893996220'
+          - body
+          value_type: string
+          variable: body_toyokeizai
       height: 52
       id: '1781187326232'
       position:
-        x: 411.0104064941406
-        y: 376.01041412353516
+        x: 346.48928097594876
+        y: 354.9913038185856
       positionAbsolute:
-        x: 411.0104064941406
-        y: 376.01041412353516
+        x: 346.48928097594876
+        y: 354.9913038185856
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -278,19 +403,27 @@ workflow:
     - data:
         cases:
         - case_id: 'true'
-          conditions: []
+          conditions:
+          - comparison_operator: ≥
+            id: 6d40604f-22b2-4836-b852-31e46b19e223
+            numberVarType: constant
+            value: '0'
+            varType: number
+            variable_selector:
+            - '1781187326232'
+            - article_count
           id: 'true'
           logical_operator: and
         selected: false
         title: IF/ELSE
         type: if-else
-      height: 100
+      height: 124
       id: '1781187440808'
       position:
-        x: 713.0104064941406
+        x: 690.1422675699714
         y: 376.01041412353516
       positionAbsolute:
-        x: 713.0104064941406
+        x: 690.1422675699714
         y: 376.01041412353516
       selected: false
       sourcePosition: right
@@ -376,7 +509,7 @@ workflow:
             6. 株価・件数・順位など変動する値は、見出しに明記されているもの以外書かない"
         - id: a2c204fd-f45f-489d-a4de-c089f0c0bc5f
           role: user
-          text: '日付: {{#1781187165020.date_label#}}
+          text: '日付: k{{#1781187326232.date_label#}}
 
 
             # トピック分析メモ
@@ -426,8 +559,14 @@ workflow:
             - [媒体/タイトル]: なぜ非接地か1行 / 提案(解釈語尾に修正 ／ 見出し引用のみに降格)\n## 接地OK\n- 件数のみ\n\n"
         - id: bf0b13c6-e4fb-4041-b57c-58b1905110b0
           role: user
-          text: '{{#1781187548626.text#}}
+          text: '# 監査対象ダイジェスト
 
+            {{#1781187548626.text#}}
+
+
+            # 参照: 本日の見出しリスト(ここに含まれる情報は「接地あり」とみなす)
+
+            {{#1781187326232.formatted_articles#}}
 
             '
         selected: false
@@ -509,28 +648,34 @@ workflow:
       id: '1781187848783'
       position:
         x: 1015.0104064941406
-        y: 503.01041412353516
+        y: 513.3518913187154
       positionAbsolute:
         x: 1015.0104064941406
-        y: 503.01041412353516
+        y: 513.3518913187154
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 242
     - data:
-        outputs: []
+        outputs:
+        - value_selector:
+          - '1781187848783'
+          - output
+          value_type: string
+          variable: output
         selected: false
         title: 出力
         type: end
-      height: 52
+      height: 89
       id: '1781187885358'
       position:
         x: 1317.0104064941406
-        y: 503.01041412353516
+        y: 513.3518913187154
       positionAbsolute:
         x: 1317.0104064941406
-        y: 503.01041412353516
+        y: 513.3518913187154
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -553,18 +698,221 @@ workflow:
       height: 115
       id: '1781188032135'
       position:
-        x: 2223.0104064941406
-        y: 376.01041412353516
+        x: 2274.122067988275
+        y: 358.19125597435266
       positionAbsolute:
-        x: 2223.0104064941406
-        y: 376.01041412353516
+        x: 2274.122067988275
+        y: 358.19125597435266
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        desc: ''
+        headers: User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+          (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+        method: get
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 日経
+        type: http-request
+        url: https://news.google.com/rss/search?q=site:nikkei.com&hl=ja&gl=JP&ceid=JP:ja
+        variables: []
+      height: 155
+      id: '1781189175977'
+      position:
+        x: -12.512640172365536
+        y: 46.13411576642136
+      positionAbsolute:
+        x: -12.512640172365536
+        y: 46.13411576642136
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        desc: 日経
+        headers: User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+          (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+        isInIteration: false
+        isInLoop: false
+        method: get
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 朝日
+        type: http-request
+        url: https://news.google.com/rss/search?q=site:asahi.com&hl=ja&gl=JP&ceid=JP:ja
+        variables: []
+      height: 183
+      id: '17811893361310'
+      position:
+        x: -12.512640172365536
+        y: 207.9234514076021
+      positionAbsolute:
+        x: -12.512640172365536
+        y: 207.9234514076021
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        desc: 日経
+        headers: User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+          (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+        isInIteration: false
+        isInLoop: false
+        method: get
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 産経
+        type: http-request
+        url: https://news.google.com/rss/search?q=site:sankei.com&hl=ja&gl=JP&ceid=JP:ja
+        variables: []
+      height: 183
+      id: '17811893942900'
+      position:
+        x: -12.512640172365536
+        y: 392.98385587388395
+      positionAbsolute:
+        x: -12.512640172365536
+        y: 392.98385587388395
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        desc: 日経
+        headers: User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+          (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+        isInIteration: false
+        isInLoop: false
+        method: get
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: Reuters JP
+        type: http-request
+        url: https://news.google.com/rss/search?q=site:jp.reuters.com&hl=ja&gl=JP&ceid=JP:ja
+        variables: []
+      height: 183
+      id: '17811893972820'
+      position:
+        x: -12.512640172365536
+        y: 576.9361142056378
+      positionAbsolute:
+        x: -12.512640172365536
+        y: 576.9361142056378
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        desc: 日経
+        headers: User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+          (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+        isInIteration: false
+        isInLoop: false
+        method: get
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 東洋経済
+        type: http-request
+        url: https://news.google.com/rss/search?q=site:toyokeizai.net&hl=ja&gl=JP&ceid=JP:ja
+        variables: []
+      height: 183
+      id: '17811893996220'
+      position:
+        x: -12.512640172365536
+        y: 771.9698338826772
+      positionAbsolute:
+        x: -12.512640172365536
+        y: 771.9698338826772
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 242
     viewport:
-      x: -24.253876232846096
-      y: 562.7967095531721
-      zoom: 0.9024080568808405
+      x: 193.42703306827207
+      y: 1133.80155300575
+      zoom: 0.2916322627976244
   rag_pipeline_variables: []
