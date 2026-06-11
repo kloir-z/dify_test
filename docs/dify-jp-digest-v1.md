@@ -308,3 +308,131 @@ python scripts/dify.py workflow --inputs-file test-data\inputs.json
 - NHKなし(認証付きローカルChrome必須のため。呼び出し側でJSONに混ぜる設計で対応予定)
 - 記事本文なし(見出しのみ)。本文取得+Webファクトチェック(Phase 3.5相当)はv2で検索ツールを足して対応
 - 過去ダイジェストは呼び出し側が渡す(Difyワークフローは実行間で状態を持たない)
+
+---
+
+# v1.5: ニュース取得もDify内に移す
+
+コードノードはサンドボックス実行でネットワーク禁止のため、取得は「HTTPリクエストノード×5(並列)」、
+解析は「コードノード」に分担させる。collector(--mode jp)のDify内再現になる。
+
+## 変更後の全体図
+
+```
+開始 ─┬─> HTTP(日経) ──┐
+      ├─> HTTP(朝日) ──┤
+      ├─> HTTP(産経) ──┼─> コード(RSS解析・整形) ─> IF/ELSE ─> (以降v1と同じLLM①〜④)
+      ├─> HTTP(Reuters)┤
+      └─> HTTP(東洋経済)┘
+```
+
+## 手順1: 開始ノードの変更
+
+- `articles_json` フィールドを**削除**(もう外から渡さない)
+- `previous_digests`(任意)と `date_label`(必須)はそのまま残す
+
+## 手順2: HTTPリクエストノードを5つ追加
+
+開始ノードから線を5本引き、それぞれ「HTTPリクエスト」ノードに繋ぐ(並列実行になる)。
+各ノードの設定:
+
+- メソッド: GET
+- URL(ノード名も媒体名にしておくと見やすい):
+  - 日経: `https://news.google.com/rss/search?q=site:nikkei.com&hl=ja&gl=JP&ceid=JP:ja`
+  - 朝日: `https://news.google.com/rss/search?q=site:asahi.com&hl=ja&gl=JP&ceid=JP:ja`
+  - 産経: `https://news.google.com/rss/search?q=site:sankei.com&hl=ja&gl=JP&ceid=JP:ja`
+  - Reuters JP: `https://news.google.com/rss/search?q=site:jp.reuters.com&hl=ja&gl=JP&ceid=JP:ja`
+  - 東洋経済: `https://news.google.com/rss/search?q=site:toyokeizai.net&hl=ja&gl=JP&ceid=JP:ja`
+- ヘッダー: `User-Agent` = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36`
+- **エラー処理: 「デフォルト値」を選び、`body` のデフォルトを空文字に**。さらにリトライを有効化(3回)
+  - こうすると1媒体が落ちても全体は止まらず、残り4媒体でダイジェストが出る
+  - (元のcollectorの「ソース単位のエラー許容」と同じ挙動になる)
+
+## 手順3: コードノードを置き換え
+
+v1の「コード(記事整形)」ノードの入力変数を、5つのHTTPノードの `body` に変更する:
+
+| 入力変数名 | 割り当て |
+|---|---|
+| `body_nikkei` | HTTP(日経)/body |
+| `body_asahi` | HTTP(朝日)/body |
+| `body_sankei` | HTTP(産経)/body |
+| `body_reuters` | HTTP(Reuters JP)/body |
+| `body_toyokeizai` | HTTP(東洋経済)/body |
+
+コード全文を以下に差し替え(RSS解析は正規表現で行う。サンドボックスで確実に使える機能だけに寄せている):
+
+```python
+import re
+
+ENTITIES = {"&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"', "&#39;": "'", "&apos;": "'"}
+
+
+def unescape(text: str) -> str:
+    for k, v in ENTITIES.items():
+        text = text.replace(k, v)
+    return text
+
+
+def parse_rss(xml_text: str, limit: int = 15) -> list:
+    items = []
+    for m in re.finditer(r"<item>([\s\S]*?)</item>", xml_text or ""):
+        block = m.group(1)
+
+        def field(tag: str) -> str:
+            f = re.search(
+                r"<" + tag + r">(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?</" + tag + r">", block
+            )
+            return unescape(f.group(1).strip()) if f else ""
+
+        title = field("title")
+        if title:
+            # Google News RSS の「見出し - 媒体名」サフィックスを除去
+            if " - " in title:
+                title = title.rsplit(" - ", 1)[0]
+            items.append({"title": title, "url": field("link"), "pub_date": field("pubDate")})
+        if len(items) >= limit:
+            break
+    return items
+
+
+def main(body_nikkei: str, body_asahi: str, body_sankei: str,
+         body_reuters: str, body_toyokeizai: str) -> dict:
+    sources = [
+        ("日経新聞", body_nikkei),
+        ("朝日新聞", body_asahi),
+        ("産経新聞", body_sankei),
+        ("Reuters JP", body_reuters),
+        ("東洋経済", body_toyokeizai),
+    ]
+    lines = []
+    count = 0
+    for name, body in sources:
+        lines.append(f"## {name}")
+        items = parse_rss(body)
+        if not items:
+            lines.append("(取得失敗または0件)")
+        for it in items:
+            lines.append(f"- {it['title']} ({it['pub_date']})")
+            lines.append(f"  {it['url']}")
+            count += 1
+        lines.append("")
+    return {"formatted_articles": "\n".join(lines), "article_count": count}
+```
+
+出力変数はv1と同じ: `formatted_articles`(String)、`article_count`(Number)。
+
+## 手順4: テスト
+
+「実行」→ 入力は `date_label`(と任意の `previous_digests`)だけになっているはず。
+これでテスト時の34KB貼り付けが不要になり、API呼び出しも軽くなる:
+
+```powershell
+python scripts/dify.py workflow --inputs '{\"date_label\": \"2026年6月12日\", \"previous_digests\": \"\"}'
+```
+
+## v1.5でも残る制限
+
+- NHK(認証Chrome必須)は引き続き外。将来 `extra_articles` 入力を足して呼び出し側から混ぜる
+- enモード相当を作る場合、ブログ新着判定(`last_checked.json`)の状態は呼び出し側持ちになる
+- Google News RSSがDify CloudのサーバーIPをブロックする可能性はゼロではない(その場合はv1方式に戻す)
