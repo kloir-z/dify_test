@@ -454,6 +454,85 @@ v1の実行で、実在の見出しに含まれる数値(「米トマホーク49
 トレードオフ: 監査ノードの入力トークンが増える(見出しリスト約7,000字)。
 誤検知(本物の事実の過剰降格)と引き換えなら払う価値がある。
 
+## 改良: 日付の自動生成(v1.6)
+
+`date_label` は取得に影響しないただのタイトル飾りなので、入力をやめてワークフロー内で
+自動生成する。サンドボックスの時計はUTCのため+9時間でJSTにする。
+
+手順:
+1. 開始ノードから `date_label` フィールドを削除(入力は `previous_digests` だけになる)
+2. コード(RSS解析・整形)ノードに出力変数 `date_label`(String)を追加し、コードを下記に差し替え
+3. LLM②のUSERプロンプトの日付参照を `開始/date_label` → `コード/date_label` に変更
+
+```python
+import re
+from datetime import datetime, timedelta, timezone
+
+ENTITIES = {"&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"', "&#39;": "'", "&apos;": "'"}
+
+
+def unescape(text: str) -> str:
+    for k, v in ENTITIES.items():
+        text = text.replace(k, v)
+    return text
+
+
+def parse_rss(xml_text: str, limit: int = 15) -> list:
+    items = []
+    for m in re.finditer(r"<item>([\s\S]*?)</item>", xml_text or ""):
+        block = m.group(1)
+
+        def field(tag: str) -> str:
+            f = re.search(
+                r"<" + tag + r">(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?</" + tag + r">", block
+            )
+            return unescape(f.group(1).strip()) if f else ""
+
+        title = field("title")
+        if title:
+            if " - " in title:
+                title = title.rsplit(" - ", 1)[0]
+            items.append({"title": title, "url": field("link"), "pub_date": field("pubDate")})
+        if len(items) >= limit:
+            break
+    return items
+
+
+def main(body_nikkei: str, body_asahi: str, body_sankei: str,
+         body_reuters: str, body_toyokeizai: str) -> dict:
+    sources = [
+        ("日経新聞", body_nikkei),
+        ("朝日新聞", body_asahi),
+        ("産経新聞", body_sankei),
+        ("Reuters JP", body_reuters),
+        ("東洋経済", body_toyokeizai),
+    ]
+    lines = []
+    count = 0
+    for name, body in sources:
+        lines.append(f"## {name}")
+        items = parse_rss(body)
+        if not items:
+            lines.append("(取得失敗または0件)")
+        for it in items:
+            lines.append(f"- {it['title']} ({it['pub_date']})")
+            lines.append(f"  {it['url']}")
+            count += 1
+        lines.append("")
+
+    jst_now = datetime.now(timezone(timedelta(hours=9)))
+    date_label = f"{jst_now.year}年{jst_now.month}月{jst_now.day}日"
+
+    return {
+        "formatted_articles": "\n".join(lines),
+        "article_count": count,
+        "date_label": date_label,
+    }
+```
+
+これでAPI呼び出しは `{"previous_digests": ""}` だけになる。
+鮮度フィルタ(pub_dateで直近24時間に絞る)は必要になったら parse_rss に足す。
+
 ## v1.5でも残る制限
 
 - NHK(認証Chrome必須)は引き続き外。将来 `extra_articles` 入力を足して呼び出し側から混ぜる
