@@ -53,4 +53,4 @@ python scripts/dify.py workflow --inputs '{\"query\": \"テスト\"}'
 |---|---|---|
 | Dify Cloud | ◎ 当面はこれ | Docker 不要ですぐ使える。`DIFY_BASE_URL=https://api.dify.ai/v1` |
 | Windows PC にセルフホスト | ○ 本格的に触るなら | Docker Desktop のインストールが必要 |
-| Raspberry Pi 4 (<raspi-ip>) | ✕ 見送り | 4GB モデルで既存サービス稼働中、空きメモリ約1.2GB。Dify はコンテナ9個で4GB以上必要なため非現実的 |
+| Raspberry Pi 4(手元の検証機) | ✕ 見送り | 4GB モデルで既存サービス稼働中、空きメモリ不足。Dify はコンテナ9個で4GB以上必要なため非現実的 |

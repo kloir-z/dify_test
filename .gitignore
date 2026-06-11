@@ -12,4 +12,5 @@ node_modules/
 # その他
 .pshistory
 *.log
+CLAUDE.local.md
 test-data/inputs.json

@@ -11,10 +11,8 @@ Dify の学習用リポジトリ。目的は (1) Claude Code から Dify アプ�
 
 ## Raspberry Pi 4 について(2026-06-11 調査)
 
-- `ssh <user>@<raspi-ip>` で鍵認証接続可(Debian 12 bookworm / aarch64 / 4コア)
-- **Dify のセルフホスト先としては不適**: 4GB モデルで空きメモリ約1.2GB、スワップ枯渇気味、
-  Docker 未インストール。claude×2・Next.js・PM2・SwitchBot 監視が常駐している
-- Pi 上の既存サービスを止めない・壊さないこと
+- 手元の Raspberry Pi 4 は **Dify のセルフホスト先としては不適**と判断(4GB モデルで
+  常駐サービスが多く空きメモリ不足)。接続情報等は `CLAUDE.local.md`(git 管理外)を参照
 
 ## 作業時の注意
 
