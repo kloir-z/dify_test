@@ -1,0 +1,19 @@
+#!/bin/sh
+# ステージされた workflows/*.yml に DSL リンターを掛ける。
+# ERROR があればコミットを中止する (WARN/INFO は通す)。
+# 有効化: git config core.hooksPath .githooks
+
+files=$(git diff --cached --name-only --diff-filter=ACM | grep '^workflows/.*\.ya\?ml$')
+[ -z "$files" ] && exit 0
+
+status=0
+for f in $files; do
+    echo "[pre-commit] lint: $f"
+    python scripts/lint_dsl.py "$f" || status=1
+done
+
+if [ $status -ne 0 ]; then
+    echo "[pre-commit] DSL リンターが ERROR を検出したためコミットを中止しました。"
+    echo "             修正するか、意図的な場合は git commit --no-verify で回避できます。"
+fi
+exit $status

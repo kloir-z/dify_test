@@ -19,6 +19,13 @@ DSL をエクスポートしたら、コミット前にリンターを通す:
 python scripts/lint_dsl.py workflows/jp-news-digest.yml
 ```
 
+`workflows/*.yml` のコミット時には pre-commit フックが自動でリンターを掛け、ERROR があれば弾く。
+クローン直後は一度だけ有効化が必要:
+
+```powershell
+git config core.hooksPath .githooks
+```
+
 ## セットアップ
 
 1. Dify でアプリを作り、「APIアクセス」画面で API キーを発行する
