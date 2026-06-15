@@ -1,0 +1,451 @@
+app:
+  description: 脆弱性フィードから『現に悪用されている新規CVE』だけを機械的に抽出し、肉付け用の構造化データ(hot_json)を返す収集エンジン
+  icon: 🛡
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: workflow
+  name: security-digest
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.6.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      enabled: false
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: http-request
+      id: 2000100001-source-2000100002-target
+      source: '2000100001'
+      sourceHandle: source
+      target: '2000100002'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: http-request
+        targetType: code
+      id: 2000100002-source-2000100007-target
+      source: '2000100002'
+      sourceHandle: source
+      target: '2000100007'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: http-request
+      id: 2000100001-source-2000100003-target
+      source: '2000100001'
+      sourceHandle: source
+      target: '2000100003'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: http-request
+        targetType: code
+      id: 2000100003-source-2000100007-target
+      source: '2000100003'
+      sourceHandle: source
+      target: '2000100007'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: http-request
+      id: 2000100001-source-2000100004-target
+      source: '2000100001'
+      sourceHandle: source
+      target: '2000100004'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: http-request
+        targetType: code
+      id: 2000100004-source-2000100007-target
+      source: '2000100004'
+      sourceHandle: source
+      target: '2000100007'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: http-request
+      id: 2000100001-source-2000100005-target
+      source: '2000100001'
+      sourceHandle: source
+      target: '2000100005'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: http-request
+        targetType: code
+      id: 2000100005-source-2000100007-target
+      source: '2000100005'
+      sourceHandle: source
+      target: '2000100007'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 2000100007-source-2000100010-target
+      source: '2000100007'
+      sourceHandle: source
+      target: '2000100010'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 開始
+        type: start
+        variables:
+        - default: ''
+          hint: 前回までに出力した CVE-ID(カンマ/改行区切り)。状態ファイルから渡す
+          label: seen_cves
+          max_length: 999999
+          options: []
+          placeholder: ''
+          required: false
+          type: paragraph
+          variable: seen_cves
+      height: 116
+      id: '2000100001'
+      position:
+        x: -520
+        y: 360
+      positionAbsolute:
+        x: -520
+        y: 360
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        desc: ''
+        headers: User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0
+          Safari/537.36
+        method: get
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 1000
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: JPCERT 注意喚起
+        type: http-request
+        url: https://www.jpcert.or.jp/rss/jpcert.rdf
+        variables: []
+      height: 155
+      id: '2000100002'
+      position:
+        x: -120
+        y: 40
+      positionAbsolute:
+        x: -120
+        y: 40
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        desc: ''
+        headers: User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0
+          Safari/537.36
+        method: get
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 1000
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: CISA Advisories
+        type: http-request
+        url: https://www.cisa.gov/cybersecurity-advisories/all.xml
+        variables: []
+      height: 155
+      id: '2000100003'
+      position:
+        x: -120
+        y: 215
+      positionAbsolute:
+        x: -120
+        y: 215
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        desc: ''
+        headers: User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0
+          Safari/537.36
+        method: get
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 1000
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: Cisco PSIRT
+        type: http-request
+        url: https://sec.cloudapps.cisco.com/security/center/psirtrss20/CiscoSecurityAdvisory.xml
+        variables: []
+      height: 155
+      id: '2000100004'
+      position:
+        x: -120
+        y: 390
+      positionAbsolute:
+        x: -120
+        y: 390
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        desc: ''
+        headers: User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0
+          Safari/537.36
+        method: get
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 1000
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: The Hacker News
+        type: http-request
+        url: https://feeds.feedburner.com/TheHackersNews
+        variables: []
+      height: 155
+      id: '2000100005'
+      position:
+        x: -120
+        y: 565
+      positionAbsolute:
+        x: -120
+        y: 565
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "import json\nimport re\nfrom datetime import datetime, timedelta, timezone\n\nCVE = re.compile(r\"CVE-\\d{4}-\\\
+          d{4,7}\", re.I)\nJST = timezone(timedelta(hours=9))\nWINDOW_DAYS = 14   # 既出除外のバックストップ(初回の大量バックログ流入を抑える)\nCAP =\
+          \ 15           # 1回の表示上限。超過分は new_cves に含めず次回へ繰り越す\n\nMONTHS = {\"Jan\": 1, \"Feb\": 2, \"Mar\": 3, \"Apr\": 4,\
+          \ \"May\": 5, \"Jun\": 6,\n          \"Jul\": 7, \"Aug\": 8, \"Sep\": 9, \"Oct\": 10, \"Nov\": 11, \"Dec\": 12}\n\
+          TZ_NAMES = {\"GMT\": 0, \"UTC\": 0, \"UT\": 0, \"Z\": 0, \"JST\": 540,\n            \"EST\": -300, \"EDT\": -240,\
+          \ \"CST\": -360, \"CDT\": -300,\n            \"MST\": -420, \"MDT\": -360, \"PST\": -480, \"PDT\": -420}\n\n\ndef\
+          \ _tzoff(tz):\n    tz = tz.strip()\n    if tz in TZ_NAMES:\n        return TZ_NAMES[tz]\n    if tz[:1] == \"+\"\
+          :\n        sign = 1\n    elif tz[:1] == \"-\":\n        sign = -1\n    else:\n        return None\n    body = tz[1:].replace(\"\
+          :\", \"\")\n    if len(body) < 4:\n        return None\n    try:\n        return sign * (int(body[0:2]) * 60 + int(body[2:4]))\n\
+          \    except ValueError:\n        return None\n\n\ndef _parse_dt(raw):\n    raw = (raw or \"\").strip()\n    if not\
+          \ raw:\n        return None\n    try:\n        if len(raw) >= 10 and raw[4:5] == \"-\" and raw[7:8] == \"-\":\n\
+          \            s = raw if \"T\" in raw else raw.replace(\" \", \"T\", 1)\n            y, mo, d = int(s[0:4]), int(s[5:7]),\
+          \ int(s[8:10])\n            rest = s[11:]\n            if not rest:\n                return None\n            off\
+          \ = None\n            if rest[-1:] in (\"Z\", \"z\"):\n                off = 0\n                rest = rest[:-1]\n\
+          \            else:\n                for i in range(len(rest) - 1, -1, -1):\n                    if rest[i] in \"\
+          +-\":\n                        off = _tzoff(rest[i:])\n                        rest = rest[:i]\n               \
+          \         break\n            if off is None:\n                return None\n            t = rest.split(\".\")[0].split(\"\
+          :\")\n            return datetime(y, mo, d, int(t[0]), int(t[1]), int(t[2]) if len(t) > 2 else 0,\n            \
+          \                tzinfo=timezone(timedelta(minutes=off)))\n        p = raw.replace(\",\", \" \").split()\n     \
+          \   if len(p) < 5:\n            return None\n        off = _tzoff(p[-1])\n        hm = p[-2].split(\":\")\n    \
+          \    mo = MONTHS.get(p[-4][:3])\n        y = int(p[-3])\n        if y < 70:\n            y += 2000\n        elif\
+          \ y < 100:\n            y += 1900\n        if mo is None or off is None:\n            return None\n        return\
+          \ datetime(y, mo, int(p[-5]), int(hm[0]), int(hm[1]), int(hm[2]) if len(hm) > 2 else 0,\n                      \
+          \  tzinfo=timezone(timedelta(minutes=off)))\n    except (ValueError, IndexError):\n        return None\n\n\ndef\
+          \ _jst_str(dt):\n    return dt.astimezone(JST).strftime(\"%Y-%m-%d %H:%M JST\") if dt else \"日付不明\"\n\n\ndef _f(block,\
+          \ tag):\n    m = re.search(r\"<\" + tag + r\"[^>]*>(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?</\" + tag + r\">\"\
+          , block)\n    return m.group(1).strip() if m else \"\"\n\n\ndef parse_feed(xml, limit=30):\n    xml = xml or \"\"\
+          \n    items = []\n    blocks = re.findall(r\"<item[^>]*>([\\s\\S]*?)</item>\", xml) or re.findall(r\"<entry[^>]*>([\\\
+          s\\S]*?)</entry>\", xml)\n    for b in blocks[:limit]:\n        title = _f(b, \"title\")\n        if not title:\n\
+          \            continue\n        link = _f(b, \"link\")\n        if not link:\n            m = re.search(r'<link[^>]*href=\"\
+          ([^\"]+)\"', b)\n            link = m.group(1) if m else \"\"\n        dt = _parse_dt(_f(b, \"pubDate\") or _f(b,\
+          \ \"dc:date\") or _f(b, \"updated\") or _f(b, \"published\"))\n        cves = set(c.upper() for c in CVE.findall(title\
+          \ + \" \" + b))\n        items.append({\"title\": title, \"url\": link, \"dt\": dt, \"cves\": cves})\n    return\
+          \ items\n\n\ndef _pick(items):\n    # CISAの汎用見出し(\"CISA Adds...\")より具体的な見出しを優先、次に長いもの\n    cand = [it for it in\
+          \ items if not it[\"title\"].startswith(\"CISA Adds\")]\n    return max(cand or items, key=lambda it: len(it[\"\
+          title\"]))\n\n\ndef main(body_jpcert, body_cisa, body_cisco, body_hn, seen_cves):\n    seen = set(c.upper() for\
+          \ c in CVE.findall(seen_cves or \"\"))\n\n    feeds = [(\"JPCERT\", body_jpcert), (\"CISA\", body_cisa),\n     \
+          \        (\"Cisco\", body_cisco), (\"The Hacker News\", body_hn)]\n    agg = {}\n    kev = set()  # CISA RSS の「KEV追加」告知から得る『現に悪用されている新規CVE』\n\
+          \    for src, body in feeds:\n        for it in parse_feed(body):\n            if src == \"CISA\" and \"Known Exploited\"\
+          \ in it[\"title\"]:\n                kev |= it[\"cves\"]\n            for c in it[\"cves\"]:\n                a\
+          \ = agg.setdefault(c, {\"items\": [], \"srcs\": set(), \"dt\": None})\n                a[\"items\"].append(it)\n\
+          \                a[\"srcs\"].add(src)\n                if it[\"dt\"] and (a[\"dt\"] is None or it[\"dt\"] > a[\"\
+          dt\"]):\n                    a[\"dt\"] = it[\"dt\"]\n\n    now = datetime.now(JST)\n    hot = []\n    for c, a in\
+          \ agg.items():\n        if c not in kev or c in seen:\n            continue\n        if a[\"dt\"] is not None and\
+          \ (now - a[\"dt\"]).days > WINDOW_DAYS:\n            continue\n        hot.append((c, a))\n    hot.sort(key=lambda\
+          \ x: x[1][\"dt\"].timestamp() if x[1][\"dt\"] else 0.0, reverse=True)\n\n    shown = hot[:CAP]\n    date_label =\
+          \ \"%d年%d月%d日\" % (now.year, now.month, now.day)\n\n    # 肉付け・整形は後段(将来の Claude ルーチン)が担う。\n    # ここでは『要注目CVEの素材』だけを構造化して返す(KEVカタログJSONとの突合は後段)。\n\
+          \    hot_items = []\n    for c, a in shown:\n        rep = _pick(a[\"items\"])\n        hot_items.append({\n   \
+          \         \"cve\": c,\n            \"srcs\": sorted(a[\"srcs\"]),\n            \"dt\": _jst_str(a[\"dt\"]),\n  \
+          \          \"url\": rep[\"url\"],\n            \"title\": rep[\"title\"],\n        })\n\n    return {\n        \"\
+          hot_json\": json.dumps(hot_items, ensure_ascii=False),\n        \"date_label\": date_label,\n    }"
+        code_language: python3
+        outputs:
+          hot_json:
+            children: null
+            type: string
+          date_label:
+            children: null
+            type: string
+        selected: false
+        title: 整形・選別
+        type: code
+        variables:
+        - value_selector:
+          - '2000100002'
+          - body
+          value_type: string
+          variable: body_jpcert
+        - value_selector:
+          - '2000100003'
+          - body
+          value_type: string
+          variable: body_cisa
+        - value_selector:
+          - '2000100004'
+          - body
+          value_type: string
+          variable: body_cisco
+        - value_selector:
+          - '2000100005'
+          - body
+          value_type: string
+          variable: body_hn
+        - value_selector:
+          - '2000100001'
+          - seen_cves
+          value_type: string
+          variable: seen_cves
+      height: 52
+      id: '2000100007'
+      position:
+        x: 320
+        y: 360
+      positionAbsolute:
+        x: 320
+        y: 360
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        outputs:
+        - value_selector:
+          - '2000100007'
+          - hot_json
+          value_type: string
+          variable: hot_json
+        - value_selector:
+          - '2000100007'
+          - date_label
+          value_type: string
+          variable: date_label
+        selected: false
+        title: 出力
+        type: end
+      height: 90
+      id: '2000100010'
+      position:
+        x: 660
+        y: 360
+      positionAbsolute:
+        x: 660
+        y: 360
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: 0
+      y: 0
+      zoom: 0.7
+  rag_pipeline_variables: []

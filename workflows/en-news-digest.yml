@@ -1,5 +1,5 @@
 app:
-  description: 海外ニュースの見出しを8ソースから収集しフレーミング比較ダイジェストを生成
+  description: 海外ニュースの見出しを8ソースから収集し整形・日本語翻訳する(LLMは翻訳1回のみ)
   icon: 🌏
   icon_background: '#FFEAD5'
   icon_type: emoji
@@ -83,58 +83,6 @@ workflow:
         isInIteration: false
         isInLoop: false
         sourceType: if-else
-        targetType: llm
-      id: 91781187440808-true-91781187450764-target
-      selected: false
-      source: '91781187440808'
-      sourceHandle: 'true'
-      target: '91781187450764'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: llm
-        targetType: llm
-      id: 91781187450764-source-91781187548626-target
-      selected: false
-      source: '91781187450764'
-      sourceHandle: source
-      target: '91781187548626'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: llm
-        targetType: llm
-      id: 91781187548626-source-91781187593654-target
-      selected: false
-      source: '91781187548626'
-      sourceHandle: source
-      target: '91781187593654'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: llm
-        targetType: llm
-      id: 91781187593654-source-91781187625837-target
-      selected: false
-      source: '91781187593654'
-      sourceHandle: source
-      target: '91781187625837'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: if-else
         targetType: template-transform
       id: 91781187440808-false-91781187848783-target
       selected: false
@@ -154,18 +102,6 @@ workflow:
       source: '91781187848783'
       sourceHandle: source
       target: '91781187885358'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: llm
-        targetType: end
-      id: 91781187625837-source-91781188032135-target
-      source: '91781187625837'
-      sourceHandle: source
-      target: '91781188032135'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -290,6 +226,18 @@ workflow:
       type: custom
       zIndex: 0
     - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 91781187440808-true-999178118900010-target
+      source: '91781187440808'
+      sourceHandle: 'true'
+      target: '999178118900010'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
         isInLoop: false
         sourceType: start
         targetType: http-request
@@ -355,21 +303,36 @@ workflow:
       targetHandle: target
       type: custom
       zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 999178118900010-source-999178118900011-target
+      source: '999178118900010'
+      sourceHandle: source
+      target: '999178118900011'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 999178118900011-source-91781188032135-target
+      source: '999178118900011'
+      sourceHandle: source
+      target: '91781188032135'
+      targetHandle: target
+      type: custom
+      zIndex: 0
     nodes:
     - data:
         selected: false
         title: ユーザー入力
         type: start
-        variables:
-        - default: ''
-          hint: ''
-          label: previous_digests
-          max_length: 999999
-          options: []
-          placeholder: ''
-          required: false
-          type: paragraph
-          variable: previous_digests
+        variables: []
       height: 109
       id: '91781187165020'
       position:
@@ -388,33 +351,61 @@ workflow:
           , \"&lt;\": \"<\", \"&gt;\": \">\", \"&quot;\": '\"', \"&#39;\": \"'\", \"&apos;\": \"'\"}\n\n\ndef unescape(text):\n\
           \    for k, v in ENTITIES.items():\n        text = text.replace(k, v)\n    return text\n\n\ndef field(block, tag):\n\
           \    f = re.search(r\"<\" + tag + r\"[^>]*>(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?</\" + tag + r\">\", block)\n\
-          \    return unescape(f.group(1).strip()) if f else \"\"\n\n\ndef parse_rss(xml_text, strip_suffix=False, limit=15):\n\
-          \    \"\"\"RSS 2.0 の <item> と Atom の <entry> 両対応\"\"\"\n    items = []\n    blocks = re.findall(r\"<item>([\\s\\\
-          S]*?)</item>\", xml_text or \"\")\n    if blocks:\n        for block in blocks:\n            title = field(block,\
-          \ \"title\")\n            if title:\n                if strip_suffix and \" - \" in title:\n                   \
-          \ title = title.rsplit(\" - \", 1)[0]\n                items.append({\"title\": title, \"url\": field(block, \"\
-          link\"), \"pub_date\": field(block, \"pubDate\")})\n            if len(items) >= limit:\n                break\n\
-          \        return items\n    for block in re.findall(r\"<entry>([\\s\\S]*?)</entry>\", xml_text or \"\")[:limit]:\n\
-          \        title = field(block, \"title\")\n        m = re.search(r'<link[^>]*href=\"([^\"]+)\"', block)\n       \
-          \ pub = field(block, \"updated\") or field(block, \"published\")\n        if title:\n            items.append({\"\
-          title\": title, \"url\": m.group(1) if m else \"\", \"pub_date\": pub})\n    return items\n\n\ndef parse_hn(json_text,\
-          \ limit=25):\n    \"\"\"Hacker News (Algolia API) の JSON。points を注目度として見出しに付ける\"\"\"\n    items = []\n    try:\n\
-          \        hits = json.loads(json_text or \"{}\").get(\"hits\", [])\n    except Exception:\n        return items\n\
-          \    for h in hits[:limit]:\n        title = h.get(\"title\") or \"\"\n        if not title:\n            continue\n\
-          \        url = h.get(\"url\") or \"https://news.ycombinator.com/item?id=\" + str(h.get(\"objectID\", \"\"))\n  \
-          \      items.append({\"title\": \"[\" + str(h.get(\"points\", 0)) + \" pts] \" + title,\n                      \"\
-          url\": url, \"pub_date\": h.get(\"created_at\", \"\")})\n    return items\n\n\ndef main(body_ap, body_reuters, body_wsj,\
-          \ body_ars, body_hn,\n         body_simonw, body_nautilus, body_aeon):\n    sources = [\n        (\"AP News\", parse_rss(body_ap,\
-          \ strip_suffix=True)),\n        (\"Reuters\", parse_rss(body_reuters, strip_suffix=True)),\n        (\"WSJ\", parse_rss(body_wsj,\
-          \ strip_suffix=True)),\n        (\"Ars Technica\", parse_rss(body_ars)),\n        (\"Hacker News\", parse_hn(body_hn)),\n\
-          \        (\"Simon Willison\", parse_rss(body_simonw, limit=10)),\n        (\"Nautilus\", parse_rss(body_nautilus,\
-          \ limit=10)),\n        (\"Aeon\", parse_rss(body_aeon, limit=10)),\n    ]\n    lines = []\n    count = 0\n    for\
-          \ name, items in sources:\n        lines.append(\"## \" + name)\n        if not items:\n            lines.append(\"\
-          (取得失敗または0件)\")\n        for it in items:\n            lines.append(\"- \" + it[\"title\"] + \" (\" + it[\"pub_date\"\
-          ] + \")\")\n            lines.append(\"  \" + it[\"url\"])\n            count += 1\n        lines.append(\"\")\n\
-          \n    jst_now = datetime.now(timezone(timedelta(hours=9)))\n    date_label = str(jst_now.year) + \"年\" + str(jst_now.month)\
-          \ + \"月\" + str(jst_now.day) + \"日\"\n\n    return {\n        \"formatted_articles\": \"\\n\".join(lines),\n   \
-          \     \"article_count\": count,\n        \"date_label\": date_label,\n    }"
+          \    return unescape(f.group(1).strip()) if f else \"\"\n\n\nMONTHS = {\"Jan\": 1, \"Feb\": 2, \"Mar\": 3, \"Apr\"\
+          : 4, \"May\": 5, \"Jun\": 6,\n          \"Jul\": 7, \"Aug\": 8, \"Sep\": 9, \"Oct\": 10, \"Nov\": 11, \"Dec\": 12}\n\
+          # 名前付きTZ→UTCからの分。文字列に書かれたTZをそのまま信頼して変換する(推測しない)\nTZ_NAMES = {\"GMT\": 0, \"UTC\": 0, \"UT\": 0, \"Z\": 0, \"JST\"\
+          : 540,\n            \"EST\": -300, \"EDT\": -240, \"CST\": -360, \"CDT\": -300,\n            \"MST\": -420, \"MDT\"\
+          : -360, \"PST\": -480, \"PDT\": -420}\n\n\ndef _tzoff(tz):\n    tz = tz.strip()\n    if tz in TZ_NAMES:\n      \
+          \  return TZ_NAMES[tz]\n    if tz[:1] == \"+\":\n        sign = 1\n    elif tz[:1] == \"-\":\n        sign = -1\n\
+          \    else:\n        return None\n    body = tz[1:].replace(\":\", \"\")\n    if len(body) < 4:\n        return None\n\
+          \    try:\n        return sign * (int(body[0:2]) * 60 + int(body[2:4]))\n    except ValueError:\n        return\
+          \ None\n\n\ndef _parse_rfc822(raw):\n    # 例: \"Sun, 14 Jun 2026 21:15:38 GMT\" / \"Mon, 15 Jun 2026 09:00:00 +0000\"\
+          \n    parts = raw.replace(\",\", \" \").split()\n    if len(parts) < 5:\n        return None\n    try:\n       \
+          \ tz = parts[-1]\n        hms = parts[-2].split(\":\")\n        year = int(parts[-3])\n        mon = MONTHS.get(parts[-4][:3])\n\
+          \        day = int(parts[-5])\n        hh = int(hms[0]); mm = int(hms[1]); ss = int(hms[2]) if len(hms) > 2 else\
+          \ 0\n    except (ValueError, IndexError):\n        return None\n    off = _tzoff(tz)\n    if mon is None or off\
+          \ is None:\n        return None\n    return datetime(year, mon, day, hh, mm, ss, tzinfo=timezone(timedelta(minutes=off)))\n\
+          \n\ndef _parse_iso(raw):\n    # 例: \"2026-06-15T09:00:00Z\" / \"...000Z\" / \"...+09:00\" / \"...-04:00\"\n    s\
+          \ = raw if \"T\" in raw else raw.replace(\" \", \"T\", 1)\n    try:\n        year = int(s[0:4]); mon = int(s[5:7]);\
+          \ day = int(s[8:10])\n    except (ValueError, IndexError):\n        return None\n    rest = s[11:]\n    if not rest:\n\
+          \        return None\n    off = None\n    if rest[-1:] in (\"Z\", \"z\"):\n        off = 0\n        rest = rest[:-1]\n\
+          \    else:\n        cut = -1\n        for i in range(len(rest) - 1, -1, -1):\n            if rest[i] in \"+-\":\n\
+          \                cut = i\n                break\n        if cut >= 0:\n            off = _tzoff(rest[cut:])\n  \
+          \          rest = rest[:cut]\n    if off is None:\n        return None  # TZ不明は変換しない(誤変換防止)\n    hms = rest.split(\"\
+          .\")[0].split(\":\")\n    try:\n        hh = int(hms[0]); mm = int(hms[1]); ss = int(hms[2]) if len(hms) > 2 else\
+          \ 0\n    except (ValueError, IndexError):\n        return None\n    return datetime(year, mon, day, hh, mm, ss,\
+          \ tzinfo=timezone(timedelta(minutes=off)))\n\n\ndef to_jst(raw):\n    \"\"\"埋め込みTZを読み取りJSTへ変換。既に+09:00ならそのまま。読めなければ素通し\"\
+          \"\"\n    raw = (raw or \"\").strip()\n    if not raw:\n        return \"\"\n    if len(raw) >= 10 and raw[4:5]\
+          \ == \"-\" and raw[7:8] == \"-\":\n        dt = _parse_iso(raw)\n    else:\n        dt = _parse_rfc822(raw)\n  \
+          \  if dt is None:\n        return raw\n    jst = dt.astimezone(timezone(timedelta(hours=9)))\n    return jst.strftime(\"\
+          %Y-%m-%d %H:%M JST\")\n\n\ndef parse_rss(xml_text, strip_suffix=False, limit=15):\n    \"\"\"RSS 2.0 の <item> と\
+          \ Atom の <entry> 両対応\"\"\"\n    items = []\n    blocks = re.findall(r\"<item>([\\s\\S]*?)</item>\", xml_text or\
+          \ \"\")\n    if blocks:\n        for block in blocks:\n            title = field(block, \"title\")\n           \
+          \ if title:\n                if strip_suffix and \" - \" in title:\n                    title = title.rsplit(\"\
+          \ - \", 1)[0]\n                items.append({\"title\": title, \"url\": field(block, \"link\"), \"pub_date\": field(block,\
+          \ \"pubDate\")})\n            if len(items) >= limit:\n                break\n        return items\n    for block\
+          \ in re.findall(r\"<entry>([\\s\\S]*?)</entry>\", xml_text or \"\")[:limit]:\n        title = field(block, \"title\"\
+          )\n        m = re.search(r'<link[^>]*href=\"([^\"]+)\"', block)\n        pub = field(block, \"updated\") or field(block,\
+          \ \"published\")\n        if title:\n            items.append({\"title\": title, \"url\": m.group(1) if m else \"\
+          \", \"pub_date\": pub})\n    return items\n\n\ndef parse_hn(json_text, limit=25):\n    \"\"\"Hacker News (Algolia\
+          \ API) の JSON。points を注目度として見出しに付ける\"\"\"\n    items = []\n    try:\n        hits = json.loads(json_text or \"{}\"\
+          ).get(\"hits\", [])\n    except Exception:\n        return items\n    for h in hits[:limit]:\n        title = h.get(\"\
+          title\") or \"\"\n        if not title:\n            continue\n        url = h.get(\"url\") or \"https://news.ycombinator.com/item?id=\"\
+          \ + str(h.get(\"objectID\", \"\"))\n        items.append({\"title\": \"[\" + str(h.get(\"points\", 0)) + \" pts]\
+          \ \" + title,\n                      \"url\": url, \"pub_date\": h.get(\"created_at\", \"\")})\n    return items\n\
+          \n\ndef main(body_ap, body_reuters, body_wsj, body_ars, body_hn,\n         body_simonw, body_nautilus, body_aeon):\n\
+          \    sources = [\n        (\"AP News\", parse_rss(body_ap, strip_suffix=True)),\n        (\"Reuters\", parse_rss(body_reuters,\
+          \ strip_suffix=True)),\n        (\"WSJ\", parse_rss(body_wsj, strip_suffix=True)),\n        (\"Ars Technica\", parse_rss(body_ars)),\n\
+          \        (\"Hacker News\", parse_hn(body_hn)),\n        (\"Simon Willison\", parse_rss(body_simonw, limit=10)),\n\
+          \        (\"Nautilus\", parse_rss(body_nautilus, limit=10)),\n        (\"Aeon\", parse_rss(body_aeon, limit=10)),\n\
+          \    ]\n    lines = []\n    url_map = {}\n    count = 0\n    for name, items in sources:\n        lines.append(\"\
+          ## \" + name)\n        if not items:\n            lines.append(\"(取得失敗または0件)\")\n        for it in items:\n    \
+          \        count += 1\n            url_map[str(count)] = it[\"url\"]\n            # URLは翻訳に不要な巨大トークン。連番プレースホルダに退避し後段で復元する\n\
+          \            lines.append(\"- \" + it[\"title\"] + \" (\" + to_jst(it[\"pub_date\"]) + \")\")\n            lines.append(\"\
+          \  [[\" + str(count) + \"]]\")\n        lines.append(\"\")\n\n    jst_now = datetime.now(timezone(timedelta(hours=9)))\n\
+          \    date_label = str(jst_now.year) + \"年\" + str(jst_now.month) + \"月\" + str(jst_now.day) + \"日\"\n\n    return\
+          \ {\n        \"formatted_articles\": \"\\n\".join(lines),\n        \"article_count\": count,\n        \"date_label\"\
+          : date_label,\n        \"url_map\": json.dumps(url_map, ensure_ascii=False),\n    }"
         code_language: python3
         outputs:
           article_count:
@@ -424,6 +415,9 @@ workflow:
             children: null
             type: string
           formatted_articles:
+            children: null
+            type: string
+          url_map:
             children: null
             type: string
         selected: false
@@ -514,307 +508,6 @@ workflow:
       type: custom
       width: 242
     - data:
-        context:
-          enabled: false
-          variable_selector: []
-        model:
-          completion_params:
-            temperature: 0.7
-          mode: chat
-          name: gemini-3.1-flash-lite
-          provider: langgenius/gemini/google
-        prompt_template:
-        - id: 70e64dfb-7214-45a5-aeb6-36e1c9321281
-          role: system
-          text: 'あなたは海外ニュースを分析するベテラン編集者です。複数媒体の本日の見出しリスト(英語)を受け取り、後工程(日本語ダイジェスト執筆)のための「トピック分析メモ」を日本語で作成します。見出しの引用は原文(英語)のままで構いません。
-
-
-            # タスク1: 同一トピック検出
-
-            全媒体の見出しを横断し、同じニュースを報じている記事をグループ化する。
-
-            - キーワードの一致だけでグルーピングしない。同じ人名・組織名・地名でも、続報・関連事案・派生事件で別事案が混在しがち。日付・関係者の属性・経緯まで一致するかを見出しから確認し、確認できない場合は「別事案の可能性あり」と注記する
-
-            - まず「別事案ではないか」と疑ってからグループ化すること
-
-            - Hacker News の [N pts] は注目度(投票数)。高ポイントの技術話題は単独でも重要とみなす
-
-
-            # タスク2: 過去ダイジェストとの照合(続報疲れの防止)
-
-            過去ダイジェストが与えられた場合、各トピックを次の3つに分類する:
-
-            - 「新規」: 過去ダイジェストに出ていない
-
-            - 「続報」: 既報だが新展開がある。何が新展開かを1行で書く
-
-            - 「既報・新展開なし」: 同内容の再掲。ダイジェストでは扱いを最小化すべきもの
-
-            過去ダイジェストが空の場合は全トピックを「新規」とする。
-
-
-            # 出力フォーマット
-
-            ### トピック: [トピック名(日本語)]
-
-            - 分類: 新規 / 続報(新展開: ...) / 既報・新展開なし
-
-            - 該当見出し: [媒体名] 見出し原文 (各行1件、URLも併記)
-
-            - 注記: (別事案の可能性、グルーピングの確信度など。なければ省略)
-
-
-            最後に「## 単独記事」セクションを置き、どのグループにも属さないが重要そうな見出しを媒体ごとに5件程度まで列挙する。'
-        - id: 6008e570-55f5-4d71-90ef-b9fe00003026
-          role: user
-          text: '# 本日の見出しリスト
-
-            {{#91781187326232.formatted_articles#}}
-
-
-            # 過去ダイジェスト(直近2〜3本、空の場合あり)
-
-            {{#91781187165020.previous_digests#}}'
-        retry_config:
-          max_retries: 3
-          retry_enabled: true
-          retry_interval: 5000
-        selected: false
-        title: LLM
-        type: llm
-        vision:
-          enabled: false
-      height: 119
-      id: '91781187450764'
-      position:
-        x: 1015.0104064941406
-        y: 376.01041412353516
-      positionAbsolute:
-        x: 1015.0104064941406
-        y: 376.01041412353516
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 242
-    - data:
-        context:
-          enabled: false
-          variable_selector: []
-        model:
-          completion_params:
-            temperature: 0.7
-          mode: chat
-          name: gemini-3.1-flash-lite
-          provider: langgenius/gemini/google
-        prompt_template:
-        - id: 28502576-fc67-4ed6-a70a-e667c190d7df
-          role: system
-          text: 'あなたは海外ニュースの日本語ダイジェスト執筆者です。本日の英語見出しリストとトピック分析メモから、フレーミング比較付きダイジェスト(Markdown、日本語)を執筆します。
-
-
-            媒体の役割: AP News(通信社・ファクトベース)、Reuters(通信社・国際)、WSJ(ビジネス・経済)、Ars Technica(テック・科学)、Hacker News(テックコミュニティ。points=投票数=注目度)、Simon
-            Willison(AI・開発の個人ブログ)、Nautilus(科学エッセイ)、Aeon(思想・哲学エッセイ)。
-
-
-            # 出力フォーマット
-
-            # 海外ニュースダイジェスト({date}) ← 与えられた日付を使う
-
-
-            ## AP News — 通信社(ファクトベース)
-
-            [主要記事を列挙し、各記事に日本語1行解説。見出しは和訳し、固有名詞は原文に忠実に]
-
-            [フレーミング注] 通信社らしいストレート報道か、選題に偏りがあれば指摘
-
-
-            ## Reuters — 国際
-
-            (同様)
-
-
-            ## WSJ — ビジネス・経済
-
-            (同様。市場・企業視点への寄りを指摘)
-
-
-            ## Ars Technica — テック・科学
-
-            (同様)
-
-
-            ## Hacker News — コミュニティの注目
-
-            [points上位を中心に。開発者コミュニティが何に注目しているかを1行ずつ]
-
-
-            ## ブログ・エッセイ(Simon Willison / Nautilus / Aeon)
-
-            [新着があれば紹介。なければ「更新なし」と1行]
-
-
-            ## 横断的なトレンド
-
-            [複数媒体で共通するテーマを3〜5個。「今回新しく動いたもの」を優先]
-
-
-            ## メディアフレーミング比較
-
-            [同一トピックを報じた媒体(特にAP/Reuters/WSJ)の見出しを並べ、言葉選び・論調・省略された文脈の差を分析。最重要セクション。2〜4トピック]
-
-
-            # 品質保証ルール(厳守)
-
-            1. 層を分ける: 「見出し引用」(そのまま引用・和訳)と「フレーミング解釈」(憶測OK、ただし「〜と読める」「〜の可能性がある」等の解釈語尾で明示)を混ぜない。裏取りしていない事実は断定で書かず「(未確認)」を付す
-
-            2. 入力は見出しと日時のみで、記事本文は取得していない。見出しから自明でない内容・主張・数値・結論を推測して書かない。抽象的・問題提起型の見出しの中身を創作しない。踏み込めない記事は見出し引用+「(見出しのみ)」に留める
-
-            3. 強い断定(「最も〜」「明らかに〜」等)は複数媒体の見出しで裏付く場合のみ
-
-            4. トピック分析メモの分類を反映する: 「既報・新展開なし」は冒頭・トレンドから外し、本編でも「(M月D日に既報、新展開なし)」の1行に留める。「続報」は差分だけを書く
-
-            5. 「別事案の可能性あり」と注記されたグループは、安易に1つの事案としてまとめない
-
-            6. 株価・件数・順位など変動する値は、見出しに明記されているもの以外書かない
-
-            7. 和訳は意訳でよいが、固有名詞・数値・引用句は原文に忠実に'
-        - id: a2c204fd-f45f-489d-a4de-c089f0c0bc5f
-          role: user
-          text: '日付: {{#91781187326232.date_label#}}
-
-
-            # トピック分析メモ
-
-            {{#91781187450764.text#}}
-
-
-            # 本日の見出しリスト(全量)
-
-            {{#91781187326232.formatted_articles#}}'
-        retry_config:
-          max_retries: 3
-          retry_enabled: true
-          retry_interval: 5000
-        selected: false
-        title: LLM 2
-        type: llm
-        vision:
-          enabled: false
-      height: 119
-      id: '91781187548626'
-      position:
-        x: 1317.0104064941406
-        y: 376.01041412353516
-      positionAbsolute:
-        x: 1317.0104064941406
-        y: 376.01041412353516
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 242
-    - data:
-        context:
-          enabled: false
-          variable_selector: []
-        model:
-          completion_params:
-            temperature: 0.7
-          mode: chat
-          name: gemini-3.1-flash-lite
-          provider: langgenius/gemini/google
-        prompt_template:
-        - id: c37e43d5-df1f-4587-8a74-30f9a669a484
-          role: system
-          text: "あなたはニュースダイジェストの「接地監査役」です。各項目の解説が、与えられた情報\n(見出しのみ。記事本文は誰も読んでいない)に接地しているかだけを機械的に判定します。\n事実の正誤は問いません(別工程)。\n\
-            \n各項目について判定:\n- タイトルは内容自明か?(具体的な事案見出しは自明 / 「〜が抱える3つの構造問題」のような\n  抽象・問題提起型・特集見出しは非自明)\n- 解説は、タイトルだけからは導けない具体的な内容・主張・数値・トレンドを断定していないか?\n\
-            - 解釈である旨の語尾(「〜と読める」等)や「(見出しのみ)」「(未確認)」の注記が\n  必要なのに欠けていないか?\n\nFLAG条件 = 「タイトル非自明」かつ「解説が具体内容・主張・トレンドを断定」の2点が揃う項目。\n\
-            \n# 出力(簡潔に)\n## FLAG項目\n- [媒体/タイトル]: なぜ非接地か1行 / 提案(解釈語尾に修正 ／ 見出し引用のみに降格)\n## 接地OK\n- 件数のみ\n\n"
-        - id: bf0b13c6-e4fb-4041-b57c-58b1905110b0
-          role: user
-          text: '# 監査対象ダイジェスト
-
-            {{#91781187548626.text#}}
-
-
-            # 参照: 本日の見出しリスト(ここに含まれる情報は「接地あり」とみなす)
-
-            {{#91781187326232.formatted_articles#}}
-
-            '
-        retry_config:
-          max_retries: 3
-          retry_enabled: true
-          retry_interval: 5000
-        selected: false
-        title: LLM 3
-        type: llm
-        vision:
-          enabled: false
-      height: 119
-      id: '91781187593654'
-      position:
-        x: 1619.0104064941406
-        y: 376.01041412353516
-      positionAbsolute:
-        x: 1619.0104064941406
-        y: 376.01041412353516
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 242
-    - data:
-        context:
-          enabled: false
-          variable_selector: []
-        model:
-          completion_params:
-            temperature: 0.7
-          mode: chat
-          name: gemini-3.1-flash-lite
-          provider: langgenius/gemini/google
-        prompt_template:
-        - id: 61779ab7-7a89-4ee9-96d7-e9d9bb77a75e
-          role: system
-          text: "あなたはダイジェストの最終編集者です。ダイジェスト原稿と接地監査結果を受け取り、\n完成版Markdownを出力します。\n\n# 手順\n1. FLAG項目を監査の提案どおり修正する(原則: 見出し引用のみ+「(見出しのみ・本文未確認)」\n\
-            \   に降格、または解釈語尾への書き換え)\n2. 降格・修正した項目について、冒頭の記述・「横断的なトレンド」・「メディアフレーミング比較」\n   まで遡って整合を取る(該当項目を根拠にした断定が残っていないか確認)\n\
-            3. 末尾に以下のセクションを追記する:\n   ---\n   ## 接地監査ログ(自動生成)\n   - 監査項目: N件 / FLAG: M件 / 降格・修正: X件\n   - [媒体/タイトル]: [対応を1行で]\n\
-            4. FLAGが0件なら原稿をそのまま使い、監査ログに「FLAG 0件」と記す\n\n# 出力\n完成版ダイジェストのMarkdown本文だけを出力する。前置き・後書き・コードフェンスは不要。\n\n"
-        - id: b6667c4e-facb-48e3-8364-7e3ff5047cb5
-          role: user
-          text: '# ダイジェスト原稿
-
-            {{#91781187548626.text#}}
-
-
-            # 接地監査結果
-
-            {{#91781187593654.text#}}'
-        retry_config:
-          max_retries: 3
-          retry_enabled: true
-          retry_interval: 5000
-        selected: true
-        title: LLM 4
-        type: llm
-        vision:
-          enabled: false
-      height: 119
-      id: '91781187625837'
-      position:
-        x: 1921.0104064941406
-        y: 376.01041412353516
-      positionAbsolute:
-        x: 1921.0104064941406
-        y: 376.01041412353516
-      selected: true
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 242
-    - data:
         selected: false
         template: 'エラー: 入力JSONから記事を1件も読み取れませんでした。collectorの出力を確認してください。'
         title: テンプレート
@@ -859,17 +552,17 @@ workflow:
     - data:
         outputs:
         - value_selector:
-          - '91781187625837'
-          - text
+          - '999178118900011'
+          - digest
           value_type: string
           variable: digest
         - value_selector:
-          - '91781187593654'
-          - text
+          - '91781187326232'
+          - date_label
           value_type: string
-          variable: audit
+          variable: date_label
         selected: false
-        title: 出力 2
+        title: 出力
         type: end
       height: 115
       id: '91781188032135'
@@ -1205,6 +898,106 @@ workflow:
       positionAbsolute:
         x: -12.512640172365536
         y: 1341.9698338826772
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.3
+          mode: chat
+          name: gemini-3.1-flash-lite
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: tr-sys-0001
+          role: system
+          text: 'あなたは英語ニュース見出しリストの翻訳者です。与えられた「ソース別の見出しリスト」(Markdown)の各見出しを自然な日本語に翻訳します。これは翻訳タスクであり、要約・解説・論評は一切行いません。
+
+
+            # 厳守ルール
+
+            1. Markdownの構造(`## 媒体名`、`-` の箇条書き、プレースホルダ行、空行)はそのまま保持する
+
+            2. 翻訳するのは `-` で始まる見出し行の本文だけ。行末の日時の括弧 `(...)` と先頭の `[N pts]` は原文のまま残す
+
+            3. `[[数字]]`(例: `[[12]]`)はURLのプレースホルダ。記号も数字も1文字も変えず、翻訳・削除・並べ替え・採番変更を一切しない。各見出しの直後の行にそのまま残す
+
+            4. 固有名詞・製品名・社名・数値・引用句は原文に忠実に。定訳の無い固有名詞は原文のまま、または「日本語(原文)」と併記してよい
+
+            5. 見出しに無い情報を足さない。見出しから内容を推測して補わない。翻訳のみ
+
+            6. 「(取得失敗または0件)」はそのまま残す
+
+            7. 先頭に `# 海外ニュースダイジェスト({date})` の見出しを1行付ける(日付は与えられた値を使う)
+
+
+            # 出力
+
+            翻訳後のMarkdown本文だけを出力する。前置き・後書き・コードフェンスは不要。'
+        - id: tr-usr-0001
+          role: user
+          text: '日付: {{#91781187326232.date_label#}}
+
+
+            {{#91781187326232.formatted_articles#}}'
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 5000
+        selected: false
+        title: 翻訳
+        type: llm
+        vision:
+          enabled: false
+      height: 119
+      id: '999178118900010'
+      position:
+        x: 1015.0
+        y: 376.0
+      positionAbsolute:
+        x: 1015.0
+        y: 376.0
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "import json\nimport re\n\n\ndef main(translated, url_map):\n    try:\n        m = json.loads(url_map or \"\
+          {}\")\n    except Exception:\n        m = {}\n\n    def repl(mo):\n        return m.get(mo.group(1), mo.group(0))\n\
+          \n    digest = re.sub(r\"\\[\\[(\\d+)\\]\\]\", repl, translated or \"\")\n    return {\"digest\": digest}"
+        code_language: python3
+        outputs:
+          digest:
+            children: null
+            type: string
+        selected: false
+        title: URL復元
+        type: code
+        variables:
+        - value_selector:
+          - '999178118900010'
+          - text
+          value_type: string
+          variable: translated
+        - value_selector:
+          - '91781187326232'
+          - url_map
+          value_type: string
+          variable: url_map
+      height: 52
+      id: '999178118900011'
+      position:
+        x: 1620.0
+        y: 376.0
+      positionAbsolute:
+        x: 1620.0
+        y: 376.0
       selected: false
       sourcePosition: right
       targetPosition: left

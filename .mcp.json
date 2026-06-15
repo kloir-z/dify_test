@@ -1,0 +1,8 @@
+﻿{
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "cmd.exe",
+      "args": ["/c", "npx", "chrome-devtools-mcp@latest", "--userDataDir", "C:\\Users\\kosuk\\.chrome-automation"]
+    }
+  }
+}

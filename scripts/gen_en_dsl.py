@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
-"""jp-news-digest のDSLから en-news-digest のDSLを生成する。
+"""jp-news-digest のDSL(純コード版)から en-news-digest のDSLを生成する。
+
+設計方針(2026-06-15 改訂):
+- ダイジェストは「機械整形 + 翻訳のみ」。LLMによる編集・分析・接地監査は廃止した
+  (見出しを忠実に整形/翻訳する限り捏造の余地が無く、接地確認が不要になるため)
+- jp はソースが日本語なので翻訳すら不要 → LLMゼロの純コードワークフロー
+- en は英語ソースなので「コード整形 → 翻訳LLM 1回 → 出力」の1ノードだけLLMを使う
 
 やること:
-- 全ノードIDを '9' プレフィックスで付け替え(プロンプト内の {{#id.var#}} 参照も追従)
+- 全ノードIDを '9' プレフィックスで付け替え(エッジ参照も文字列置換で追従)
 - HTTPノード5本を英語メディアに差し替え + 3本追加(計8ソース)
 - コードノードを Atom / Hacker News(Algolia JSON) 対応版に差し替え
-- LLM①②のプロンプトを英語メディア用に書き換え(③④は汎用なのでそのまま)
-- previous_digests を任意入力に変更
+- URLは翻訳に不要な巨大トークンなので、整形時に [[連番]] プレースホルダへ退避し url_map に保存
+- IF(true) と 出力(end2) の間に「翻訳」LLM → 「URL復元」コード の2ノードを挿入し、end2 を復元後に繋ぐ
 
 使い方:
     python scripts/gen_en_dsl.py
@@ -27,8 +33,9 @@ DST = ROOT / "workflows" / "en-news-digest.yml"
 ID_START = "1781187165020"
 ID_CODE = "1781187326232"
 ID_IF = "1781187440808"
-ID_LLM1 = "1781187450764"
-ID_LLM2 = "1781187548626"
+ID_END2 = "1781188032135"  # 整形成功時の出力ノード
+ID_TRANSLATE = "999178118900010"  # en で新設する翻訳LLMノード
+ID_RESTORE = "999178118900011"  # en で新設するURL復元コードノード
 HTTP_REPLACE = {  # 旧HTTPノードID → (新タイトル, URL)
     "1781189175977": ("AP News", "https://news.google.com/rss/search?q=site:apnews.com&hl=en-US&gl=US&ceid=US:en"),
     "17811893361310": ("Reuters", "https://news.google.com/rss/search?q=site:reuters.com&hl=en-US&gl=US&ceid=US:en"),
@@ -69,6 +76,101 @@ def unescape(text):
 def field(block, tag):
     f = re.search(r"<" + tag + r"[^>]*>(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?</" + tag + r">", block)
     return unescape(f.group(1).strip()) if f else ""
+
+
+MONTHS = {"Jan": 1, "Feb": 2, "Mar": 3, "Apr": 4, "May": 5, "Jun": 6,
+          "Jul": 7, "Aug": 8, "Sep": 9, "Oct": 10, "Nov": 11, "Dec": 12}
+# 名前付きTZ→UTCからの分。文字列に書かれたTZをそのまま信頼して変換する(推測しない)
+TZ_NAMES = {"GMT": 0, "UTC": 0, "UT": 0, "Z": 0, "JST": 540,
+            "EST": -300, "EDT": -240, "CST": -360, "CDT": -300,
+            "MST": -420, "MDT": -360, "PST": -480, "PDT": -420}
+
+
+def _tzoff(tz):
+    tz = tz.strip()
+    if tz in TZ_NAMES:
+        return TZ_NAMES[tz]
+    if tz[:1] == "+":
+        sign = 1
+    elif tz[:1] == "-":
+        sign = -1
+    else:
+        return None
+    body = tz[1:].replace(":", "")
+    if len(body) < 4:
+        return None
+    try:
+        return sign * (int(body[0:2]) * 60 + int(body[2:4]))
+    except ValueError:
+        return None
+
+
+def _parse_rfc822(raw):
+    # 例: "Sun, 14 Jun 2026 21:15:38 GMT" / "Mon, 15 Jun 2026 09:00:00 +0000"
+    parts = raw.replace(",", " ").split()
+    if len(parts) < 5:
+        return None
+    try:
+        tz = parts[-1]
+        hms = parts[-2].split(":")
+        year = int(parts[-3])
+        mon = MONTHS.get(parts[-4][:3])
+        day = int(parts[-5])
+        hh = int(hms[0]); mm = int(hms[1]); ss = int(hms[2]) if len(hms) > 2 else 0
+    except (ValueError, IndexError):
+        return None
+    off = _tzoff(tz)
+    if mon is None or off is None:
+        return None
+    return datetime(year, mon, day, hh, mm, ss, tzinfo=timezone(timedelta(minutes=off)))
+
+
+def _parse_iso(raw):
+    # 例: "2026-06-15T09:00:00Z" / "...000Z" / "...+09:00" / "...-04:00"
+    s = raw if "T" in raw else raw.replace(" ", "T", 1)
+    try:
+        year = int(s[0:4]); mon = int(s[5:7]); day = int(s[8:10])
+    except (ValueError, IndexError):
+        return None
+    rest = s[11:]
+    if not rest:
+        return None
+    off = None
+    if rest[-1:] in ("Z", "z"):
+        off = 0
+        rest = rest[:-1]
+    else:
+        cut = -1
+        for i in range(len(rest) - 1, -1, -1):
+            if rest[i] in "+-":
+                cut = i
+                break
+        if cut >= 0:
+            off = _tzoff(rest[cut:])
+            rest = rest[:cut]
+    if off is None:
+        return None  # TZ不明は変換しない(誤変換防止)
+    hms = rest.split(".")[0].split(":")
+    try:
+        hh = int(hms[0]); mm = int(hms[1]); ss = int(hms[2]) if len(hms) > 2 else 0
+    except (ValueError, IndexError):
+        return None
+    return datetime(year, mon, day, hh, mm, ss, tzinfo=timezone(timedelta(minutes=off)))
+
+
+def to_jst(raw):
+    """埋め込みTZを読み取りJSTへ変換。既に+09:00ならそのまま。読めなければ素通し"""
+    raw = (raw or "").strip()
+    if not raw:
+        return ""
+    if len(raw) >= 10 and raw[4:5] == "-" and raw[7:8] == "-":
+        dt = _parse_iso(raw)
+    else:
+        dt = _parse_rfc822(raw)
+    if dt is None:
+        return raw
+    jst = dt.astimezone(timezone(timedelta(hours=9)))
+    return jst.strftime("%Y-%m-%d %H:%M JST")
 
 
 def parse_rss(xml_text, strip_suffix=False, limit=15):
@@ -124,15 +226,18 @@ def main(body_ap, body_reuters, body_wsj, body_ars, body_hn,
         ("Aeon", parse_rss(body_aeon, limit=10)),
     ]
     lines = []
+    url_map = {}
     count = 0
     for name, items in sources:
         lines.append("## " + name)
         if not items:
             lines.append("(取得失敗または0件)")
         for it in items:
-            lines.append("- " + it["title"] + " (" + it["pub_date"] + ")")
-            lines.append("  " + it["url"])
             count += 1
+            url_map[str(count)] = it["url"]
+            # URLは翻訳に不要な巨大トークン。連番プレースホルダに退避し後段で復元する
+            lines.append("- " + it["title"] + " (" + to_jst(it["pub_date"]) + ")")
+            lines.append("  [[" + str(count) + "]]")
         lines.append("")
 
     jst_now = datetime.now(timezone(timedelta(hours=9)))
@@ -142,92 +247,121 @@ def main(body_ap, body_reuters, body_wsj, body_ars, body_hn,
         "formatted_articles": "\\n".join(lines),
         "article_count": count,
         "date_label": date_label,
+        "url_map": json.dumps(url_map, ensure_ascii=False),
     }'''
 
-LLM1_SYSTEM = """あなたは海外ニュースを分析するベテラン編集者です。複数媒体の本日の見出しリスト(英語)を受け取り、後工程(日本語ダイジェスト執筆)のための「トピック分析メモ」を日本語で作成します。見出しの引用は原文(英語)のままで構いません。
+# 翻訳ノードのシステムプロンプト。整形済みリストの「見出しだけ」を訳し、構造・
+# プレースホルダ・日時・[N pts] は一切触らない。要約・解説・論評は禁止(=接地リスクをゼロに保つ)。
+# URLは [[数字]] プレースホルダに退避済みで、LLMには渡さない(後段の「URL復元」で戻す)。
+TRANSLATE_SYSTEM = """あなたは英語ニュース見出しリストの翻訳者です。与えられた「ソース別の見出しリスト」(Markdown)の各見出しを自然な日本語に翻訳します。これは翻訳タスクであり、要約・解説・論評は一切行いません。
 
-# タスク1: 同一トピック検出
-全媒体の見出しを横断し、同じニュースを報じている記事をグループ化する。
-- キーワードの一致だけでグルーピングしない。同じ人名・組織名・地名でも、続報・関連事案・派生事件で別事案が混在しがち。日付・関係者の属性・経緯まで一致するかを見出しから確認し、確認できない場合は「別事案の可能性あり」と注記する
-- まず「別事案ではないか」と疑ってからグループ化すること
-- Hacker News の [N pts] は注目度(投票数)。高ポイントの技術話題は単独でも重要とみなす
+# 厳守ルール
+1. Markdownの構造(`## 媒体名`、`-` の箇条書き、プレースホルダ行、空行)はそのまま保持する
+2. 翻訳するのは `-` で始まる見出し行の本文だけ。行末の日時の括弧 `(...)` と先頭の `[N pts]` は原文のまま残す
+3. `[[数字]]`(例: `[[12]]`)はURLのプレースホルダ。記号も数字も1文字も変えず、翻訳・削除・並べ替え・採番変更を一切しない。各見出しの直後の行にそのまま残す
+4. 固有名詞・製品名・社名・数値・引用句は原文に忠実に。定訳の無い固有名詞は原文のまま、または「日本語(原文)」と併記してよい
+5. 見出しに無い情報を足さない。見出しから内容を推測して補わない。翻訳のみ
+6. 「(取得失敗または0件)」はそのまま残す
+7. 先頭に `# 海外ニュースダイジェスト({date})` の見出しを1行付ける(日付は与えられた値を使う)
 
-# タスク2: 過去ダイジェストとの照合(続報疲れの防止)
-過去ダイジェストが与えられた場合、各トピックを次の3つに分類する:
-- 「新規」: 過去ダイジェストに出ていない
-- 「続報」: 既報だが新展開がある。何が新展開かを1行で書く
-- 「既報・新展開なし」: 同内容の再掲。ダイジェストでは扱いを最小化すべきもの
-過去ダイジェストが空の場合は全トピックを「新規」とする。
+# 出力
+翻訳後のMarkdown本文だけを出力する。前置き・後書き・コードフェンスは不要。"""
 
-# 出力フォーマット
-### トピック: [トピック名(日本語)]
-- 分類: 新規 / 続報(新展開: ...) / 既報・新展開なし
-- 該当見出し: [媒体名] 見出し原文 (各行1件、URLも併記)
-- 注記: (別事案の可能性、グルーピングの確信度など。なければ省略)
+TRANSLATE_USER = "日付: {{#9" + ID_CODE + ".date_label#}}\n\n{{#9" + ID_CODE + ".formatted_articles#}}"
 
-最後に「## 単独記事」セクションを置き、どのグループにも属さないが重要そうな見出しを媒体ごとに5件程度まで列挙する。"""
+# URL復元コードノード。翻訳済みテキスト中の [[数字]] を url_map の実URLに戻す。
+RESTORE_CODE = '''import json
+import re
 
-LLM2_SYSTEM = """あなたは海外ニュースの日本語ダイジェスト執筆者です。本日の英語見出しリストとトピック分析メモから、フレーミング比較付きダイジェスト(Markdown、日本語)を執筆します。
 
-媒体の役割: AP News(通信社・ファクトベース)、Reuters(通信社・国際)、WSJ(ビジネス・経済)、Ars Technica(テック・科学)、Hacker News(テックコミュニティ。points=投票数=注目度)、Simon Willison(AI・開発の個人ブログ)、Nautilus(科学エッセイ)、Aeon(思想・哲学エッセイ)。
+def main(translated, url_map):
+    try:
+        m = json.loads(url_map or "{}")
+    except Exception:
+        m = {}
 
-# 出力フォーマット
-# 海外ニュースダイジェスト({date}) ← 与えられた日付を使う
+    def repl(mo):
+        return m.get(mo.group(1), mo.group(0))
 
-## AP News — 通信社(ファクトベース)
-[主要記事を列挙し、各記事に日本語1行解説。見出しは和訳し、固有名詞は原文に忠実に]
-[フレーミング注] 通信社らしいストレート報道か、選題に偏りがあれば指摘
+    digest = re.sub(r"\\[\\[(\\d+)\\]\\]", repl, translated or "")
+    return {"digest": digest}'''
 
-## Reuters — 国際
-(同様)
 
-## WSJ — ビジネス・経済
-(同様。市場・企業視点への寄りを指摘)
+def build_translate_node() -> dict:
+    """en 専用の翻訳LLMノードを構築する(jp 純コード版には存在しない)"""
+    return {
+        "data": {
+            "context": {"enabled": False, "variable_selector": []},
+            "model": {
+                "completion_params": {"temperature": 0.3},
+                "mode": "chat",
+                "name": "gemini-3.1-flash-lite",
+                "provider": "langgenius/gemini/google",
+            },
+            "prompt_template": [
+                {"id": "tr-sys-0001", "role": "system", "text": TRANSLATE_SYSTEM},
+                {"id": "tr-usr-0001", "role": "user", "text": TRANSLATE_USER},
+            ],
+            "retry_config": {"max_retries": 3, "retry_enabled": True, "retry_interval": 5000},
+            "selected": False,
+            "title": "翻訳",
+            "type": "llm",
+            "vision": {"enabled": False},
+        },
+        "height": 119,
+        "id": ID_TRANSLATE,
+        "position": {"x": 1015.0, "y": 376.0},
+        "positionAbsolute": {"x": 1015.0, "y": 376.0},
+        "selected": False,
+        "sourcePosition": "right",
+        "targetPosition": "left",
+        "type": "custom",
+        "width": 242,
+    }
 
-## Ars Technica — テック・科学
-(同様)
 
-## Hacker News — コミュニティの注目
-[points上位を中心に。開発者コミュニティが何に注目しているかを1行ずつ]
-
-## ブログ・エッセイ(Simon Willison / Nautilus / Aeon)
-[新着があれば紹介。なければ「更新なし」と1行]
-
-## 横断的なトレンド
-[複数媒体で共通するテーマを3〜5個。「今回新しく動いたもの」を優先]
-
-## メディアフレーミング比較
-[同一トピックを報じた媒体(特にAP/Reuters/WSJ)の見出しを並べ、言葉選び・論調・省略された文脈の差を分析。最重要セクション。2〜4トピック]
-
-# 品質保証ルール(厳守)
-1. 層を分ける: 「見出し引用」(そのまま引用・和訳)と「フレーミング解釈」(憶測OK、ただし「〜と読める」「〜の可能性がある」等の解釈語尾で明示)を混ぜない。裏取りしていない事実は断定で書かず「(未確認)」を付す
-2. 入力は見出しと日時のみで、記事本文は取得していない。見出しから自明でない内容・主張・数値・結論を推測して書かない。抽象的・問題提起型の見出しの中身を創作しない。踏み込めない記事は見出し引用+「(見出しのみ)」に留める
-3. 強い断定(「最も〜」「明らかに〜」等)は複数媒体の見出しで裏付く場合のみ
-4. トピック分析メモの分類を反映する: 「既報・新展開なし」は冒頭・トレンドから外し、本編でも「(M月D日に既報、新展開なし)」の1行に留める。「続報」は差分だけを書く
-5. 「別事案の可能性あり」と注記されたグループは、安易に1つの事案としてまとめない
-6. 株価・件数・順位など変動する値は、見出しに明記されているもの以外書かない
-7. 和訳は意訳でよいが、固有名詞・数値・引用句は原文に忠実に"""
+def build_restore_node() -> dict:
+    """翻訳結果の [[数字]] を実URLに戻すコードノード(en 専用)"""
+    return {
+        "data": {
+            "code": RESTORE_CODE,
+            "code_language": "python3",
+            "outputs": {"digest": {"children": None, "type": "string"}},
+            "selected": False,
+            "title": "URL復元",
+            "type": "code",
+            "variables": [
+                {"value_selector": [ID_TRANSLATE, "text"], "value_type": "string", "variable": "translated"},
+                {"value_selector": ["9" + ID_CODE, "url_map"], "value_type": "string", "variable": "url_map"},
+            ],
+        },
+        "height": 52,
+        "id": ID_RESTORE,
+        "position": {"x": 1620.0, "y": 376.0},
+        "positionAbsolute": {"x": 1620.0, "y": 376.0},
+        "selected": False,
+        "sourcePosition": "right",
+        "targetPosition": "left",
+        "type": "custom",
+        "width": 242,
+    }
 
 
 def main() -> None:
     text = SRC.read_text(encoding="utf-8")
     doc_probe = yaml.safe_load(text)
     old_ids = [n["id"] for n in doc_probe["workflow"]["graph"]["nodes"]]
-    # ID付け替え(プロンプト内 {{#id.var#}} とエッジ参照も文字列置換で追従)
+    # ID付け替え(エッジ参照も文字列置換で追従)。長いIDから処理して部分一致を防ぐ
     for oid in sorted(old_ids, key=len, reverse=True):
         text = text.replace(oid, "9" + oid)
     doc = yaml.safe_load(text)
 
     doc["app"]["name"] = "en-news-digest"
-    doc["app"]["description"] = "海外ニュースの見出しを8ソースから収集しフレーミング比較ダイジェストを生成"
+    doc["app"]["description"] = "海外ニュースの見出しを8ソースから収集し整形・日本語翻訳する(LLMは翻訳1回のみ)"
     doc["app"]["icon"] = "🌏"
 
     graph = doc["workflow"]["graph"]
     nodes = {n["id"]: n for n in graph["nodes"]}
-
-    # 開始ノード: previous_digests を任意に
-    for v in nodes["9" + ID_START]["data"]["variables"]:
-        v["required"] = False
 
     # HTTPノード差し替え
     http_template = None
@@ -266,19 +400,45 @@ def main() -> None:
             "type": "custom", "zIndex": 0,
         })
 
-    # コードノード差し替え
+    # コードノード差し替え(8ソース対応版)。url_map を出力に追加
     code_node = nodes["9" + ID_CODE]
     code_node["data"]["code"] = EN_CODE
     code_node["data"]["variables"] = [
         {"value_selector": [src_id, "body"], "value_type": "string", "variable": var}
         for var, src_id in CODE_VARS
     ]
+    code_node["data"]["outputs"]["url_map"] = {"children": None, "type": "string"}
 
-    # LLM①②のSYSTEMプロンプト差し替え(USERプロンプトは参照のみなのでID置換で済んでいる)
-    nodes["9" + ID_LLM1]["data"]["prompt_template"][0]["text"] = LLM1_SYSTEM
-    nodes["9" + ID_LLM2]["data"]["prompt_template"][0]["text"] = LLM2_SYSTEM
+    # 翻訳・復元ノードを挿入: IF(true) → 翻訳 → URL復元 → 出力(end2)
+    graph["nodes"].append(build_translate_node())
+    graph["nodes"].append(build_restore_node())
+    end2_id = "9" + ID_END2
+    for e in graph["edges"]:
+        if e["id"] == f"9{ID_IF}-true-{end2_id}-target":
+            e["target"] = ID_TRANSLATE
+            e["data"]["targetType"] = "llm"
+            e["id"] = f"9{ID_IF}-true-{ID_TRANSLATE}-target"
+    graph["edges"].append({
+        "data": {"isInIteration": False, "isInLoop": False, "sourceType": "llm", "targetType": "code"},
+        "id": f"{ID_TRANSLATE}-source-{ID_RESTORE}-target",
+        "source": ID_TRANSLATE, "sourceHandle": "source",
+        "target": ID_RESTORE, "targetHandle": "target",
+        "type": "custom", "zIndex": 0,
+    })
+    graph["edges"].append({
+        "data": {"isInIteration": False, "isInLoop": False, "sourceType": "code", "targetType": "end"},
+        "id": f"{ID_RESTORE}-source-{end2_id}-target",
+        "source": ID_RESTORE, "sourceHandle": "source",
+        "target": end2_id, "targetHandle": "target",
+        "type": "custom", "zIndex": 0,
+    })
 
-    # ダイジェスト名もen用に(LLM②のフォーマット見出しはSYSTEM内で指定済み)
+    # 出力ノードを復元後ダイジェストに繋ぎ替える
+    nodes[end2_id]["data"]["outputs"] = [
+        {"value_selector": [ID_RESTORE, "digest"], "value_type": "string", "variable": "digest"},
+        {"value_selector": ["9" + ID_CODE, "date_label"], "value_type": "string", "variable": "date_label"},
+    ]
+
     DST.write_text(
         yaml.dump(doc, allow_unicode=True, sort_keys=False, default_flow_style=False, width=120),
         encoding="utf-8",
