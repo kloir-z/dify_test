@@ -16,6 +16,7 @@ Dify のワークフロー DSL(YAML)をバージョン管理する置き場。
 |---|---|---|
 | `jp-news-digest.yml` | (手組み) | 国内ニュース見出しを5ソースから収集・整形(純コード、LLMなし) |
 | `en-news-digest.yml` | `gen_en_dsl.py` | 海外8ソースを整形+翻訳LLM1回 |
+| `combined-news-digest.yml` | `gen_combined_dsl.py` | jp(国内5)とen(海外8)を1グラフに合流させ、`# 統合ダイジェスト` 1本にまとめる(翻訳LLM1回) |
 | `security-digest.yml` | `gen_security_dsl.py` | 脆弱性フィードから要注目CVEを機械抽出(hot_json) |
 | `irodori-script-prep.yml` | `gen_irodori_dsl.py` | irodori_test `/auto` の「題材 → script_processed.yaml + glossary.json」までを再現(mp3合成は範囲外) |
 
@@ -26,3 +27,11 @@ Dify のワークフロー DSL(YAML)をバージョン管理する置き場。
 - 後段: ローカルの irodori_test で `modal run src/synthesize.py --script-yaml <保存先> --output output.mp3`(glossary.json も同階層に置けば SRT に表記復元が乗る)
 - **LLM は既定で Claude Sonnet**(品質重視)。インポート後に各 LLM ノード(台本生成 / 修正#1〜3 / glossary生成)でモデルを選び直すこと。Anthropic プラグイン未導入なら `gen_irodori_dsl.py` の `LLM_PROVIDER`/`LLM_MODEL` を gemini に変えて再生成する
 - 検証: `python scripts/test_irodori_dsl.py`(前処理が原実装と一致するか等)
+
+### combined-news-digest の使い方
+
+- `gen_combined_dsl.py` は `jp-news-digest.yml` と `en-news-digest.yml`(生成済み)から必要ノードだけを抜き出して合流させる。jp/en を直したら **両方を再生成してから** `python scripts/gen_combined_dsl.py` を回す(順序依存)
+- フロー: `start ┬ jp HTTP×5 → jp_code ┐` / `└ en HTTP×8 → en_code → 翻訳 → URL復元 ┘` → `連結 → 出力`。連結ノードが両ブランチの完了を待ち合わせる
+- 出力 `digest`: `# 統合ダイジェスト(YYYY年M月D日)` + `## 📰 国内ニュース…` + `## 🌐 海外ニュース…`(notes 2026-06-15 の共通体裁。`#` タイトルはここで初めて足す)。`date_label` も出力する
+- 翻訳 LLM は en と同じ既定(`gemini-3.1-flash-lite`)。`dependencies` は gemini プラグイン。モデルを変えるなら en 側を直して再生成する
+- lint: `python scripts/lint_dsl.py workflows/combined-news-digest.yml`(ERROR/WARN なし=ノード20/エッジ31)
