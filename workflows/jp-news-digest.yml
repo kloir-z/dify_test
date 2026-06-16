@@ -293,13 +293,14 @@ workflow:
           : field(\"pubDate\")})\n        if len(items) >= limit:\n            break\n    return items\n\n\ndef main(body_nikkei:\
           \ str, body_asahi: str, body_sankei: str,\n         body_reuters: str, body_toyokeizai: str) -> dict:\n    sources\
           \ = [\n        (\"日経新聞\", body_nikkei),\n        (\"朝日新聞\", body_asahi),\n        (\"産経新聞\", body_sankei),\n   \
-          \     (\"Reuters JP\", body_reuters),\n        (\"東洋経済\", body_toyokeizai),\n    ]\n    lines = []\n    count =\
-          \ 0\n    for name, body in sources:\n        lines.append(f\"## {name}\")\n        items = parse_rss(body)\n   \
-          \     if not items:\n            lines.append(\"(取得失敗または0件)\")\n        for it in items:\n            lines.append(f\"\
-          - {it['title']} ({to_jst(it['pub_date'])})\")\n            lines.append(f\"  {it['url']}\")\n            count +=\
-          \ 1\n        lines.append(\"\")\n\n    jst_now = datetime.now(timezone(timedelta(hours=9)))\n    date_label = f\"\
-          {jst_now.year}年{jst_now.month}月{jst_now.day}日\"\n\n    return {\n        \"formatted_articles\": \"\\n\".join(lines),\n\
-          \        \"article_count\": count,\n        \"date_label\": date_label,\n    }"
+          \     (\"Reuters JP\", body_reuters),\n        (\"東洋経済\", body_toyokeizai),\n    ]\n    lines = [\"## \U0001F4F0\
+          \ 国内ニュース\", \"\"]\n    count = 0\n    for name, body in sources:\n        lines.append(f\"### {name}\")\n      \
+          \  items = parse_rss(body)\n        if not items:\n            lines.append(\"(取得失敗または0件)\")\n        for it in\
+          \ items:\n            lines.append(f\"- {it['title']}\")\n            lines.append(f\"  {it['url']}\")\n       \
+          \     lines.append(f\"  {to_jst(it['pub_date'])}\")\n            count += 1\n        lines.append(\"\")\n\n    jst_now\
+          \ = datetime.now(timezone(timedelta(hours=9)))\n    date_label = f\"{jst_now.year}年{jst_now.month}月{jst_now.day}日\"\
+          \n\n    return {\n        \"formatted_articles\": \"\\n\".join(lines),\n        \"article_count\": count,\n    \
+          \    \"date_label\": date_label,\n    }"
         code_language: python3
         outputs:
           article_count:

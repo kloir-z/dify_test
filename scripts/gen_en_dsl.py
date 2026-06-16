@@ -225,19 +225,21 @@ def main(body_ap, body_reuters, body_wsj, body_ars, body_hn,
         ("Nautilus", parse_rss(body_nautilus, limit=10)),
         ("Aeon", parse_rss(body_aeon, limit=10)),
     ]
-    lines = []
+    lines = ["## 🌐 海外ニュース", ""]
     url_map = {}
     count = 0
     for name, items in sources:
-        lines.append("## " + name)
+        lines.append("### " + name)
         if not items:
             lines.append("(取得失敗または0件)")
         for it in items:
             count += 1
             url_map[str(count)] = it["url"]
-            # URLは翻訳に不要な巨大トークン。連番プレースホルダに退避し後段で復元する
-            lines.append("- " + it["title"] + " (" + to_jst(it["pub_date"]) + ")")
+            # URLは翻訳に不要な巨大トークン。連番プレースホルダに退避し後段で復元する。
+            # 統合ダイジェスト共通体裁: 見出し / URL行 / 日時行 をそれぞれ独立行にする
+            lines.append("- " + it["title"])
             lines.append("  [[" + str(count) + "]]")
+            lines.append("  " + to_jst(it["pub_date"]))
         lines.append("")
 
     jst_now = datetime.now(timezone(timedelta(hours=9)))
@@ -256,18 +258,18 @@ def main(body_ap, body_reuters, body_wsj, body_ars, body_hn,
 TRANSLATE_SYSTEM = """あなたは英語ニュース見出しリストの翻訳者です。与えられた「ソース別の見出しリスト」(Markdown)の各見出しを自然な日本語に翻訳します。これは翻訳タスクであり、要約・解説・論評は一切行いません。
 
 # 厳守ルール
-1. Markdownの構造(`## 媒体名`、`-` の箇条書き、プレースホルダ行、空行)はそのまま保持する
-2. 翻訳するのは `-` で始まる見出し行の本文だけ。行末の日時の括弧 `(...)` と先頭の `[N pts]` は原文のまま残す
-3. `[[数字]]`(例: `[[12]]`)はURLのプレースホルダ。記号も数字も1文字も変えず、翻訳・削除・並べ替え・採番変更を一切しない。各見出しの直後の行にそのまま残す
+1. Markdownの構造(`## 🌐 海外ニュース` 見出し、`### 媒体名` 見出し、`-` の箇条書き、プレースホルダ行、日時行、空行)はそのまま保持する
+2. 翻訳するのは `-` で始まる見出し行の本文だけ。先頭の `[N pts]` は原文のまま残す
+3. 各見出しの直後の2行は触らない: `[[数字]]`(例 `[[12]]`。URLプレースホルダ。記号も数字も1文字も変えない)と、その次の日時行(例 `2026-06-15 09:00 JST`)。翻訳・削除・並べ替え・採番変更を一切しない
 4. 固有名詞・製品名・社名・数値・引用句は原文に忠実に。定訳の無い固有名詞は原文のまま、または「日本語(原文)」と併記してよい
 5. 見出しに無い情報を足さない。見出しから内容を推測して補わない。翻訳のみ
 6. 「(取得失敗または0件)」はそのまま残す
-7. 先頭に `# 海外ニュースダイジェスト({date})` の見出しを1行付ける(日付は与えられた値を使う)
+7. `## 🌐 海外ニュース` と `### 媒体名` の見出しはそのまま残す(媒体名は固有名詞。`#` のタイトル行は付けない)
 
 # 出力
 翻訳後のMarkdown本文だけを出力する。前置き・後書き・コードフェンスは不要。"""
 
-TRANSLATE_USER = "日付: {{#9" + ID_CODE + ".date_label#}}\n\n{{#9" + ID_CODE + ".formatted_articles#}}"
+TRANSLATE_USER = "{{#9" + ID_CODE + ".formatted_articles#}}"
 
 # URL復元コードノード。翻訳済みテキスト中の [[数字]] を url_map の実URLに戻す。
 RESTORE_CODE = '''import json

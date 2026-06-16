@@ -398,14 +398,15 @@ workflow:
           \ strip_suffix=True)),\n        (\"WSJ\", parse_rss(body_wsj, strip_suffix=True)),\n        (\"Ars Technica\", parse_rss(body_ars)),\n\
           \        (\"Hacker News\", parse_hn(body_hn)),\n        (\"Simon Willison\", parse_rss(body_simonw, limit=10)),\n\
           \        (\"Nautilus\", parse_rss(body_nautilus, limit=10)),\n        (\"Aeon\", parse_rss(body_aeon, limit=10)),\n\
-          \    ]\n    lines = []\n    url_map = {}\n    count = 0\n    for name, items in sources:\n        lines.append(\"\
-          ## \" + name)\n        if not items:\n            lines.append(\"(取得失敗または0件)\")\n        for it in items:\n    \
-          \        count += 1\n            url_map[str(count)] = it[\"url\"]\n            # URLは翻訳に不要な巨大トークン。連番プレースホルダに退避し後段で復元する\n\
-          \            lines.append(\"- \" + it[\"title\"] + \" (\" + to_jst(it[\"pub_date\"]) + \")\")\n            lines.append(\"\
-          \  [[\" + str(count) + \"]]\")\n        lines.append(\"\")\n\n    jst_now = datetime.now(timezone(timedelta(hours=9)))\n\
-          \    date_label = str(jst_now.year) + \"年\" + str(jst_now.month) + \"月\" + str(jst_now.day) + \"日\"\n\n    return\
-          \ {\n        \"formatted_articles\": \"\\n\".join(lines),\n        \"article_count\": count,\n        \"date_label\"\
-          : date_label,\n        \"url_map\": json.dumps(url_map, ensure_ascii=False),\n    }"
+          \    ]\n    lines = [\"## \U0001F310 海外ニュース\", \"\"]\n    url_map = {}\n    count = 0\n    for name, items in sources:\n\
+          \        lines.append(\"### \" + name)\n        if not items:\n            lines.append(\"(取得失敗または0件)\")\n     \
+          \   for it in items:\n            count += 1\n            url_map[str(count)] = it[\"url\"]\n            # URLは翻訳に不要な巨大トークン。連番プレースホルダに退避し後段で復元する。\n\
+          \            # 統合ダイジェスト共通体裁: 見出し / URL行 / 日時行 をそれぞれ独立行にする\n            lines.append(\"- \" + it[\"title\"])\n  \
+          \          lines.append(\"  [[\" + str(count) + \"]]\")\n            lines.append(\"  \" + to_jst(it[\"pub_date\"\
+          ]))\n        lines.append(\"\")\n\n    jst_now = datetime.now(timezone(timedelta(hours=9)))\n    date_label = str(jst_now.year)\
+          \ + \"年\" + str(jst_now.month) + \"月\" + str(jst_now.day) + \"日\"\n\n    return {\n        \"formatted_articles\"\
+          : \"\\n\".join(lines),\n        \"article_count\": count,\n        \"date_label\": date_label,\n        \"url_map\"\
+          : json.dumps(url_map, ensure_ascii=False),\n    }"
         code_language: python3
         outputs:
           article_count:
@@ -921,11 +922,11 @@ workflow:
 
             # 厳守ルール
 
-            1. Markdownの構造(`## 媒体名`、`-` の箇条書き、プレースホルダ行、空行)はそのまま保持する
+            1. Markdownの構造(`## 🌐 海外ニュース` 見出し、`### 媒体名` 見出し、`-` の箇条書き、プレースホルダ行、日時行、空行)はそのまま保持する
 
-            2. 翻訳するのは `-` で始まる見出し行の本文だけ。行末の日時の括弧 `(...)` と先頭の `[N pts]` は原文のまま残す
+            2. 翻訳するのは `-` で始まる見出し行の本文だけ。先頭の `[N pts]` は原文のまま残す
 
-            3. `[[数字]]`(例: `[[12]]`)はURLのプレースホルダ。記号も数字も1文字も変えず、翻訳・削除・並べ替え・採番変更を一切しない。各見出しの直後の行にそのまま残す
+            3. 各見出しの直後の2行は触らない: `[[数字]]`(例 `[[12]]`。URLプレースホルダ。記号も数字も1文字も変えない)と、その次の日時行(例 `2026-06-15 09:00 JST`)。翻訳・削除・並べ替え・採番変更を一切しない
 
             4. 固有名詞・製品名・社名・数値・引用句は原文に忠実に。定訳の無い固有名詞は原文のまま、または「日本語(原文)」と併記してよい
 
@@ -933,7 +934,7 @@ workflow:
 
             6. 「(取得失敗または0件)」はそのまま残す
 
-            7. 先頭に `# 海外ニュースダイジェスト({date})` の見出しを1行付ける(日付は与えられた値を使う)
+            7. `## 🌐 海外ニュース` と `### 媒体名` の見出しはそのまま残す(媒体名は固有名詞。`#` のタイトル行は付けない)
 
 
             # 出力
@@ -941,10 +942,7 @@ workflow:
             翻訳後のMarkdown本文だけを出力する。前置き・後書き・コードフェンスは不要。'
         - id: tr-usr-0001
           role: user
-          text: '日付: {{#91781187326232.date_label#}}
-
-
-            {{#91781187326232.formatted_articles#}}'
+          text: '{{#91781187326232.formatted_articles#}}'
         retry_config:
           max_retries: 3
           retry_enabled: true
