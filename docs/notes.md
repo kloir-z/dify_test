@@ -194,21 +194,9 @@
 
 ## 2026-06-16 jp+en を1本に統合(combined-news-digest)
 
-- **目的**: jp-news(国内5・純コード)と en-news(海外8・翻訳LLM1回)を1ワークフローに合流させ、
+- jp-news(国内5・純コード)と en-news(海外8・翻訳LLM1回)を1ワークフローに合流させ、
   `# 統合ダイジェスト(date)` 1本を出力する。security は KEV 肉付けが Dify 外なので今回は含めない
-- **生成方式**: `gen_combined_dsl.py` が `jp-news-digest.yml` と `en-news-digest.yml`(両方とも生成済み)
-  を読み、**必要ノードだけ**を抜き出して合流させる。コード本体・HTTP設定・翻訳プロンプトは両DSLの実物を
-  再利用(単一の真実源)。**jp/en を直したら両方を再生成 → そのあと combined を再生成**(順序依存)
-- **取り込むノード**: jp から start+HTTP×5+code、en から HTTP×8+code+翻訳+URL復元。
-  **捨てるノード**: 両DSLの IF/ELSE・エラーテンプレート・各 end、en 側の start(start は jp の1個に統一)。
-  en 由来ノードは ID が `9`/`999` プレフィックスで jp と衝突しないので、そのまま同居できる
-- **合流の待ち合わせ**: Dify は複数入力ノードを「全入力到達で発火」する(en の code が HTTP×8 を待つのと同じ)。
-  よって最終「連結」コードノードに jp_code と URL復元の2本を入れるだけで両ブランチ完了を待てる(IF不要)
-- **連結ノード**: `jp_md`(`## 📰…` 始まり)と `en_md`(`## 🌐…` 始まり)を縦結合し、先頭に `#` タイトルを足す。
-  date_label は jp_code 側を採用(jp/en 同値)
-- **lint クリーンの肝**: コードノードの `outputs` 宣言を**下流で参照する変数だけに絞る**
-  (jp_code→formatted_articles/date_label、en_code→formatted_articles/url_map)。コード本体は元のまま
-  全変数を return するが、未参照の宣言を残すと「未使用変数」WARN が出るため宣言側を削る。
-  `lint_dsl.py` は ERROR/WARN なし(ノード20/エッジ31)
-- **翻訳/依存**: 翻訳LLMは en と同一(`gemini-3.1-flash-lite`)、`dependencies` も gemini プラグインで共通。
-  モデルを変えるなら en 側を直して再生成する
+- フロー: `start ┬ 国内 HTTP×5 → 整形 ┐` / `└ 海外 HTTP×8 → 整形 → 翻訳 → URL復元 ┘` → `連結 → 出力`
+- 合流の待ち合わせ: Dify は複数入力ノードを「全入力到達で発火」する(整形ノードが HTTP 群を待つのと同じ)。
+  よって最終「連結」ノードに国内整形と海外URL復元の2本を入れるだけで両ブランチ完了を待てる(IF不要)
+- 連結ノードが `## 📰 国内…`(国内側)と `## 🌐 海外…`(海外側)を縦結合し、先頭に `#` タイトルを足す

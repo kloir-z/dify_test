@@ -16,7 +16,7 @@ Dify のワークフロー DSL(YAML)をバージョン管理する置き場。
 |---|---|---|
 | `jp-news-digest.yml` | (手組み) | 国内ニュース見出しを5ソースから収集・整形(純コード、LLMなし) |
 | `en-news-digest.yml` | `gen_en_dsl.py` | 海外8ソースを整形+翻訳LLM1回 |
-| `combined-news-digest.yml` | `gen_combined_dsl.py` | jp(国内5)とen(海外8)を1グラフに合流させ、`# 統合ダイジェスト` 1本にまとめる(翻訳LLM1回) |
+| `combined-news-digest.yml` | (手組み) | 国内5ソース+海外8ソースを1グラフで収集し、`# 統合ダイジェスト` 1本にまとめる(翻訳LLM1回) |
 | `security-digest.yml` | `gen_security_dsl.py` | 脆弱性フィードから要注目CVEを機械抽出(hot_json) |
 | `irodori-script-prep.yml` | `gen_irodori_dsl.py` | irodori_test `/auto` の「題材 → script_processed.yaml + glossary.json」までを再現(mp3合成は範囲外) |
 
@@ -30,8 +30,8 @@ Dify のワークフロー DSL(YAML)をバージョン管理する置き場。
 
 ### combined-news-digest の使い方
 
-- `gen_combined_dsl.py` は `jp-news-digest.yml` と `en-news-digest.yml`(生成済み)から必要ノードだけを抜き出して合流させる。jp/en を直したら **両方を再生成してから** `python scripts/gen_combined_dsl.py` を回す(順序依存)
-- フロー: `start ┬ jp HTTP×5 → jp_code ┐` / `└ en HTTP×8 → en_code → 翻訳 → URL復元 ┘` → `連結 → 出力`。連結ノードが両ブランチの完了を待ち合わせる
-- 出力 `digest`: `# 統合ダイジェスト(YYYY年M月D日)` + `## 📰 国内ニュース…` + `## 🌐 海外ニュース…`(notes 2026-06-15 の共通体裁。`#` タイトルはここで初めて足す)。`date_label` も出力する
-- 翻訳 LLM は en と同じ既定(`gemini-3.1-flash-lite`)。`dependencies` は gemini プラグイン。モデルを変えるなら en 側を直して再生成する
-- lint: `python scripts/lint_dsl.py workflows/combined-news-digest.yml`(ERROR/WARN なし=ノード20/エッジ31)
+- 入力なしで実行すると、国内5ソース+海外8ソースを収集して1本の統合ダイジェストを返す
+- フロー: `start ┬ 国内 HTTP×5 → 整形 ┐` / `└ 海外 HTTP×8 → 整形 → 翻訳 → URL復元 ┘` → `連結 → 出力`。連結ノードが両ブランチの完了を待ち合わせる
+- 出力 `digest`: `# 統合ダイジェスト(YYYY年M月D日)` + `## 📰 国内ニュース…` + `## 🌐 海外ニュース…`(notes 2026-06-15 の共通体裁。`#` タイトルはここで足す)。`date_label` も出力する
+- 翻訳 LLM の既定は `gemini-3.1-flash-lite`(`dependencies` は gemini プラグイン)。変えるなら翻訳ノードで選び直す
+- lint: `python scripts/lint_dsl.py workflows/combined-news-digest.yml`(ERROR/WARN なし)
