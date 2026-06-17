@@ -1,5 +1,5 @@
 app:
-  description: 国内5ソース+海外8ソースのニュース見出しを収集・整形し、海外分のみ日本語翻訳して1本の統合ダイジェストにまとめる(LLMは翻訳1回のみ)
+  description: 国内5ソース+海外8ソースのニュース見出しを収集・整形し、海外分のみ日本語翻訳して1本の統合ダイジェストにまとめる(見にくい3ソースは本文要約も付与)
   icon: 🗞️
   icon_background: '#FFEAD5'
   icon_type: emoji
@@ -19,37 +19,7 @@ workflow:
   environment_variables: []
   features:
     file_upload:
-      allowed_file_extensions:
-      - .JPG
-      - .JPEG
-      - .PNG
-      - .GIF
-      - .WEBP
-      - .SVG
-      allowed_file_types:
-      - image
-      allowed_file_upload_methods:
-      - local_file
-      - remote_url
       enabled: false
-      fileUploadConfig:
-        attachment_image_file_size_limit: 2
-        audio_file_size_limit: 50
-        batch_count_limit: 5
-        file_size_limit: 15
-        file_upload_limit: 50
-        image_file_batch_limit: 10
-        image_file_size_limit: 10
-        single_chunk_attachment_limit: 10
-        video_file_size_limit: 100
-        workflow_file_upload_limit: 10
-      image:
-        enabled: false
-        number_limits: 3
-        transfer_methods:
-        - local_file
-        - remote_url
-      number_limits: 3
     opening_statement: ''
     retriever_resource:
       enabled: true
@@ -66,66 +36,6 @@ workflow:
       voice: ''
   graph:
     edges:
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: start
-        targetType: http-request
-      id: 1781187165020-source-1781189175977-target
-      source: '1781187165020'
-      sourceHandle: source
-      target: '1781189175977'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: http-request
-        targetType: http-request
-      id: 1781189175977-source-17811893361310-target
-      source: '1781189175977'
-      sourceHandle: source
-      target: '17811893361310'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: http-request
-        targetType: http-request
-      id: 1781189175977-source-17811893942900-target
-      source: '1781189175977'
-      sourceHandle: source
-      target: '17811893942900'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: http-request
-        targetType: http-request
-      id: 1781189175977-source-17811893972820-target
-      source: '1781189175977'
-      sourceHandle: source
-      target: '17811893972820'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: http-request
-        targetType: http-request
-      id: 1781189175977-source-17811893996220-target
-      source: '1781189175977'
-      sourceHandle: source
-      target: '17811893996220'
-      targetHandle: target
-      type: custom
-      zIndex: 0
     - data:
         isInIteration: false
         isInLoop: false
@@ -191,10 +101,10 @@ workflow:
         isInLoop: false
         sourceType: start
         targetType: http-request
-      id: 1781187165020-source-91781189175977-target
+      id: 1781187165020-source-1781189175977-target
       source: '1781187165020'
       sourceHandle: source
-      target: '91781189175977'
+      target: '1781189175977'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -203,10 +113,10 @@ workflow:
         isInLoop: false
         sourceType: http-request
         targetType: http-request
-      id: 91781189175977-source-917811893361310-target
-      source: '91781189175977'
+      id: 1781189175977-source-17811893361310-target
+      source: '1781189175977'
       sourceHandle: source
-      target: '917811893361310'
+      target: '17811893361310'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -215,10 +125,10 @@ workflow:
         isInLoop: false
         sourceType: http-request
         targetType: http-request
-      id: 91781189175977-source-917811893942900-target
-      source: '91781189175977'
+      id: 1781189175977-source-17811893942900-target
+      source: '1781189175977'
       sourceHandle: source
-      target: '917811893942900'
+      target: '17811893942900'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -227,10 +137,10 @@ workflow:
         isInLoop: false
         sourceType: http-request
         targetType: http-request
-      id: 91781189175977-source-917811893972820-target
-      source: '91781189175977'
+      id: 1781189175977-source-17811893972820-target
+      source: '1781189175977'
       sourceHandle: source
-      target: '917811893972820'
+      target: '17811893972820'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -239,46 +149,10 @@ workflow:
         isInLoop: false
         sourceType: http-request
         targetType: http-request
-      id: 91781189175977-source-917811893996220-target
-      source: '91781189175977'
+      id: 1781189175977-source-17811893996220-target
+      source: '1781189175977'
       sourceHandle: source
-      target: '917811893996220'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: http-request
-        targetType: http-request
-      id: 91781189175977-source-999178118900001-target
-      source: '91781189175977'
-      sourceHandle: source
-      target: '999178118900001'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: http-request
-        targetType: http-request
-      id: 91781189175977-source-999178118900002-target
-      source: '91781189175977'
-      sourceHandle: source
-      target: '999178118900002'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: http-request
-        targetType: http-request
-      id: 91781189175977-source-999178118900003-target
-      source: '91781189175977'
-      sourceHandle: source
-      target: '999178118900003'
+      target: '17811893996220'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -381,6 +255,102 @@ workflow:
     - data:
         isInIteration: false
         isInLoop: false
+        sourceType: start
+        targetType: http-request
+      id: 1781187165020-source-91781189175977-target
+      source: '1781187165020'
+      sourceHandle: source
+      target: '91781189175977'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: http-request
+      id: 91781189175977-source-917811893361310-target
+      source: '91781189175977'
+      sourceHandle: source
+      target: '917811893361310'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: http-request
+      id: 91781189175977-source-917811893942900-target
+      source: '91781189175977'
+      sourceHandle: source
+      target: '917811893942900'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: http-request
+      id: 91781189175977-source-917811893972820-target
+      source: '91781189175977'
+      sourceHandle: source
+      target: '917811893972820'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: http-request
+      id: 91781189175977-source-917811893996220-target
+      source: '91781189175977'
+      sourceHandle: source
+      target: '917811893996220'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: http-request
+      id: 91781189175977-source-999178118900001-target
+      source: '91781189175977'
+      sourceHandle: source
+      target: '999178118900001'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: http-request
+      id: 91781189175977-source-999178118900002-target
+      source: '91781189175977'
+      sourceHandle: source
+      target: '999178118900002'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: http-request
+      id: 91781189175977-source-999178118900003-target
+      source: '91781189175977'
+      sourceHandle: source
+      target: '999178118900003'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
         sourceType: code
         targetType: llm
       id: 91781187326232-source-999178118900010-target
@@ -393,10 +363,34 @@ workflow:
     - data:
         isInIteration: false
         isInLoop: false
+        sourceType: code
+        targetType: llm
+      id: 91781187326232-source-999178118900020-target
+      source: '91781187326232'
+      sourceHandle: source
+      target: '999178118900020'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
         sourceType: llm
         targetType: code
       id: 999178118900010-source-999178118900011-target
       source: '999178118900010'
+      sourceHandle: source
+      target: '999178118900011'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 999178118900020-source-999178118900011-target
+      source: '999178118900020'
       sourceHandle: source
       target: '999178118900011'
       targetHandle: target
@@ -443,15 +437,24 @@ workflow:
         selected: false
         title: ユーザー入力
         type: start
-        variables: []
-      height: 109
+        variables:
+        - default: 'no'
+          hint: 出典URLを併記するなら yes。空または no で見出し+日時のみ(既定)
+          label: with_urls
+          max_length: 48
+          options: []
+          placeholder: 'no'
+          required: false
+          type: text-input
+          variable: with_urls
+      height: 116
       id: '1781187165020'
       position:
-        x: -538.6352901585824
-        y: 396.040166716223
+        x: -540
+        y: 400
       positionAbsolute:
-        x: -538.6352901585824
-        y: 396.040166716223
+        x: -540
+        y: 400
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -486,11 +489,11 @@ workflow:
       height: 155
       id: '1781189175977'
       position:
-        x: -12.512640172365536
-        y: 46.13411576642136
+        x: 0
+        y: 40
       positionAbsolute:
-        x: -12.512640172365536
-        y: 46.13411576642136
+        x: 0
+        y: 40
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -503,11 +506,9 @@ workflow:
         body:
           data: []
           type: none
-        desc: 日経
+        desc: ''
         headers: User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0
           Safari/537.36
-        isInIteration: false
-        isInLoop: false
         method: get
         params: ''
         retry_config:
@@ -524,14 +525,14 @@ workflow:
         type: http-request
         url: https://news.google.com/rss/search?q=site:asahi.com&hl=ja&gl=JP&ceid=JP:ja
         variables: []
-      height: 183
+      height: 155
       id: '17811893361310'
       position:
-        x: -12.512640172365536
-        y: 207.9234514076021
+        x: 0
+        y: 225
       positionAbsolute:
-        x: -12.512640172365536
-        y: 207.9234514076021
+        x: 0
+        y: 225
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -544,11 +545,9 @@ workflow:
         body:
           data: []
           type: none
-        desc: 日経
+        desc: ''
         headers: User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0
           Safari/537.36
-        isInIteration: false
-        isInLoop: false
         method: get
         params: ''
         retry_config:
@@ -565,14 +564,14 @@ workflow:
         type: http-request
         url: https://news.google.com/rss/search?q=site:sankei.com&hl=ja&gl=JP&ceid=JP:ja
         variables: []
-      height: 183
+      height: 155
       id: '17811893942900'
       position:
-        x: -12.512640172365536
-        y: 392.98385587388395
+        x: 0
+        y: 410
       positionAbsolute:
-        x: -12.512640172365536
-        y: 392.98385587388395
+        x: 0
+        y: 410
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -585,11 +584,9 @@ workflow:
         body:
           data: []
           type: none
-        desc: 日経
+        desc: ''
         headers: User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0
           Safari/537.36
-        isInIteration: false
-        isInLoop: false
         method: get
         params: ''
         retry_config:
@@ -606,14 +603,14 @@ workflow:
         type: http-request
         url: https://news.google.com/rss/search?q=site:jp.reuters.com&hl=ja&gl=JP&ceid=JP:ja
         variables: []
-      height: 183
+      height: 155
       id: '17811893972820'
       position:
-        x: -12.512640172365536
-        y: 576.9361142056378
+        x: 0
+        y: 595
       positionAbsolute:
-        x: -12.512640172365536
-        y: 576.9361142056378
+        x: 0
+        y: 595
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -626,11 +623,9 @@ workflow:
         body:
           data: []
           type: none
-        desc: 日経
+        desc: ''
         headers: User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0
           Safari/537.36
-        isInIteration: false
-        isInLoop: false
         method: get
         params: ''
         retry_config:
@@ -647,14 +642,14 @@ workflow:
         type: http-request
         url: https://news.google.com/rss/search?q=site:toyokeizai.net&hl=ja&gl=JP&ceid=JP:ja
         variables: []
-      height: 183
+      height: 155
       id: '17811893996220'
       position:
-        x: -12.512640172365536
-        y: 771.9698338826772
+        x: 0
+        y: 780
       positionAbsolute:
-        x: -12.512640172365536
-        y: 771.9698338826772
+        x: 0
+        y: 780
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -662,49 +657,53 @@ workflow:
       width: 242
     - data:
         code: "import re\nfrom datetime import datetime, timedelta, timezone\n\nENTITIES = {\"&amp;\": \"&\", \"&lt;\": \"\
-          <\", \"&gt;\": \">\", \"&quot;\": '\"', \"&#39;\": \"'\", \"&apos;\": \"'\"}\n\n\ndef unescape(text: str) -> str:\n\
-          \    for k, v in ENTITIES.items():\n        text = text.replace(k, v)\n    return text\n\n\nMONTHS = {\"Jan\": 1,\
-          \ \"Feb\": 2, \"Mar\": 3, \"Apr\": 4, \"May\": 5, \"Jun\": 6,\n          \"Jul\": 7, \"Aug\": 8, \"Sep\": 9, \"\
-          Oct\": 10, \"Nov\": 11, \"Dec\": 12}\n# 名前付きTZ→UTCからの分。文字列に書かれたTZをそのまま信頼して変換する(推測しない)\nTZ_NAMES = {\"GMT\": 0, \"\
-          UTC\": 0, \"UT\": 0, \"Z\": 0, \"JST\": 540,\n            \"EST\": -300, \"EDT\": -240, \"CST\": -360, \"CDT\":\
-          \ -300,\n            \"MST\": -420, \"MDT\": -360, \"PST\": -480, \"PDT\": -420}\n\n\ndef _tzoff(tz):\n    tz =\
-          \ tz.strip()\n    if tz in TZ_NAMES:\n        return TZ_NAMES[tz]\n    if tz[:1] == \"+\":\n        sign = 1\n \
-          \   elif tz[:1] == \"-\":\n        sign = -1\n    else:\n        return None\n    body = tz[1:].replace(\":\", \"\
-          \")\n    if len(body) < 4:\n        return None\n    try:\n        return sign * (int(body[0:2]) * 60 + int(body[2:4]))\n\
-          \    except ValueError:\n        return None\n\n\ndef _parse_rfc822(raw):\n    parts = raw.replace(\",\", \" \"\
-          ).split()\n    if len(parts) < 5:\n        return None\n    try:\n        tz = parts[-1]\n        hms = parts[-2].split(\"\
-          :\")\n        year = int(parts[-3])\n        mon = MONTHS.get(parts[-4][:3])\n        day = int(parts[-5])\n   \
-          \     hh = int(hms[0]); mm = int(hms[1]); ss = int(hms[2]) if len(hms) > 2 else 0\n    except (ValueError, IndexError):\n\
-          \        return None\n    off = _tzoff(tz)\n    if mon is None or off is None:\n        return None\n    return\
-          \ datetime(year, mon, day, hh, mm, ss, tzinfo=timezone(timedelta(minutes=off)))\n\n\ndef _parse_iso(raw):\n    s\
+          <\", \"&gt;\": \">\", \"&quot;\": '\"', \"&#39;\": \"'\", \"&apos;\": \"'\"}\n\n\ndef unescape(text):\n    for k,\
+          \ v in ENTITIES.items():\n        text = text.replace(k, v)\n    return text\n\n\ndef field(block, tag):\n    f\
+          \ = re.search(r\"<\" + tag + r\"[^>]*>(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?</\" + tag + r\">\", block)\n  \
+          \  return unescape(f.group(1).strip()) if f else \"\"\n\n\nMONTHS = {\"Jan\": 1, \"Feb\": 2, \"Mar\": 3, \"Apr\"\
+          : 4, \"May\": 5, \"Jun\": 6,\n          \"Jul\": 7, \"Aug\": 8, \"Sep\": 9, \"Oct\": 10, \"Nov\": 11, \"Dec\": 12}\n\
+          # 名前付きTZ→UTCからの分。文字列に書かれたTZをそのまま信頼して変換する(推測しない)\nTZ_NAMES = {\"GMT\": 0, \"UTC\": 0, \"UT\": 0, \"Z\": 0, \"JST\"\
+          : 540,\n            \"EST\": -300, \"EDT\": -240, \"CST\": -360, \"CDT\": -300,\n            \"MST\": -420, \"MDT\"\
+          : -360, \"PST\": -480, \"PDT\": -420}\n\n\ndef _tzoff(tz):\n    tz = tz.strip()\n    if tz in TZ_NAMES:\n      \
+          \  return TZ_NAMES[tz]\n    if tz[:1] == \"+\":\n        sign = 1\n    elif tz[:1] == \"-\":\n        sign = -1\n\
+          \    else:\n        return None\n    body = tz[1:].replace(\":\", \"\")\n    if len(body) < 4:\n        return None\n\
+          \    try:\n        return sign * (int(body[0:2]) * 60 + int(body[2:4]))\n    except ValueError:\n        return\
+          \ None\n\n\ndef _parse_rfc822(raw):\n    # 例: \"Sun, 14 Jun 2026 21:15:38 GMT\" / \"Mon, 15 Jun 2026 09:00:00 +0000\"\
+          \n    parts = raw.replace(\",\", \" \").split()\n    if len(parts) < 5:\n        return None\n    try:\n       \
+          \ tz = parts[-1]\n        hms = parts[-2].split(\":\")\n        year = int(parts[-3])\n        mon = MONTHS.get(parts[-4][:3])\n\
+          \        day = int(parts[-5])\n        hh = int(hms[0]); mm = int(hms[1]); ss = int(hms[2]) if len(hms) > 2 else\
+          \ 0\n    except (ValueError, IndexError):\n        return None\n    off = _tzoff(tz)\n    if mon is None or off\
+          \ is None:\n        return None\n    return datetime(year, mon, day, hh, mm, ss, tzinfo=timezone(timedelta(minutes=off)))\n\
+          \n\ndef _parse_iso(raw):\n    # 例: \"2026-06-15T09:00:00Z\" / \"...000Z\" / \"...+09:00\" / \"...-04:00\"\n    s\
           \ = raw if \"T\" in raw else raw.replace(\" \", \"T\", 1)\n    try:\n        year = int(s[0:4]); mon = int(s[5:7]);\
           \ day = int(s[8:10])\n    except (ValueError, IndexError):\n        return None\n    rest = s[11:]\n    if not rest:\n\
           \        return None\n    off = None\n    if rest[-1:] in (\"Z\", \"z\"):\n        off = 0\n        rest = rest[:-1]\n\
           \    else:\n        cut = -1\n        for i in range(len(rest) - 1, -1, -1):\n            if rest[i] in \"+-\":\n\
           \                cut = i\n                break\n        if cut >= 0:\n            off = _tzoff(rest[cut:])\n  \
-          \          rest = rest[:cut]\n    if off is None:\n        return None\n    hms = rest.split(\".\")[0].split(\"\
-          :\")\n    try:\n        hh = int(hms[0]); mm = int(hms[1]); ss = int(hms[2]) if len(hms) > 2 else 0\n    except\
-          \ (ValueError, IndexError):\n        return None\n    return datetime(year, mon, day, hh, mm, ss, tzinfo=timezone(timedelta(minutes=off)))\n\
-          \n\ndef to_jst(raw):\n    raw = (raw or \"\").strip()\n    if not raw:\n        return \"\"\n    if len(raw) >=\
-          \ 10 and raw[4:5] == \"-\" and raw[7:8] == \"-\":\n        dt = _parse_iso(raw)\n    else:\n        dt = _parse_rfc822(raw)\n\
-          \    if dt is None:\n        return raw\n    jst = dt.astimezone(timezone(timedelta(hours=9)))\n    return jst.strftime(\"\
-          %Y-%m-%d %H:%M JST\")\n\n\ndef parse_rss(xml_text: str, limit: int = 15) -> list:\n    items = []\n    for m in\
-          \ re.finditer(r\"<item>([\\s\\S]*?)</item>\", xml_text or \"\"):\n        block = m.group(1)\n\n        def field(tag:\
-          \ str) -> str:\n            f = re.search(\n                r\"<\" + tag + r\">(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\\
-          ]\\]>)?</\" + tag + r\">\", block\n            )\n            return unescape(f.group(1).strip()) if f else \"\"\
-          \n\n        title = field(\"title\")\n        if title:\n            if \" - \" in title:\n                title\
-          \ = title.rsplit(\" - \", 1)[0]\n            items.append({\"title\": title, \"url\": field(\"link\"), \"pub_date\"\
-          : field(\"pubDate\")})\n        if len(items) >= limit:\n            break\n    return items\n\n\ndef main(body_nikkei:\
-          \ str, body_asahi: str, body_sankei: str,\n         body_reuters: str, body_toyokeizai: str) -> dict:\n    sources\
-          \ = [\n        (\"日経新聞\", body_nikkei),\n        (\"朝日新聞\", body_asahi),\n        (\"産経新聞\", body_sankei),\n   \
-          \     (\"Reuters JP\", body_reuters),\n        (\"東洋経済\", body_toyokeizai),\n    ]\n    lines = [\"## \U0001F4F0\
-          \ 国内ニュース\", \"\"]\n    count = 0\n    for name, body in sources:\n        lines.append(f\"### {name}\")\n      \
-          \  items = parse_rss(body)\n        if not items:\n            lines.append(\"(取得失敗または0件)\")\n        for it in\
-          \ items:\n            lines.append(f\"- {it['title']}\")\n            lines.append(f\"  {it['url']}\")\n       \
-          \     lines.append(f\"  {to_jst(it['pub_date'])}\")\n            count += 1\n        lines.append(\"\")\n\n    jst_now\
-          \ = datetime.now(timezone(timedelta(hours=9)))\n    date_label = f\"{jst_now.year}年{jst_now.month}月{jst_now.day}日\"\
-          \n\n    return {\n        \"formatted_articles\": \"\\n\".join(lines),\n        \"date_label\": date_label,\n  \
-          \  }"
+          \          rest = rest[:cut]\n    if off is None:\n        return None  # TZ不明は変換しない(誤変換防止)\n    hms = rest.split(\"\
+          .\")[0].split(\":\")\n    try:\n        hh = int(hms[0]); mm = int(hms[1]); ss = int(hms[2]) if len(hms) > 2 else\
+          \ 0\n    except (ValueError, IndexError):\n        return None\n    return datetime(year, mon, day, hh, mm, ss,\
+          \ tzinfo=timezone(timedelta(minutes=off)))\n\n\ndef to_jst(raw):\n    \"\"\"埋め込みTZを読み取りJSTへ変換。既に+09:00ならそのまま。読めなければ素通し\"\
+          \"\"\n    raw = (raw or \"\").strip()\n    if not raw:\n        return \"\"\n    if len(raw) >= 10 and raw[4:5]\
+          \ == \"-\" and raw[7:8] == \"-\":\n        dt = _parse_iso(raw)\n    else:\n        dt = _parse_rfc822(raw)\n  \
+          \  if dt is None:\n        return raw\n    jst = dt.astimezone(timezone(timedelta(hours=9)))\n    return jst.strftime(\"\
+          %Y-%m-%d %H:%M JST\")\n\n\ndef parse_rss(xml_text, strip_suffix=False, limit=15):\n    items = []\n    seen = set()\
+          \  # 媒体内の重複見出しを除去(Google News RSS は同一記事を複数返す)\n    for block in re.findall(r\"<item>([\\s\\S]*?)</item>\", xml_text\
+          \ or \"\"):\n        title = field(block, \"title\")\n        if title:\n            if strip_suffix and \" - \"\
+          \ in title:\n                title = title.rsplit(\" - \", 1)[0]\n            key = \" \".join(title.split())\n\
+          \            if key not in seen:\n                seen.add(key)\n                items.append({\"title\": title,\
+          \ \"url\": field(block, \"link\"), \"pub_date\": field(block, \"pubDate\")})\n        if len(items) >= limit:\n\
+          \            break\n    return items\n\n\ndef main(body_nikkei, body_asahi, body_sankei, body_reuters, body_toyokeizai,\
+          \ with_urls):\n    wu = (with_urls or \"\").strip().lower() in (\"yes\", \"true\", \"1\", \"on\")\n    sources =\
+          \ [\n        (\"日経新聞\", body_nikkei),\n        (\"朝日新聞\", body_asahi),\n        (\"産経新聞\", body_sankei),\n     \
+          \   (\"Reuters JP\", body_reuters),\n        (\"東洋経済\", body_toyokeizai),\n    ]\n    lines = [\"## \U0001F4F0 国内ニュース\"\
+          , \"\"]\n    for name, body in sources:\n        lines.append(\"### \" + name)\n        items = parse_rss(body,\
+          \ strip_suffix=True)\n        if not items:\n            lines.append(\"(取得失敗または0件)\")\n        for it in items:\n\
+          \            lines.append(\"- \" + it[\"title\"])\n            if wu and it[\"url\"]:\n                lines.append(\"\
+          \  \" + it[\"url\"])\n            lines.append(\"  \" + to_jst(it[\"pub_date\"]))\n        lines.append(\"\")\n\n\
+          \    jst_now = datetime.now(timezone(timedelta(hours=9)))\n    date_label = str(jst_now.year) + \"年\" + str(jst_now.month)\
+          \ + \"月\" + str(jst_now.day) + \"日\"\n    return {\n        \"formatted_articles\": \"\\n\".join(lines),\n     \
+          \   \"date_label\": date_label,\n    }"
         code_language: python3
         outputs:
           formatted_articles:
@@ -714,7 +713,7 @@ workflow:
             children: null
             type: string
         selected: false
-        title: コード実行
+        title: 国内整形
         type: code
         variables:
         - value_selector:
@@ -742,14 +741,19 @@ workflow:
           - body
           value_type: string
           variable: body_toyokeizai
+        - value_selector:
+          - '1781187165020'
+          - with_urls
+          value_type: string
+          variable: with_urls
       height: 52
       id: '1781187326232'
       position:
-        x: 346.48928097594876
-        y: 354.9913038185856
+        x: 350
+        y: 350
       positionAbsolute:
-        x: 346.48928097594876
-        y: 354.9913038185856
+        x: 350
+        y: 350
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -784,11 +788,11 @@ workflow:
       height: 155
       id: '91781189175977'
       position:
-        x: -12.512640172365536
-        y: 1046.1341157664215
+        x: 0
+        y: 1050
       positionAbsolute:
-        x: -12.512640172365536
-        y: 1046.1341157664215
+        x: 0
+        y: 1050
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -804,8 +808,6 @@ workflow:
         desc: ''
         headers: User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0
           Safari/537.36
-        isInIteration: false
-        isInLoop: false
         method: get
         params: ''
         retry_config:
@@ -822,14 +824,14 @@ workflow:
         type: http-request
         url: https://news.google.com/rss/search?q=site:reuters.com&hl=en-US&gl=US&ceid=US:en
         variables: []
-      height: 183
+      height: 155
       id: '917811893361310'
       position:
-        x: -12.512640172365536
-        y: 1207.923451407602
+        x: 0
+        y: 1235
       positionAbsolute:
-        x: -12.512640172365536
-        y: 1207.923451407602
+        x: 0
+        y: 1235
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -845,8 +847,6 @@ workflow:
         desc: ''
         headers: User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0
           Safari/537.36
-        isInIteration: false
-        isInLoop: false
         method: get
         params: ''
         retry_config:
@@ -863,14 +863,14 @@ workflow:
         type: http-request
         url: https://news.google.com/rss/search?q=site:wsj.com&hl=en-US&gl=US&ceid=US:en
         variables: []
-      height: 183
+      height: 155
       id: '917811893942900'
       position:
-        x: -12.512640172365536
-        y: 1392.9838558738838
+        x: 0
+        y: 1420
       positionAbsolute:
-        x: -12.512640172365536
-        y: 1392.9838558738838
+        x: 0
+        y: 1420
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -886,8 +886,6 @@ workflow:
         desc: ''
         headers: User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0
           Safari/537.36
-        isInIteration: false
-        isInLoop: false
         method: get
         params: ''
         retry_config:
@@ -904,14 +902,14 @@ workflow:
         type: http-request
         url: https://feeds.arstechnica.com/arstechnica/index
         variables: []
-      height: 183
+      height: 155
       id: '917811893972820'
       position:
-        x: -12.512640172365536
-        y: 1576.9361142056378
+        x: 0
+        y: 1605
       positionAbsolute:
-        x: -12.512640172365536
-        y: 1576.9361142056378
+        x: 0
+        y: 1605
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -927,8 +925,6 @@ workflow:
         desc: ''
         headers: User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0
           Safari/537.36
-        isInIteration: false
-        isInLoop: false
         method: get
         params: ''
         retry_config:
@@ -945,14 +941,14 @@ workflow:
         type: http-request
         url: https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=25
         variables: []
-      height: 183
+      height: 155
       id: '917811893996220'
       position:
-        x: -12.512640172365536
-        y: 1771.9698338826772
+        x: 0
+        y: 1790
       positionAbsolute:
-        x: -12.512640172365536
-        y: 1771.9698338826772
+        x: 0
+        y: 1790
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -968,8 +964,6 @@ workflow:
         desc: ''
         headers: User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0
           Safari/537.36
-        isInIteration: false
-        isInLoop: false
         method: get
         params: ''
         retry_config:
@@ -986,14 +980,14 @@ workflow:
         type: http-request
         url: https://simonwillison.net/atom/everything/
         variables: []
-      height: 183
+      height: 155
       id: '999178118900001'
       position:
-        x: -12.512640172365536
-        y: 1961.9698338826772
+        x: 0
+        y: 1975
       positionAbsolute:
-        x: -12.512640172365536
-        y: 1961.9698338826772
+        x: 0
+        y: 1975
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1009,8 +1003,6 @@ workflow:
         desc: ''
         headers: User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0
           Safari/537.36
-        isInIteration: false
-        isInLoop: false
         method: get
         params: ''
         retry_config:
@@ -1027,14 +1019,14 @@ workflow:
         type: http-request
         url: https://nautil.us/feed/
         variables: []
-      height: 183
+      height: 155
       id: '999178118900002'
       position:
-        x: -12.512640172365536
-        y: 2151.9698338826774
+        x: 0
+        y: 2160
       positionAbsolute:
-        x: -12.512640172365536
-        y: 2151.9698338826774
+        x: 0
+        y: 2160
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1050,8 +1042,6 @@ workflow:
         desc: ''
         headers: User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0
           Safari/537.36
-        isInIteration: false
-        isInLoop: false
         method: get
         params: ''
         retry_config:
@@ -1068,14 +1058,14 @@ workflow:
         type: http-request
         url: https://aeon.co/feed.rss
         variables: []
-      height: 183
+      height: 155
       id: '999178118900003'
       position:
-        x: -12.512640172365536
-        y: 2341.9698338826774
+        x: 0
+        y: 2345
       positionAbsolute:
-        x: -12.512640172365536
-        y: 2341.9698338826774
+        x: 0
+        y: 2345
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1113,34 +1103,53 @@ workflow:
           \"\"\n    raw = (raw or \"\").strip()\n    if not raw:\n        return \"\"\n    if len(raw) >= 10 and raw[4:5]\
           \ == \"-\" and raw[7:8] == \"-\":\n        dt = _parse_iso(raw)\n    else:\n        dt = _parse_rfc822(raw)\n  \
           \  if dt is None:\n        return raw\n    jst = dt.astimezone(timezone(timedelta(hours=9)))\n    return jst.strftime(\"\
-          %Y-%m-%d %H:%M JST\")\n\n\ndef parse_rss(xml_text, strip_suffix=False, limit=15):\n    \"\"\"RSS 2.0 の <item> と\
-          \ Atom の <entry> 両対応\"\"\"\n    items = []\n    blocks = re.findall(r\"<item>([\\s\\S]*?)</item>\", xml_text or\
-          \ \"\")\n    if blocks:\n        for block in blocks:\n            title = field(block, \"title\")\n           \
-          \ if title:\n                if strip_suffix and \" - \" in title:\n                    title = title.rsplit(\"\
-          \ - \", 1)[0]\n                items.append({\"title\": title, \"url\": field(block, \"link\"), \"pub_date\": field(block,\
-          \ \"pubDate\")})\n            if len(items) >= limit:\n                break\n        return items\n    for block\
-          \ in re.findall(r\"<entry>([\\s\\S]*?)</entry>\", xml_text or \"\")[:limit]:\n        title = field(block, \"title\"\
-          )\n        m = re.search(r'<link[^>]*href=\"([^\"]+)\"', block)\n        pub = field(block, \"updated\") or field(block,\
-          \ \"published\")\n        if title:\n            items.append({\"title\": title, \"url\": m.group(1) if m else \"\
-          \", \"pub_date\": pub})\n    return items\n\n\ndef parse_hn(json_text, limit=25):\n    \"\"\"Hacker News (Algolia\
-          \ API) の JSON。points を注目度として見出しに付ける\"\"\"\n    items = []\n    try:\n        hits = json.loads(json_text or \"{}\"\
-          ).get(\"hits\", [])\n    except Exception:\n        return items\n    for h in hits[:limit]:\n        title = h.get(\"\
-          title\") or \"\"\n        if not title:\n            continue\n        url = h.get(\"url\") or \"https://news.ycombinator.com/item?id=\"\
+          %Y-%m-%d %H:%M JST\")\n\n\ndef html_to_text(html):\n    \"\"\"HTML を素のテキストへ。script/style を除き、ブロック境界を改行に、残りのタグを除去。\"\
+          \"\"\n    if not html:\n        return \"\"\n    html = re.sub(r\"(?is)<(script|style)[^>]*>.*?</\\1>\", \" \",\
+          \ html)\n    html = re.sub(r\"(?i)<br[^>]*>\", \"\\n\", html)\n    html = re.sub(r\"(?i)</(p|div|li|h[1-6]|blockquote|tr|section|article)>\"\
+          , \"\\n\", html)\n    html = re.sub(r\"<[^>]+>\", \" \", html)\n    html = unescape(html)\n    lines = [re.sub(r\"\
+          [ \\t　]+\", \" \", ln).strip() for ln in html.split(\"\\n\")]\n    return \"\\n\".join(ln for ln in lines if ln).strip()\n\
+          \n\ndef truncate(text, limit=1600):\n    \"\"\"要約に十分な長さで切る。なるべく文末(。/. )で切って途中で切らない。\"\"\"\n    if len(text) <= limit:\n\
+          \        return text\n    cut = text[:limit]\n    for sep in (\"。\", \". \", \"\\n\", \" \"):\n        idx = cut.rfind(sep)\n\
+          \        if idx > limit * 0.5:\n            return cut[: idx + 1].strip()\n    return cut.strip()\n\n\ndef parse_rss(xml_text,\
+          \ strip_suffix=False, limit=15, want_body=False):\n    \"\"\"RSS 2.0 の <item> と Atom の <entry> 両対応。want_body で本文/抜粋も拾う。\"\
+          \"\"\n    items = []\n    seen = set()  # 媒体内の重複見出しを除去(Google News RSS は同一記事を複数返す)\n    blocks = re.findall(r\"\
+          <item>([\\s\\S]*?)</item>\", xml_text or \"\")\n    if blocks:\n        for block in blocks:\n            title\
+          \ = field(block, \"title\")\n            if title:\n                if strip_suffix and \" - \" in title:\n    \
+          \                title = title.rsplit(\" - \", 1)[0]\n                key = \" \".join(title.split())\n        \
+          \        if key not in seen:\n                    seen.add(key)\n                    it = {\"title\": title, \"\
+          url\": field(block, \"link\"), \"pub_date\": field(block, \"pubDate\")}\n                    if want_body:\n   \
+          \                     it[\"body\"] = field(block, \"content:encoded\") or field(block, \"description\")\n      \
+          \              items.append(it)\n            if len(items) >= limit:\n                break\n        return items\n\
+          \    for block in re.findall(r\"<entry>([\\s\\S]*?)</entry>\", xml_text or \"\"):\n        title = field(block,\
+          \ \"title\")\n        if not title:\n            continue\n        key = \" \".join(title.split())\n        if key\
+          \ in seen:\n            continue\n        seen.add(key)\n        m = re.search(r'<link[^>]*href=\"([^\"]+)\"', block)\n\
+          \        pub = field(block, \"updated\") or field(block, \"published\")\n        it = {\"title\": title, \"url\"\
+          : m.group(1) if m else \"\", \"pub_date\": pub}\n        if want_body:\n            it[\"body\"] = field(block,\
+          \ \"content\") or field(block, \"summary\")\n        items.append(it)\n        if len(items) >= limit:\n       \
+          \     break\n    return items\n\n\ndef parse_hn(json_text, limit=25):\n    \"\"\"Hacker News (Algolia API) の JSON。points\
+          \ を注目度として見出しに付ける\"\"\"\n    items = []\n    seen = set()\n    try:\n        hits = json.loads(json_text or \"{}\"\
+          ).get(\"hits\", [])\n    except Exception:\n        return items\n    for h in hits:\n        title = h.get(\"title\"\
+          ) or \"\"\n        if not title:\n            continue\n        key = \" \".join(title.split())\n        if key\
+          \ in seen:\n            continue\n        seen.add(key)\n        url = h.get(\"url\") or \"https://news.ycombinator.com/item?id=\"\
           \ + str(h.get(\"objectID\", \"\"))\n        items.append({\"title\": \"[\" + str(h.get(\"points\", 0)) + \" pts]\
-          \ \" + title,\n                      \"url\": url, \"pub_date\": h.get(\"created_at\", \"\")})\n    return items\n\
-          \n\ndef main(body_ap, body_reuters, body_wsj, body_ars, body_hn,\n         body_simonw, body_nautilus, body_aeon):\n\
-          \    sources = [\n        (\"AP News\", parse_rss(body_ap, strip_suffix=True)),\n        (\"Reuters\", parse_rss(body_reuters,\
-          \ strip_suffix=True)),\n        (\"WSJ\", parse_rss(body_wsj, strip_suffix=True)),\n        (\"Ars Technica\", parse_rss(body_ars)),\n\
-          \        (\"Hacker News\", parse_hn(body_hn)),\n        (\"Simon Willison\", parse_rss(body_simonw, limit=10)),\n\
-          \        (\"Nautilus\", parse_rss(body_nautilus, limit=10)),\n        (\"Aeon\", parse_rss(body_aeon, limit=10)),\n\
-          \    ]\n    lines = [\"## \U0001F310 海外ニュース\", \"\"]\n    url_map = {}\n    count = 0\n    for name, items in sources:\n\
-          \        lines.append(\"### \" + name)\n        if not items:\n            lines.append(\"(取得失敗または0件)\")\n     \
-          \   for it in items:\n            count += 1\n            url_map[str(count)] = it[\"url\"]\n            # URLは翻訳に不要な巨大トークン。連番プレースホルダに退避し後段で復元する。\n\
-          \            # 統合ダイジェスト共通体裁: 見出し / URL行 / 日時行 をそれぞれ独立行にする\n            lines.append(\"- \" + it[\"title\"])\n  \
-          \          lines.append(\"  [[\" + str(count) + \"]]\")\n            lines.append(\"  \" + to_jst(it[\"pub_date\"\
-          ]))\n        lines.append(\"\")\n\n    jst_now = datetime.now(timezone(timedelta(hours=9)))\n    date_label = str(jst_now.year)\
-          \ + \"年\" + str(jst_now.month) + \"月\" + str(jst_now.day) + \"日\"\n\n    return {\n        \"formatted_articles\"\
-          : \"\\n\".join(lines),\n        \"url_map\": json.dumps(url_map, ensure_ascii=False),\n    }"
+          \ \" + title,\n                      \"url\": url, \"pub_date\": h.get(\"created_at\", \"\")})\n        if len(items)\
+          \ >= limit:\n            break\n    return items\n\n\ndef main(body_ap, body_reuters, body_wsj, body_ars, body_hn,\n\
+          \         body_simonw, body_nautilus, body_aeon):\n    # (媒体名, items, 要約対象か)\n    sources = [\n        (\"AP News\"\
+          , parse_rss(body_ap, strip_suffix=True), False),\n        (\"Reuters\", parse_rss(body_reuters, strip_suffix=True),\
+          \ False),\n        (\"WSJ\", parse_rss(body_wsj, strip_suffix=True), False),\n        (\"Ars Technica\", parse_rss(body_ars),\
+          \ False),\n        (\"Hacker News\", parse_hn(body_hn), False),\n        (\"Simon Willison\", parse_rss(body_simonw,\
+          \ limit=10, want_body=True), True),\n        (\"Nautilus\", parse_rss(body_nautilus, limit=10, want_body=True),\
+          \ True),\n        (\"Aeon\", parse_rss(body_aeon, limit=10, want_body=True), True),\n    ]\n    lines = [\"## \U0001F310\
+          \ 海外ニュース\", \"\"]\n    url_map = {}\n    summ_blocks = []  # 要約LLMに渡す本文素材(===[[id]]=== / 見出し / 本文)\n    count =\
+          \ 0\n    for name, items, do_summ in sources:\n        lines.append(\"### \" + name)\n        if not items:\n  \
+          \          lines.append(\"(取得失敗または0件)\")\n        for it in items:\n            count += 1\n            url_map[str(count)]\
+          \ = it[\"url\"]\n            # URLは翻訳に不要な巨大トークン。連番プレースホルダに退避し後段で復元する。\n            lines.append(\"- \" + it[\"title\"\
+          ])\n            lines.append(\"  [[\" + str(count) + \"]]\")\n            lines.append(\"  \" + to_jst(it[\"pub_date\"\
+          ]))\n            if do_summ:\n                # コードノードはネット禁止のため記事ページの補完取得はしない。\n                # フィード埋め込み本文だけを素材にする(無ければ要約対象から外す)。\n\
+          \                btext = truncate(html_to_text(it.get(\"body\", \"\")))\n                if btext:\n           \
+          \         summ_blocks.append(\"===[[\" + str(count) + \"]]===\\n\" + it[\"title\"] + \"\\n\" + btext)\n        lines.append(\"\
+          \")\n\n    return {\n        \"formatted_articles\": \"\\n\".join(lines),\n        \"url_map\": json.dumps(url_map,\
+          \ ensure_ascii=False),\n        \"summary_src\": \"\\n\\n\".join(summ_blocks),\n    }"
         code_language: python3
         outputs:
           formatted_articles:
@@ -1149,8 +1158,11 @@ workflow:
           url_map:
             children: null
             type: string
+          summary_src:
+            children: null
+            type: string
         selected: false
-        title: コード実行
+        title: 海外整形
         type: code
         variables:
         - value_selector:
@@ -1196,11 +1208,11 @@ workflow:
       height: 52
       id: '91781187326232'
       position:
-        x: 346.48928097594876
-        y: 1354.9913038185855
+        x: 350
+        y: 1350
       positionAbsolute:
-        x: 346.48928097594876
-        y: 1354.9913038185855
+        x: 350
+        y: 1350
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1217,7 +1229,7 @@ workflow:
           name: gemini-3.1-flash-lite
           provider: langgenius/gemini/google
         prompt_template:
-        - id: tr-sys-0001
+        - id: 999178118900010-sys
           role: system
           text: 'あなたは英語ニュース見出しリストの翻訳者です。与えられた「ソース別の見出しリスト」(Markdown)の各見出しを自然な日本語に翻訳します。これは翻訳タスクであり、要約・解説・論評は一切行いません。
 
@@ -1242,7 +1254,7 @@ workflow:
             # 出力
 
             翻訳後のMarkdown本文だけを出力する。前置き・後書き・コードフェンスは不要。'
-        - id: tr-usr-0001
+        - id: 999178118900010-usr
           role: user
           text: '{{#91781187326232.formatted_articles#}}'
         retry_config:
@@ -1257,20 +1269,87 @@ workflow:
       height: 119
       id: '999178118900010'
       position:
-        x: 1015.0
-        y: 1376.0
+        x: 1015
+        y: 1250
       positionAbsolute:
-        x: 1015.0
-        y: 1376.0
+        x: 1015
+        y: 1250
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 242
     - data:
-        code: "import json\nimport re\n\n\ndef main(translated, url_map):\n    try:\n        m = json.loads(url_map or \"\
-          {}\")\n    except Exception:\n        m = {}\n\n    def repl(mo):\n        return m.get(mo.group(1), mo.group(0))\n\
-          \n    digest = re.sub(r\"\\[\\[(\\d+)\\]\\]\", repl, translated or \"\")\n    return {\"digest\": digest}"
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.3
+          mode: chat
+          name: gemini-3.1-flash-lite
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 999178118900020-sys
+          role: system
+          text: 'あなたは記事本文の要約者です。入力には、海外ニュースのうち見出しだけでは内容が分かりにくい記事の本文が `===[[ID]]===` 区切りで複数並んでいます(各ブロックは 1 行目=見出し、2 行目以降=本文)。各記事を1〜2文の自然な日本語に要約します。
+
+
+            # 厳守ルール
+
+            1. 出力は記事ごとに1行、`[[ID]] 要約文` の形式。ID は入力の `===[[ID]]===` の数字をそのまま使う(記号も数字も1文字も変えない)
+
+            2. 要約は1〜2文・改行なし。前置き・見出しの繰り返し・引用符・箇条書き・URLは付けない
+
+            3. 本文に書かれていないことを足さない。推測で補わない。本文の内容だけを要約する
+
+            4. 媒体は問わず「何についての記事か」が素直に分かる要約にする
+
+            5. 入力に記事ブロックが1件も無ければ、何も出力しない(空出力)
+
+
+            # 出力例
+
+            [[86]] 静止画をクリックすると短い動画として再生される仕組みの紹介。
+
+            [[96]] カルシウムとビタミンDのサプリには骨折予防効果が乏しいとする新研究の報告。'
+        - id: 999178118900020-usr
+          role: user
+          text: '{{#91781187326232.summary_src#}}'
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 5000
+        selected: false
+        title: 要約
+        type: llm
+        vision:
+          enabled: false
+      height: 119
+      id: '999178118900020'
+      position:
+        x: 1015
+        y: 1450
+      positionAbsolute:
+        x: 1015
+        y: 1450
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "import json\nimport re\n\nPH = re.compile(r\"^\\s*\\[\\[(\\d+)\\]\\]\\s*$\")          # 本文側: [[N]] 単独行\nSUMM\
+          \ = re.compile(r\"^\\s*\\[\\[(\\d+)\\]\\]\\s*(.+)$\")     # 要約側: [[N]] 要約文\n\n\ndef parse_summaries(text):\n   \
+          \ \"\"\"要約LLM出力(`[[N]] 要約文` の行)を {id: 要約} に。\"\"\"\n    out = {}\n    for ln in (text or \"\").split(\"\\n\"):\n\
+          \        m = SUMM.match(ln)\n        if m and m.group(2).strip():\n            out[m.group(1)] = m.group(2).strip()\n\
+          \    return out\n\n\ndef main(translated, url_map, summaries_text, with_urls):\n    try:\n        m = json.loads(url_map\
+          \ or \"{}\")\n    except Exception:\n        m = {}\n    summaries = parse_summaries(summaries_text)\n    wu = (with_urls\
+          \ or \"\").strip().lower() in (\"yes\", \"true\", \"1\", \"on\")\n    out = []\n    for ln in (translated or \"\"\
+          ).split(\"\\n\"):\n        mo = PH.match(ln)\n        if mo:\n            sid = mo.group(1)\n            if wu:\n\
+          \                url = m.get(sid)\n                out.append(\"  \" + url if url else ln)\n            s = summaries.get(sid)\n\
+          \            if s:\n                out.append(\"  ↳ \" + s)\n            continue\n        out.append(ln)\n   \
+          \ return {\"digest\": \"\\n\".join(out)}"
         code_language: python3
         outputs:
           digest:
@@ -1290,14 +1369,24 @@ workflow:
           - url_map
           value_type: string
           variable: url_map
+        - value_selector:
+          - '999178118900020'
+          - text
+          value_type: string
+          variable: summaries_text
+        - value_selector:
+          - '1781187165020'
+          - with_urls
+          value_type: string
+          variable: with_urls
       height: 52
       id: '999178118900011'
       position:
-        x: 1620.0
-        y: 1376.0
+        x: 1620
+        y: 1350
       positionAbsolute:
-        x: 1620.0
-        y: 1376.0
+        x: 1620
+        y: 1350
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1334,11 +1423,11 @@ workflow:
       height: 52
       id: '8000000000001'
       position:
-        x: 2274.0
-        y: 700.0
+        x: 2274
+        y: 700
       positionAbsolute:
-        x: 2274.0
-        y: 700.0
+        x: 2274
+        y: 700
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1359,21 +1448,21 @@ workflow:
         selected: false
         title: 出力
         type: end
-      height: 115
+      height: 90
       id: '8000000000002'
       position:
-        x: 2620.0
-        y: 700.0
+        x: 2620
+        y: 700
       positionAbsolute:
-        x: 2620.0
-        y: 700.0
+        x: 2620
+        y: 700
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 242
     viewport:
-      x: -1253.3797143798402
-      y: 518.6076878913057
-      zoom: 0.9024080582064539
+      x: 0
+      y: 0
+      zoom: 0.7
   rag_pipeline_variables: []
