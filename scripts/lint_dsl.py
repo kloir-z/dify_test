@@ -6,6 +6,8 @@ Dify本体のチェックリストが拾わない問題を検出する:
 - どこからも参照されていない入力・出力変数(未使用)
 - 開始ノードから到達できないノード、エッジの宙吊り
 - 常に真になる数値条件(件数 ≥ 0 など)
+- 1ノードからの並列分岐数が Dify の上限を超過(実行が止まる)
+- コードノードの return キーと outputs 宣言の不一致(Dify の出力検証で落ちる)
 - リトライ無効のLLM/HTTPノード(情報表示)
 
 使い方:
@@ -14,11 +16,16 @@ Dify本体のチェックリストが拾わない問題を検出する:
 
 import re
 import sys
+from collections import Counter
 from pathlib import Path
 
 import yaml
 
 VAR_REF = re.compile(r"\{\{#([0-9a-zA-Z_]+)\.([a-zA-Z0-9_\.]+)#\}\}")
+
+# 1ノードの同一出力ハンドルから出せる並列分岐の上限。Dify の MAX_PARALLEL_LIMIT 既定値で、
+# Dify Cloud では変更不可。超えると「並列分岐が上限を超えた」で実行が止まる。
+MAX_PARALLEL_BRANCHES = 10
 
 # ノードタイプごとの出力変数(参照可否の判定に使う)
 STATIC_OUTPUTS = {
@@ -41,6 +48,75 @@ def node_outputs(node: dict) -> set:
     if ntype == "code":
         return set((node["data"].get("outputs") or {}).keys())
     return STATIC_OUTPUTS.get(ntype, set())
+
+
+def _main_body(code: str):
+    """Dify コードノードのエントリポイント `def main(...)` の本体だけを取り出す。
+
+    ノード出力として検証されるのは main の戻り値のみ。ヘルパー関数(main の前後に定義され、
+    独自に dict を返すことがある)を巻き込まないよう、本体を列単位の字下げで切り出す。
+    main が見つからなければ None。
+    """
+    lines = code.splitlines(keepends=True)
+    start = None
+    for i, ln in enumerate(lines):
+        if re.match(r"def main\s*\(", ln):
+            start = i
+            break
+    if start is None:
+        return None
+    body = [lines[start]]
+    for ln in lines[start + 1:]:
+        if ln.strip() and not ln[0].isspace():  # 列0の非空行=次のトップレベル定義で main 終了
+            break
+        body.append(ln)
+    return "".join(body)
+
+
+def return_dict_keys(code: str):
+    """code の `main()` 本体にある各 `return {...}` 辞書リテラルのトップレベル文字列キー集合を列挙する。
+
+    main が無い/辞書リテラルの return が1つも無い(変数を返す等で静的解析できない)場合は None を返し、
+    呼び出し側はチェックをスキップする。文字列・ネスト辞書はスキャンで正しく読み飛ばす。
+    """
+    body = _main_body(code)
+    if body is None:
+        return None
+    key_sets = []
+    for m in re.finditer(r"return\s*\{", body):
+        depth = 0
+        keys: list[str] = []
+        k = body.index("{", m.start())
+        n = len(body)
+        while k < n:
+            c = body[k]
+            if c in "\"'":  # 文字列リテラル: 終端まで飛ばし、深さ1なら直後の ':' でキー判定
+                q = c
+                s = k + 1
+                while s < n:
+                    if body[s] == "\\":
+                        s += 2
+                        continue
+                    if body[s] == q:
+                        break
+                    s += 1
+                if depth == 1:
+                    t = s + 1
+                    while t < n and body[t] in " \t":
+                        t += 1
+                    if t < n and body[t] == ":":
+                        keys.append(body[k + 1:s])
+                k = s + 1
+                continue
+            if c == "{":
+                depth += 1
+            elif c == "}":
+                depth -= 1
+                if depth == 0:
+                    break
+            k += 1
+        key_sets.append(set(keys))
+    return key_sets or None
 
 
 def walk_refs(obj, refs: list, path: str = "") -> None:
@@ -147,7 +223,44 @@ def main() -> None:
                         f"(偽側の経路が死んでいる可能性。'>' の間違いでは?)"
                     )
 
-    # --- 5. リトライ設定(情報) ---
+    # --- 5. 並列分岐数の上限(Dify MAX_PARALLEL_LIMIT。超過すると実行が止まる) ---
+    # if-else 等は出力ハンドルごとに排他分岐するので、(source, sourceHandle) 単位で数える。
+    fanout: Counter = Counter()
+    for e in edges:
+        if e["source"] in nodes:
+            fanout[(e["source"], e.get("sourceHandle", "source"))] += 1
+    for (src, handle), cnt in sorted(fanout.items()):
+        if cnt > MAX_PARALLEL_BRANCHES:
+            errors.append(
+                f"{label(src)} の並列分岐が {cnt} 本(出力 '{handle}')。"
+                f"Dify の上限 {MAX_PARALLEL_BRANCHES} を超過し実行が止まる"
+                f"(中継ノードを挟んで多段にファンアウトし、各段 ≤{MAX_PARALLEL_BRANCHES} に抑える)"
+            )
+
+    # --- 6. コードノードの return キーと outputs 宣言の一致 ---
+    # 宣言外のキーを返すと Dify が "Not all output parameters are validated" で弾く。
+    # 宣言したのに返さないキーがあっても出力検証で落ちる。両方向を ERROR にする。
+    for node in nodes.values():
+        if node["data"].get("type") != "code":
+            continue
+        declared = set((node["data"].get("outputs") or {}).keys())
+        key_sets = return_dict_keys(node["data"].get("code") or "")
+        if key_sets is None:
+            continue  # 辞書リテラルの return が無い=静的解析不能。スキップ
+        returned: set = set().union(*key_sets)
+        extra = returned - declared
+        missing = declared - returned
+        if extra:
+            errors.append(
+                f"{label(node['id'])} の return キー {sorted(extra)} が outputs 未宣言"
+                f"(Dify が 'Not all output parameters are validated' で弾く)"
+            )
+        if missing:
+            errors.append(
+                f"{label(node['id'])} の outputs 宣言 {sorted(missing)} が return に存在しない"
+            )
+
+    # --- 7. リトライ設定(情報) ---
     for node in nodes.values():
         ntype = node["data"].get("type")
         if ntype not in ("llm", "http-request", "code", "tool"):
